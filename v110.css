@@ -8,14 +8,22 @@
 .sidebar .nav-link{min-height:40px;padding:8px 10px;gap:11px}
 .sidebar .sidebar-subtitle{margin:15px 0 5px}
 .sidebar .sidebar-spacer{flex:1 0 7px;min-height:7px}
-.sidebar .side-promo{min-height:130px;margin:3px 0 9px;padding:11px 11px 9px}
-.sidebar .side-promo img{width:88px;height:88px;right:-6px}
-.sidebar .side-promo .promo-text b{font-size:23px;line-height:.93;max-width:150px}
+.sidebar .side-promo{min-height:190px;margin:3px 0 9px;padding:14px 12px 12px}
+.sidebar .side-promo>img{
+  position:absolute;top:-6px;bottom:auto;right:-18px;
+  width:190px;height:190px;max-width:none;
+  object-fit:contain;object-position:center;
+  opacity:.94;transform:none;
+  filter:brightness(.84) saturate(1.1);
+  -webkit-mask-image:radial-gradient(ellipse 105% 102% at 85% 41%,#000 0%,#000 40%,rgba(0,0,0,.86) 59%,transparent 86%);
+  mask-image:radial-gradient(ellipse 105% 102% at 85% 41%,#000 0%,#000 40%,rgba(0,0,0,.86) 59%,transparent 86%);
+}
+.sidebar .side-promo .promo-text b{font-size:20px;line-height:1.03;max-width:148px}
 .sidebar .sidebar-bottom{flex-shrink:0;margin-top:2px;padding:8px 4px 3px}
 @media(max-height:800px) and (min-width:761px){
-.sidebar .side-promo{min-height:104px;padding:9px}
+.sidebar .side-promo{min-height:173px;padding:11px}
 .sidebar .side-promo .promo-text b{font-size:19px}
-.sidebar .side-promo img{width:67px;height:67px}
+.sidebar .side-promo>img{top:-6px;bottom:auto;right:-18px;width:177px;height:177px}
 .sidebar .side-promo .promo-btn{padding:5px 6px;min-height:25px;font-size:9px}
 .sidebar .brand-v14{padding-bottom:8px}.sidebar .nav-link{min-height:36px;padding:6px 9px}
 .sidebar .sidebar-subtitle{margin-top:10px}

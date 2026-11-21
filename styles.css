@@ -1459,3 +1459,56 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
  .map-detail-actions{grid-template-columns:1fr}
  .map-detail-actions .button{font-size:11px}
 }
+
+
+/* v1.16 — dynamic transparent full-body brawler, enlarged in the overview hero.
+   Last-rule override: previous v1.14 rule made the hero art nearly invisible. */
+.n16-homehero .n16-hero-brawler{
+  display:block;
+  position:absolute;
+  z-index:1;
+  width:min(60%,820px);
+  height:124%;
+  right:-2%;
+  bottom:-11%;
+  opacity:.90;
+  object-fit:contain;
+  object-position:right bottom;
+  pointer-events:none;
+  transform:none;
+  filter:drop-shadow(0 20px 23px #08030988) drop-shadow(0 0 34px #ff365844);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 19%,#000 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 19%,#000 100%);
+}
+.n16-homehero:after{
+  content:'';
+  z-index:1;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent 0%,transparent 55%,#200d1b26 100%);
+}
+.n16-homehero-content{position:relative;z-index:2;max-width:min(57%,650px)}
+.n16-homehero .n16-hero-stats{z-index:3}
+@media(max-width:1150px) and (min-width:961px){
+  .n16-homehero .n16-hero-brawler{
+    width:63%;
+    height:114%;
+    right:-6%;
+    bottom:-8%;
+    opacity:.75;
+  }
+  .n16-homehero-content{max-width:65%}
+}
+@media(max-width:960px) and (min-width:621px){
+  .n16-homehero .n16-hero-brawler{
+    width:65%;
+    height:105%;
+    right:-10%;
+    bottom:-5%;
+    opacity:.35;
+  }
+  .n16-homehero-content{max-width:72%}
+}
+@media(max-width:620px){
+  .n16-homehero .n16-hero-brawler{display:none}
+  .n16-homehero-content{max-width:100%}
+}

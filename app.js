@@ -1,4 +1,4 @@
-/* BRAWL//NEXUS 1.12 — fan dashboard. No fabricated live player or esport statistics. */
+/* BRAWL//NEXUS 1.13 — fan dashboard. No fabricated live player or esport statistics. */
 (() => {
 'use strict';
 const CDN = 'https://cdn.brawlify.com';

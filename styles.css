@@ -770,3 +770,11 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
  #page-profile .bs-profile-showcase .battle-row .battle-images img{width:23px;height:23px}
 }
 @media(max-width:390px){.bs-tier-tab{padding:6px 9px;font-size:10px}.bn17-prestige-brawler{gap:5px}.bn17-prestige-brawler>img{width:35px;height:38px}}
+
+
+/* v1.8: aligned game mode/result and club icons */
+#page-profile .battle-outcome{display:flex;align-items:center;justify-content:center;gap:6px}
+#page-profile .battle-outcome .bn17-img-glyph{font-size:20px}
+.member-trophies{display:inline-flex;align-items:center;justify-content:flex-end;gap:5px}
+.member-trophies .bn17-img-glyph{font-size:18px}
+@media(max-width:480px){#page-profile .battle-outcome{gap:3px}#page-profile .battle-outcome .bn17-img-glyph{font-size:14px}}

@@ -120,7 +120,7 @@ function render(p,recent,util){
  const trophySection=section('ДИНАМИКА КУБКОВ','Наблюдения с этого устройства',chart);
  const ext='https://brawlify.com/player/'+encodeURIComponent(safeTag(p.tag));
  return '<div class="ni-root"><div class="ni-title"><div><span>NEXUS / INTELLIGENCE</span><h2>'+gameIcon('award')+' РАСШИРЕННАЯ СТАТИСТИКА</h2><p>Никаких выдуманных рейтингов: только данные аккаунта и доступная история.</p></div><a href="'+esc(ext)+'" target="_blank" rel="noopener noreferrer" class="ni-brawlify">ПОЛНАЯ ИСТОРИЯ В BRAWLIFY ↗</a></div>'+
- metrics+sample+'<div class="ni-panels">'+trophySection+collection+modeSection+mapSection+mateSection+'</div><p class="ni-bottom">NEXUS сохраняет историю локально только когда сайт открыт и загружает твой профиль. Старые данные Brawlify, качество аккаунта и 2 098 ранее отслеженных боёв здесь не копируются.</p></div>';
+ metrics+sample+'<div class="ni-panels">'+trophySection+collection+modeSection+mapSection+mateSection+'</div><p class="ni-bottom">История боёв сохраняется на этом устройстве при открытии профиля. Данные других трекеров сюда не импортируются.</p></div>';
 }
 window.NexusInsights={capture,load,getHistory,render,calc};
 })();

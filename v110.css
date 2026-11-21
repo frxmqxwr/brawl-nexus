@@ -310,3 +310,39 @@
 @media(max-height:660px) and (min-width:761px){
   .sidebar .side-promo{display:none}
 }
+
+/* v1.19: real transparent Spike art (alpha WebP). Keep the face visible on right. */
+.sidebar .side-promo{
+  min-height:192px;
+  overflow:hidden;
+  isolation:isolate;
+}
+.sidebar .side-promo>img{
+  display:block;
+  position:absolute;
+  top:-4px;
+  bottom:auto;
+  right:-15px;
+  width:196px;
+  height:196px;
+  max-width:none;
+  opacity:1;
+  visibility:visible;
+  object-fit:contain;
+  object-position:center center;
+  transform:none;
+  filter:drop-shadow(-7px 9px 13px rgba(0,0,0,.32));
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 67%,rgba(0,0,0,.86) 82%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 67%,rgba(0,0,0,.86) 82%,transparent 100%);
+  z-index:1;
+  pointer-events:none;
+}
+.sidebar .side-promo .promo-text{z-index:2;position:relative}
+.sidebar .side-promo .promo-btn{z-index:3;position:relative}
+@media (max-height:800px) and (min-width:761px){
+  .sidebar .side-promo{min-height:176px}
+  .sidebar .side-promo>img{top:-7px;right:-13px;width:186px;height:186px}
+}
+@media (max-height:660px) and (min-width:761px){
+  .sidebar .side-promo{display:none}
+}

@@ -1065,11 +1065,11 @@ Million Dollars|Миллион долларов
     mapLookup.set(normalizeMapKey(en),{en,ru});
     mapLookup.set(normalizeMapKey(ru),{en,ru});
   }
-  const escapeMapPattern = s => s.replace(/[.*+?^${}()|[\]\\]/g,'\\  const originals = new WeakMap();');
+  const escapeMapPattern = s => [...s].map(c => '.^$*+?()[]{}|\\'.includes(c) ? '\\' + c : c).join('');
   const mapAlternates = [...new Set(MAP_PAIRS.flat())].sort((a,b)=>b.length-a.length).map(escapeMapPattern);
   const mapPattern = new RegExp('(?<![\\p{L}\\p{N}])(?:'+mapAlternates.join('|')+')(?![\\p{L}\\p{N}])','giu');
   function mapText(src,language){
-    if (!src || !/[\\p{L}]/u.test(src)) return src;
+    if (!src || !/[\p{L}]/u.test(src)) return src;
     return src.replace(mapPattern,name=>{
       const found=mapLookup.get(normalizeMapKey(name));
       return found ? found[language] : name;

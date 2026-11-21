@@ -376,3 +376,47 @@
 @media(max-height:800px) and (min-width:761px){
   .sidebar .side-promo>img.nexus-tip-spike{top:-5px!important;right:-20px!important;width:173px!important;height:173px!important;min-width:173px!important}
 }
+
+/* v1.20 — restore original compact Netlify-sized NEXUS/TIP banner.
+   Keep Spike art visible, but don't let his portrait enlarge the card. */
+.sidebar .side-promo {
+  box-sizing:border-box;
+  flex:0 0 170px;
+  height:170px;
+  min-height:170px;
+  max-height:170px;
+  margin:0 1px 9px;
+  padding:10px 11px 9px;
+  justify-content:space-between;
+}
+.sidebar .side-promo .promo-text {
+  max-width:calc(100% - 70px);
+  gap:4px;
+  margin:0;
+}
+.sidebar .side-promo .promo-text b {
+  font-size:19px;
+  line-height:.98;
+}
+.sidebar .side-promo .promo-text small {
+  font-size:10px;
+  line-height:1.34;
+}
+.sidebar .side-promo .promo-btn {
+  min-height:30px;
+  margin:7px 0 0;
+  padding:6px 8px;
+  font-size:9px;
+}
+.sidebar .side-promo>img.nexus-tip-spike {
+  width:159px!important;
+  min-width:159px!important;
+  height:159px!important;
+  top:-3px!important;
+  right:-19px!important;
+}
+@media(max-height:800px) and (min-width:761px) {
+  .sidebar .side-promo{flex-basis:164px;height:164px;min-height:164px;max-height:164px;padding:9px 10px 8px}
+  .sidebar .side-promo .promo-text b{font-size:18px}
+  .sidebar .side-promo>img.nexus-tip-spike{width:151px!important;min-width:151px!important;height:151px!important;top:-3px!important;right:-17px!important}
+}

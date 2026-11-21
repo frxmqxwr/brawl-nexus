@@ -1223,7 +1223,82 @@ STAR PLAYER = STAR PLAYER
 Тег игрока = Player tag
 
 `;
-  const pairs = (RULES + '\n' + EXTRA_RULES + '\n' + EXTRA_RULES_2).split('\n').map(x => x.trim()).filter(x => x && x.includes(' = '))
+  const EXTRA_RULES_MAPS = String.raw`
+БАЗА КАРТ. = MAP DATABASE.
+БАЗА = DATABASE
+КАРТ. = MAPS.
+Карты / Meta = Maps / Meta
+Карты = Maps
+КАРТЫ = MAPS
+КАРТ = MAPS
+КАРТА = MAP
+ПОЛНАЯ СТАТИСТИКА КАРТЫ = FULL MAP STATISTICS
+ОТКРЫТЬ ДРАФТ ДЛЯ ЭТОЙ КАРТЫ = OPEN DRAFT FOR THIS MAP
+ПРОВЕРИТЬ ДАННЫЕ В BRAWLIFY = VERIFY DATA ON BRAWLIFY
+Все карты каталога, текущая ротация и доступная статистика. = Browse all maps, current rotation and available stats.
+ПОИСК КАРТЫ... = SEARCH MAPS...
+Поиск карты = Map search
+ВСЕ РЕЖИМЫ = ALL MODES
+АКТУАЛЬНЫЙ КАТАЛОГ = CURRENT CATALOG
+СЕЙЧАС В РОТАЦИИ = CURRENTLY IN ROTATION
+ВСЕ, ВКЛЮЧАЯ СТАРЫЕ = ALL, INCLUDING RETIRED
+Карта из каталога = Catalog map
+КАРТ = MAPS
+КАРТЫ / META = MAPS / META
+Показать ещё = Show more
+ПОКАЗАТЬ ЕЩЁ = SHOW MORE
+Карты не найдены. Измени фильтры или дождись загрузки каталога. = No maps found. Change filters or let the catalog load.
+Загружаем каталог BrawlAPI… = Loading BrawlAPI catalog…
+Загружаем карты… = Loading maps…
+МАТЧЕЙ В ВЫБОРКЕ = MATCHES SAMPLED
+ТВОИ БОИ = YOUR BATTLES
+ТВОЙ ВИНРЕЙТ = YOUR WIN RATE
+СОБСТВЕННАЯ ВЫБОРКА = OUR MATCH SAMPLE
+ВНЕШНИЙ ПРОВАЙДЕР = EXTERNAL PROVIDER
+АРХИВНЫЙ ПРИМЕР = ARCHIVED EXAMPLE
+НЕТ СТАТИСТИКИ = NO STATISTICS
+Реальные результаты, накопленные NEXUS через Supercell API. Выборка не репрезентирует всех игроков. = Actual matches collected by NEXUS through the Supercell API. The sample is not representative of all players.
+Показатели предоставлены подключённым внешним источником. Сверяй размер и дату выборки. = Statistics come from a connected external source. Check sample size and update date.
+Числа из присланного примера Brawlify для Quintillion. Не текущая мета и не LIVE статистика. = Numbers from the Brawlify Quintillion example you shared. Not current meta or LIVE stats.
+Пока нет массовой выборки для этой карты. Тактические варианты ниже не являются измеренными винрейтами. = There is no large sample for this map yet. The tactical suggestions below are not measured win rates.
+УМНЫЕ ПИКИ = SMART PICKS
+ЧАЩЕ ВЫБИРАЮТ = MOST PLAYED
+СИЛЬНЫЕ СВЯЗКИ = TOP TEAMS
+КОНТРПИКИ = COUNTERPICKS
+ВСЕ КУБКИ = ALL TROPHIES
+ТОЛЬКО МОИ БОЙЦЫ = MY BRAWLERS ONLY
+Недостаточно проверенных данных. Подключи статистический источник или накопи матчи в NEXUS. = Not enough verified stats. Connect a provider or collect matches in NEXUS.
+ТАКТИЧЕСКИЕ ВАРИАНТЫ · НЕ WIN RATE = TACTICAL OPTIONS · NOT WIN RATES
+Нужна реальная выборка полных команд. Без неё NEXUS не выдумывает проценты побед для связок. = Actual complete-team matches are needed. NEXUS does not invent team win rates.
+ПРОТИВ КОГО? = AGAINST WHO?
+ВЫБЕРИ БОЙЦА = SELECT BRAWLER
+Нет достаточного числа прямых встреч (минимум 10) для этих бойцов на данной карте. Общий винрейт не доказывает, что боец является контрпиком. = Not enough head-to-head matches (at least 10) on this map. Overall win rate does not prove a counterpick.
+WIN RATE = WIN RATE
+USE RATE = USE RATE
+GAMES = GAMES
+WIN RATE = победы / известные исходы. USE RATE = доля пиков среди всех участников. Выборки из D1 собираются только по доступным боям. Малые выборки не считаются надёжными. = WIN RATE = wins / known outcomes. USE RATE = share of picks among all participants. D1 samples include only accessible matches. Small samples are unreliable.
+WIN RATE = победы / известные исходы. = WIN RATE = wins / known outcomes.
+доля пиков среди всех участников. = share of picks among participants.
+Выборки из D1 собираются только по доступным боям. Малые выборки не считаются надёжными. = D1 samples include only accessible matches. Small samples are unreliable.
+матчей = matches
+игр = games
+БРАВЛЕРЫ = BRAWLERS
+ОБЩАЯ ВЫБОРКА = GLOBAL SAMPLE
+ЛИЧНЫЕ МАТЧИ = PERSONAL BATTLES
+ТВОИ РЕЗУЛЬТАТЫ НА ЭТОЙ КАРТЕ = YOUR RESULTS ON THIS MAP
+НЕТ ДАННЫХ = NO DATA
+ТРОФЕЙНЫЙ ДИАПАЗОН = TROPHY RANGE
+ЧАСТОТА ВЫБОРА = PICK RATE
+ПРИМЕР ИЗ BRAWLIFY = BRAWLIFY EXAMPLE
+КАТАЛОГ КАРТ = MAP CATALOG
+ОШИБКА ЗАГРУЗКИ СТАТИСТИКИ = STATS LOAD FAILED
+ВЫБОРКА = SAMPLE
+НА ЭТОЙ КАРТЕ = ON THIS MAP
+СОСТАВЫ = LINEUPS
+ПРЯМЫЕ ВСТРЕЧИ = HEAD-TO-HEAD
+
+`;
+  const pairs = (RULES + '\n' + EXTRA_RULES + '\n' + EXTRA_RULES_2 + '\n' + EXTRA_RULES_MAPS).split('\n').map(x => x.trim()).filter(x => x && x.includes(' = '))
     .map(x => { const at = x.indexOf(' = '); return [x.slice(0, at), x.slice(at + 3)]; });
   const dictionary = new Map(pairs);
   // A single compiled pattern is faster than running hundreds of regexes on every DOM node.

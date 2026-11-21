@@ -1541,75 +1541,78 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
  .bn115-pick-meta .bn118-game-plan{font-size:10px;line-height:1.4}
 }
 
-/* NEXUS / TIP — compact sidebar banner layout fix */
-.sidebar .side-promo{display:flex;flex-direction:column;justify-content:flex-end;min-height:205px;padding:16px 12px 12px;isolation:isolate;background:linear-gradient(145deg,#461b28 0%,#25141d 100%);border-color:#713040}
-.sidebar .side-promo .promo-rays{z-index:-1}
-.sidebar .side-promo>img{width:94px;height:110px;right:-8px;top:4px;object-fit:contain;object-position:center top;transform:rotate(0);pointer-events:none}
-.sidebar .side-promo .promo-text{display:flex;flex-direction:column;gap:5px;max-width:calc(100% - 75px);min-width:0;padding-top:0;margin-bottom:14px;z-index:1}
-.sidebar .side-promo .promo-text b{font:900 20px/1.03 var(--display);letter-spacing:-.35px;overflow-wrap:normal;word-break:normal}
-.sidebar .side-promo .promo-text small{font-size:11px;line-height:1.35}
-.sidebar .side-promo .promo-btn{flex-shrink:0;min-height:34px;margin-top:0;padding:8px 10px;font-size:10px;z-index:2}
-@media(max-height:800px) and (min-width:761px){.sidebar .side-promo{min-height:175px;padding:12px}.sidebar .side-promo>img{width:78px;height:94px;right:-6px;top:3px}.sidebar .side-promo .promo-text{max-width:calc(100% - 60px);margin-bottom:10px}.sidebar .side-promo .promo-text b{font-size:17px}.sidebar .side-promo .promo-btn{min-height:30px}}
-@media(max-width:760px){.sidebar .side-promo{min-height:190px}}
 
-/* Blend Spike into the sidebar promo instead of showing a hard image edge. */
+/* NEXUS / TIP: integrated Spike portrait, soft edge and readable copy. */
+.sidebar .side-promo{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  min-height:205px;
+  padding:16px 12px 12px;
+  isolation:isolate;
+  overflow:hidden;
+  background:linear-gradient(145deg,#461b28 0%,#25141d 100%);
+  border-color:#713040;
+}
+.sidebar .side-promo .promo-rays{z-index:-1}
 .sidebar .side-promo>img{
-  right:-16px;
-  top:0;
-  width:112px;
-  height:116px;
-  opacity:.84;
-  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 45%,transparent 99%),linear-gradient(to right,transparent 0%,#000 24%,#000 88%,transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:radial-gradient(ellipse 72% 73% at 56% 35%,#000 34%,rgba(0,0,0,.85) 57%,transparent 100%);
-  filter:brightness(.8) saturate(.85) drop-shadow(0 7px 12px rgba(0,0,0,.3));
+  position:absolute;
+  display:block;
+  top:-78px;
+  bottom:auto;
+  right:-52px;
+  width:230px;
+  height:250px;
+  max-width:none;
+  object-fit:contain;
+  object-position:center;
+  transform:none;
+  pointer-events:none;
+  opacity:.92;
+  filter:brightness(.83) saturate(1.1);
+  -webkit-mask-image:radial-gradient(ellipse 75% 65% at 67% 48%,#000 22%,rgba(0,0,0,.96) 42%,rgba(0,0,0,.38) 65%,transparent 95%);
+  mask-image:radial-gradient(ellipse 75% 65% at 67% 48%,#000 22%,rgba(0,0,0,.96) 42%,rgba(0,0,0,.38) 65%,transparent 95%);
 }
 .sidebar .side-promo:after{
   content:"";
   position:absolute;
   z-index:0;
-  pointer-events:none;
   inset:0;
-  background:linear-gradient(90deg,transparent 52%,rgba(29,13,21,.15) 75%,rgba(29,13,21,.35) 100%);
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent 55%,rgba(29,13,21,.06) 78%,rgba(29,13,21,.19) 100%);
 }
-.sidebar .side-promo .promo-text,.sidebar .side-promo .promo-btn{z-index:1}
-@media(max-height:800px) and (min-width:761px){
- .sidebar .side-promo>img{width:92px;height:98px;right:-12px;top:0}
+.sidebar .side-promo .promo-text{
+  position:relative;
+  z-index:1;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  max-width:calc(100% - 75px);
+  min-width:0;
+  padding-top:0;
+  margin-bottom:14px;
 }
-
-/* NEXUS / TIP: larger Spike face, retaining soft fade into the banner. */
-.sidebar .side-promo>img{
-  width:148px;
-  height:150px;
-  right:-34px;
-  top:-12px;
-  object-fit:contain;
-  object-position:center top;
-  mask-image:radial-gradient(ellipse 76% 76% at 54% 36%,#000 37%,rgba(0,0,0,.86) 60%,transparent 100%);
+.sidebar .side-promo .promo-text b{
+  font:900 20px/1.03 var(--display);
+  letter-spacing:-.35px;
+  overflow-wrap:normal;
+  word-break:normal;
 }
-@media(max-height:800px) and (min-width:761px){
-  .sidebar .side-promo>img{width:118px;height:122px;right:-25px;top:-9px}
-}
-
-/* NEXUS / TIP — Spike fills the RIGHT EDGE vertically, rather than floating above it. */
-.sidebar .side-promo>img{
-  top:auto;
-  bottom:0;
-  right:-14px;
-  width:68%;
-  max-width:none;
-  height:100%;
-  object-fit:cover;
-  object-position:center center;
-  transform:none;
-  opacity:.92;
-  filter:brightness(.86) saturate(1.12);
-  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.68) 26%,#000 48%,#000 100%);
-  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.68) 26%,#000 48%,#000 100%);
-}
-.sidebar .side-promo:after{
-  background:linear-gradient(90deg,transparent 48%,rgba(35,13,24,.08) 70%,rgba(35,13,24,.17) 100%);
+.sidebar .side-promo .promo-text small{font-size:11px;line-height:1.35}
+.sidebar .side-promo .promo-btn{
+  position:relative;
+  z-index:2;
+  flex-shrink:0;
+  min-height:34px;
+  margin-top:0;
+  padding:8px 10px;
+  font-size:10px;
 }
 @media(max-height:800px) and (min-width:761px){
-  .sidebar .side-promo>img{top:auto;bottom:0;right:-12px;width:67%;height:100%;object-fit:cover}
+  .sidebar .side-promo{min-height:175px;padding:12px}
+  .sidebar .side-promo>img{width:205px;height:225px;right:-49px;top:-77px}
+  .sidebar .side-promo .promo-text{max-width:calc(100% - 65px);margin-bottom:10px}
+  .sidebar .side-promo .promo-text b{font-size:17px}
+  .sidebar .side-promo .promo-btn{min-height:30px}
 }
+@media(max-width:760px){.sidebar .side-promo{min-height:190px}}

@@ -640,3 +640,61 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 @media(max-width:900px){.n16-rotation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.n16-homehero{min-height:320px}.n16-hero-stats>div{padding:8px}.n16-battle-row{grid-template-columns:80px minmax(110px,1fr) auto 65px}.n16-battle-map{display:none}.n16-hero-brawler{opacity:.6}}
 @media(max-width:760px){.n16-overview-grid,.n16-tools-row{grid-template-columns:minmax(0,1fr)}.n16-homehero{min-height:345px;padding:24px 17px 118px}.n16-homehero-content{max-width:80%}.n16-homehero-content>p{font-size:11px}.n16-big-title{font-size:72px}.n16-hero-brawler{width:55%;opacity:.55;right:-5%;bottom:1%}.n16-hero-stats{left:9px;right:9px;gap:6px}.n16-hero-stats>div{padding:8px 5px;gap:5px;justify-content:center}.n16-hero-stats .game-stat-glyph{height:24px;width:24px}.n16-hero-stats .game-stat-glyph svg{height:15px;width:15px}.n16-hero-stats strong{font-size:18px}.n16-hero-stats small{font-size:8px}.n16-rotation-grid{gap:9px}.n16-map-card{min-height:320px}.n16-map-card .n16-map-mode{font-size:14px}.n16-map-card .map-rotation-img{height:140px}.n16-map-card .map-rotation-meta b{font-size:20px}.n16-map-picks img{height:34px;width:34px}.n16-profile-card{min-height:0}.n16-profile-portrait{opacity:.25}.n16-profile-stats b{font-size:20px}}
 @media(max-width:480px){.n16-homehero{min-height:380px;padding-bottom:124px}.n16-homehero-content{max-width:100%}.n16-homehero-content>p{max-width:73%}.n16-big-title{font-size:63px}.n16-hero-brawler{right:-22%;width:76%;opacity:.43}.n16-home-links .button{font-size:9px;padding:10px 11px}.n16-rotation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.n16-map-card{min-height:286px}.n16-map-card .n16-map-mode{height:36px;font-size:12px;padding:4px 6px}.n16-map-mode .real-mode-glyph{width:23px;height:23px}.n16-map-card .map-rotation-img{height:115px}.n16-map-card .map-rotation-meta{padding:9px 7px 5px}.n16-map-card .map-rotation-meta b{font-size:16px}.n16-map-card .map-rotation-meta small{font-size:8px}.n16-map-picks{padding:7px}.n16-map-picks>span{font-size:8px}.n16-map-picks>div{gap:3px}.n16-map-picks img{height:31px;width:31px}.n16-hero-stats strong{font-size:16px}.n16-battle-row{grid-template-columns:64px minmax(0,1fr) auto;gap:6px}.n16-battle-row .battle-time{display:none}.n16-battle-row .battle-images img{height:25px;width:25px}.n16-battle-row .battle-outcome{font-size:8px;padding:8px 4px}.n16-battle-row .mode-label .mode-icon{height:22px;width:22px}.podium-spot{min-height:218px}.podium-spot.podium-1{min-height:248px}.podium-spot .podium-model{height:145px}.podium-spot.podium-1 .podium-model{height:178px}.podium-spot>b{font-size:15px}.podium-spot .podium-plinth{font-size:11px}.ranked-stat .ranked-icon,.ranked-stat .ranked-icon img{width:66px;height:66px;min-width:66px}.ranked-stat .rank-dynamic-img{height:66px!important;width:66px!important}}
+
+
+/* v1.7: authentic game UI icons, prestige and Brawlidex. */
+.bn17-img-glyph{display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;vertical-align:middle;flex:none;line-height:1}
+.bn17-img-glyph>img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 3px 5px #0b020688)}
+.bn17-fallback{align-items:center;justify-content:center;width:100%;height:100%}
+.bn17-fallback svg{width:100%;height:100%}
+.game-stat-glyph:has(.bn17-img-glyph){background:none;box-shadow:none;border:0;font-size:30px}
+.bn17-nav-icon{width:20px;height:20px;object-fit:contain;flex-shrink:0}
+.bn17-prestige-panel{overflow:hidden;background:radial-gradient(ellipse at 3% 5%,#7226373f,transparent 57%),linear-gradient(148deg,#27171d,#1a1417)}
+.bn17-prestige-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.35fr);gap:13px;margin:13px 0 16px}
+.bn17-prestige-main,.bn17-prestige-count{min-width:0;display:flex;gap:14px;align-items:center;border:1px solid #814253;background:linear-gradient(130deg,#4e202f,#231720);border-radius:15px;padding:20px}
+.bn17-prestige-count{background:linear-gradient(130deg,#4c2924,#251c20)}
+.bn17-prestige-medal{display:grid;place-items:center;font-size:46px;flex-shrink:0;width:56px;height:60px}
+.bn17-prestige-main>div,.bn17-prestige-count>div{min-width:0;display:flex;flex-direction:column;gap:3px}
+.bn17-prestige-main small,.bn17-prestige-count small{color:#f0a8bc;font-size:10px;font-weight:900;letter-spacing:.6px}
+.bn17-prestige-main strong,.bn17-prestige-count strong{font:900 clamp(28px,3vw,43px) var(--display);color:white;line-height:1}
+.bn17-prestige-main span:not(.bn17-prestige-medal),.bn17-prestige-count span:not(.bn17-prestige-medal){color:#d1acb5;font-size:10px}
+.bn17-progress-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.bn17-progress-metrics>div{border:1px solid #56333c;background:#24171d;border-radius:13px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:10px}
+.bn17-progress-metrics span{font-size:10px;color:#dca2b0;font-weight:800;text-align:center}
+.bn17-progress-metrics strong{font:900 30px var(--display);color:#f8ede7}
+.bn17-prestige-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.bn17-prestige-brawler{display:flex;align-items:center;gap:10px;min-width:0;background:#2b1d23;border:1px solid #693c4a;border-radius:12px;padding:10px}
+.bn17-prestige-brawler>img{width:55px;height:55px;object-fit:contain;flex-shrink:0}
+.bn17-prestige-brawler>span{display:flex;flex-direction:column;min-width:0;gap:4px;flex:1}
+.bn17-prestige-brawler b{font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bn17-prestige-brawler small{display:flex;gap:3px;align-items:center;font-size:10px;color:#cdbac0}
+.bn17-prestige-brawler small .bn17-img-glyph{font-size:14px}
+.bn17-prestige-brawler em{font-size:9px;color:#ffca5a;font-style:normal;font-weight:900;text-align:right;max-width:48px;white-space:normal}
+.bn17-prestige-empty{color:#a6959a;grid-column:1/-1;font-size:12px;padding:13px}
+.bn17-achievements{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:12px 0}
+.bn17-achievement{display:flex;min-width:0;flex-direction:column;align-items:center;justify-content:center;gap:7px;background:#302128;border:1px solid #68404a;border-radius:12px;padding:16px 9px}
+.bn17-achievement>span{font-size:31px;min-height:34px}
+.bn17-achievement small{text-align:center;font-size:10px;color:#d4b5c0;font-weight:700}
+.bn17-achievement strong{font:900 25px var(--display);color:#fff}
+.bn17-other-prestige{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:10px;margin-top:11px;border-radius:10px;background:#402632;color:#f9d8e4;font-size:12px;font-weight:700}
+.bn17-other-prestige .bn17-img-glyph{font-size:20px}
+.bn17-roster-tools{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:12px 0}
+.bn17-roster-tools label{display:flex;align-items:center;gap:10px;max-width:390px;width:100%;font-size:22px}
+.bn17-roster-tools label .input{min-width:0;flex:1}
+.bn17-roster-tools>span{font-size:11px;color:#f6b4bb;font-weight:900;white-space:nowrap}
+.bn17-roster-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;max-height:520px;overflow-y:auto;scrollbar-width:thin;padding:3px}
+.bn17-roster-card{position:relative;display:grid;grid-template-columns:52px minmax(0,1fr);align-items:center;column-gap:9px;row-gap:5px;padding:10px;background:linear-gradient(130deg,#39202b,#251922);border:1px solid #714050;border-radius:12px;min-width:0}
+.bn17-roster-card[hidden]{display:none}
+.bn17-roster-card>img{width:52px;height:52px;object-fit:contain;grid-row:span 2}
+.bn17-roster-label{display:flex;flex-direction:column;gap:3px;min-width:0}
+.bn17-roster-label>b{white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:11px}
+.bn17-roster-label>small{font-size:10px;color:#bd9aa6}
+.bn17-roster-score{display:flex;align-items:center;gap:5px;font-weight:900;font-size:12px;flex-wrap:wrap}
+.bn17-roster-score>.bn17-img-glyph{font-size:18px}
+.bn17-roster-score>small{display:block;width:100%;font-size:9px;color:#c9acb7;font-weight:500}
+.bn17-roster-prestige{font-size:10px;font-weight:900;color:#ffd079;grid-column:1/-1}
+.bn17-roster-powerups{display:flex;flex-wrap:wrap;gap:3px;align-items:center;grid-column:1/-1;font-size:9px;color:#dbb8c2}
+.bn17-roster-powerups>.bn17-img-glyph{font-size:14px}
+@media(max-width:1200px){.bn17-prestige-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-progress-metrics{grid-column:1/-1}.bn17-prestige-list{grid-template-columns:repeat(3,minmax(0,1fr))}.bn17-achievements{grid-template-columns:repeat(3,minmax(0,1fr))}.bn17-roster-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.bn17-prestige-overview{grid-template-columns:1fr}.bn17-prestige-list,.bn17-roster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-achievements{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-prestige-main,.bn17-prestige-count{padding:13px}.bn17-prestige-brawler{padding:7px;gap:6px}.bn17-prestige-brawler>img{width:38px;height:43px}.bn17-prestige-brawler em{font-size:8px}}
+@media(max-width:380px){.bn17-prestige-list,.bn17-roster-grid{grid-template-columns:1fr}.bn17-progress-metrics>div{padding:6px}.bn17-progress-metrics span{font-size:8px}}

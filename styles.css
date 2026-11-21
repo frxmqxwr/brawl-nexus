@@ -860,3 +860,6 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
  .topbar-actions .pulse-dot{display:inline-block}
  .topbar-actions .topbar-sep{display:none}
 }
+
+.bn19-profile-figure img{color:transparent;font-size:0}
+@media(max-width:760px){.ai-fab-wrap{right:11px;bottom:10px;transform:scale(.88);transform-origin:bottom right}}

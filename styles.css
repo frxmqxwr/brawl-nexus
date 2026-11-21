@@ -1512,3 +1512,31 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
   .n16-homehero .n16-hero-brawler{display:none}
   .n16-homehero-content{max-width:100%}
 }
+
+
+/* v1.18: short readable tactical plans on the map picker (desktop + phone). */
+.bn115-pick-meta .bn118-game-plan{
+  display:block;
+  color:#f2cfda;
+  font-size:11px;
+  line-height:1.45;
+  font-weight:500;
+  white-space:normal;
+  overflow-wrap:break-word;
+  max-width:100%;
+}
+.bn115-pick-meta .bn118-game-plan strong{
+  color:#ffcf7e;
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.2px;
+  white-space:nowrap;
+}
+.bn115-pick-card:has(.bn118-game-plan){
+  min-height:97px;
+  align-items:center;
+}
+@media(max-width:680px){
+ .bn115-pick-card:has(.bn118-game-plan){min-height:82px}
+ .bn115-pick-meta .bn118-game-plan{font-size:10px;line-height:1.4}
+}

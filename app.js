@@ -119,7 +119,7 @@ function actualRank(p,period='current'){
  const elo=current?p.rankedElo:p.highestAllTimeRankedElo;
  return {label:name,elo:typeof elo==='number'&&Number.isFinite(elo)?elo:null,raw};
 }
-function rankBadgeFor(v){let s=String(v||'').toLowerCase();const known=['bronze','silver','gold','diamond','mythic','legendary','masters','pro'];const detected=known.find(k=>s.includes(k));return detected?`<span class="rank-letter-fallback">${esc(String(v).slice(0,1))}</span>${rankPic(detected,'rank-dynamic-img')}`:`<span class="rank-badge-generic">${icon('shield-half')}</span>`;}
+function rankBadgeFor(v){const s=String(v||'').toLowerCase();const known=['bronze','silver','gold','diamond','mythic','legendary','masters','pro'];const detected=known.find(k=>s.includes(k));return detected?rankPic(detected,'rank-dynamic-img'):`<span class="rank-badge-generic">${icon('shield-half')}</span>`;}
 
 // Original game artwork and game-mode art: URLs from Brawlify CDN/API, not generated illustrations.
 const bModel=(name,cl='')=>{const b=getB(name);const id=b?.id;return id?`<img class="${esc(cl)}" loading="lazy" src="${CDN}/brawlers/model/${id}.png" alt="Игровая PNG-модель ${esc(name)}" onerror="this.onerror=()=>{this.style.display='none'};this.src='${esc(b?.imageUrl2||b?.imageUrl||'')}';this.classList.add('model-fallback')">`:bimg(name,cl)};
@@ -308,6 +308,7 @@ async function loadRotation(){
 async function loadMapStats(id){if(!id||state.mapStats[id])return;state.mapStats[id]={stats:[],source:'unavailable'};try{const d=await apiRequest('/api/map-stats?mapId='+encodeURIComponent(id));state.mapStats[id]={stats:Array.isArray(d.stats)?d.stats:[],source:d.source||'provider'}}catch{}if(state.page==='home'){renderHome();learnIcons()}}
 function renderHome(){
  const p=state.player;const owned=p?.brawlers||[];const current=actualRank(p,'current');
+ const topBrawler=owned.length?owned.slice().sort((a,b)=>Number(b.trophies||0)-Number(a.trophies||0))[0]:null;
  const choice=rotationSelected();const picks=choice?rotationPicksFor(choice):[];
  const active=rotationEntries().filter(e=>e.live);
  const headlines=state.news||[];
@@ -318,7 +319,7 @@ function renderHome(){
     <p>Твоя ротация, драфты, профиль и киберспорт в одном месте. Игровые PNG — оригинальные, цифры — из подключённых источников.</p>
     <div class="n16-home-links">${button('ОТКРЫТЬ META LAB','meta','')}${button('МОЙ ПРОФИЛЬ','profile','secondary')}</div>
   </div>
-  ${bPortrait('Colt','n16-hero-brawler')}
+  ${topBrawler?bPortrait(topBrawler.name,'n16-hero-brawler'):''}
   <div class="n16-hero-stats">
     <div>${gameStatIcon('trophy','gold')}<span><strong>${fmt(p?.trophies)}</strong><small>Кубки аккаунта</small></span></div>
     <div>${p?rankBadgeFor(current.raw):gameStatIcon('shield','pink')}<span><strong>${p?esc(current.label):'—'}</strong><small>Текущий ранг</small></span></div>

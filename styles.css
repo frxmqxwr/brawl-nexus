@@ -1133,3 +1133,155 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 #page-profile .ranked-panel-v14 .ranked-stat>div:last-child{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:4px;min-width:0;align-self:center}
 @media(max-width:800px){.bn112-battle>summary{grid-template-columns:66px minmax(0,1fr) 35px 71px 50px 14px;gap:4px}.bn112-self img,.bn112-allies img{height:27px;width:27px}.bn112-teams{grid-template-columns:1fr}.bn112-detail header time{width:100%;margin:0}}
 @media(max-width:440px){#page-profile .ranked-panel-v14 .ranked-stat{grid-template-columns:63px minmax(0,1fr);gap:10px;padding:10px}#page-profile .ranked-panel-v14 .ranked-icon{width:59px;height:62px}#page-profile .ranked-panel-v14 .ranked-icon img{width:54px;height:54px}.bn112-battle>summary{grid-template-columns:54px minmax(0,1fr) 28px 58px 40px 10px;gap:3px;padding:6px}.bn112-outcome{font-size:9px}.bn112-mode b{font-size:10px}.bn112-mode small{font-size:9px}.bn112-self img,.bn112-allies img{height:24px;width:24px}.bn112-self small,.bn112-allies small{font-size:7px}.bn112-delta{font-size:12px}.bn112-delta .bn17-img-glyph{font-size:13px}.bn112-journal{max-height:570px}}
+
+
+/* v1.13 HOTFIX — do not let 25 battle rows shrink to 18px inside a flex scroller. */
+#page-profile .bs-journal-panel{min-width:0;overflow:hidden}
+#page-profile .bn112-journal{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:9px;
+  max-height:min(720px,75vh);
+  height:auto;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+  overscroll-behavior-y:contain;
+  padding:3px 7px 9px 2px;
+  scrollbar-width:thin;
+}
+#page-profile .bn112-journal>.bn112-battle{
+  box-sizing:border-box;
+  display:block;
+  flex:0 0 auto;
+  flex-shrink:0;
+  height:auto;
+  min-height:78px;
+  width:100%;
+  margin:0;
+  overflow:visible;
+  border:1px solid #744052;
+  border-radius:12px;
+}
+#page-profile .bn112-journal>.bn112-battle>summary{
+  box-sizing:border-box;
+  display:grid;
+  grid-template-columns:92px minmax(155px,1fr) 64px 92px 76px 18px;
+  gap:12px;
+  align-items:center;
+  min-height:76px;
+  height:auto;
+  padding:10px 14px;
+  overflow:hidden;
+}
+#page-profile .bn112-battle>summary>svg{width:17px;height:17px;flex:none}
+#page-profile .bn112-mode{min-width:0;overflow:hidden}
+#page-profile .bn112-mode b,
+#page-profile .bn112-mode small{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#page-profile .bn112-self,
+#page-profile .bn112-allies{min-width:0;overflow:hidden}
+#page-profile .bn112-self img,
+#page-profile .bn112-allies img{flex:none;max-width:100%;object-fit:contain}
+#page-profile .bn112-battle[open]>.bn112-detail{height:auto;overflow:visible}
+#page-profile .ranked-panel-v14 .ranked-stat{
+  display:grid!important;
+  grid-template-columns:76px minmax(0,1fr)!important;
+  align-items:center;
+  justify-items:stretch;
+  gap:12px;
+  padding:14px;
+  min-height:120px;
+}
+#page-profile .ranked-panel-v14 .ranked-stat .ranked-icon{
+  box-sizing:border-box;
+  display:grid!important;
+  place-items:center!important;
+  width:72px!important;
+  min-width:0!important;
+  height:76px!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:5px!important;
+  align-self:center!important;
+  justify-self:center!important;
+  overflow:hidden;
+}
+#page-profile .ranked-panel-v14 .ranked-icon img,
+#page-profile .ranked-panel-v14 .rank-dynamic-img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:64px!important;
+  max-height:64px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:0 auto!important;
+}
+#page-profile .ranked-panel-v14 .ranked-stat>div:last-child{
+  display:flex!important;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:center;
+  gap:5px;
+  min-width:0;
+  text-align:left;
+}
+#page-profile .ranked-panel-v14 .ranked-stat b{line-height:1.1;font-size:clamp(21px,2.1vw,29px)}
+#page-profile .ranked-panel-v14 .ranked-stat strong{line-height:1.05}
+@media(max-width:1100px){
+ #page-profile .bn112-journal>.bn112-battle>summary{
+  grid-template-columns:72px minmax(100px,1fr) 44px 70px 58px 15px;
+  gap:7px;
+  padding:9px;
+  min-height:74px;
+ }
+}
+@media(max-width:700px){
+ #page-profile .bn112-journal{max-height:62vh;padding-right:3px}
+ #page-profile .bn112-journal>.bn112-battle{min-height:74px}
+ #page-profile .bn112-journal>.bn112-battle>summary{
+  grid-template-columns:62px minmax(0,1fr) 38px 58px 48px 12px;
+  gap:4px;
+  min-height:72px;
+  padding:7px 6px;
+ }
+ #page-profile .ranked-panel-v14 .ranked-stat{
+  grid-template-columns:63px minmax(0,1fr)!important;
+  gap:10px;
+  padding:10px;
+ }
+ #page-profile .ranked-panel-v14 .ranked-stat .ranked-icon{
+  width:59px!important;
+  height:62px!important;
+ }
+ #page-profile .ranked-panel-v14 .ranked-icon img,
+ #page-profile .ranked-panel-v14 .rank-dynamic-img{
+  max-width:52px!important;
+  max-height:52px!important;
+ }
+}
+@media(max-width:430px){
+ #page-profile .bn112-journal>.bn112-battle>summary{
+  grid-template-columns:49px minmax(0,1fr) 27px 50px 35px 10px;
+  gap:3px;
+  min-height:68px;
+  padding:6px 5px;
+ }
+ #page-profile .bn112-journal>.bn112-battle{min-height:70px}
+ #page-profile .bn112-mode b{font-size:10px}
+ #page-profile .bn112-mode small{font-size:9px}
+ #page-profile .bn112-self img,
+ #page-profile .bn112-allies img{width:24px;height:24px}
+ #page-profile .bn112-delta{font-size:10px}
+ #page-profile .bn112-delta .bn17-img-glyph{font-size:12px}
+ #page-profile .ranked-panel-v14 .ranked-stat .ranked-icon{
+  width:52px!important;
+  height:56px!important;
+ }
+ #page-profile .ranked-panel-v14 .ranked-icon img,
+ #page-profile .ranked-panel-v14 .rank-dynamic-img{
+  max-width:46px!important;
+  max-height:46px!important;
+ }
+}

@@ -117,7 +117,7 @@ function actualRank(p,period='current'){
 function rankBadgeFor(v){let s=String(v||'').toLowerCase();const known=['bronze','silver','gold','diamond','mythic','legendary','masters','pro'];const detected=known.find(k=>s.includes(k));return detected?`<span class="rank-letter-fallback">${esc(String(v).slice(0,1))}</span>${rankPic(detected,'rank-dynamic-img')}`:`<span class="rank-badge-generic">${icon('shield-half')}</span>`;}
 
 // Original game artwork and game-mode art: URLs from Brawlify CDN/API, not generated illustrations.
-const bModel=(name,cl='')=>{const b=getB(name);const id=b?.id;return id?`<img class="${esc(cl)}" loading="lazy" src="${CDN}/brawlers/model/${id}.png" alt="Игровая PNG-модель ${esc(name)}" onerror="this.onerror=null;this.src='${esc(b?.imageUrl2||b?.imageUrl||'')}';this.classList.add('model-fallback')">`:bimg(name,cl)};
+const bModel=(name,cl='')=>{const b=getB(name);const id=b?.id;return id?`<img class="${esc(cl)}" loading="lazy" src="${CDN}/brawlers/model/${id}.png" alt="Игровая PNG-модель ${esc(name)}" onerror="this.onerror=()=>{this.style.display='none'};this.src='${esc(b?.imageUrl2||b?.imageUrl||'')}';this.classList.add('model-fallback')">`:bimg(name,cl)};
 const bPortrait=(name,cl='')=>{const b=getB(name);return b?.id?`<img class="${esc(cl)}" loading="lazy" src="${CDN}/brawlers/portraits/${b.id}.png" alt="Оригинальный портрет ${esc(name)}" onerror="this.onerror=null;this.src='${esc(b.imageUrl2||b.imageUrl)}'">`:bimg(name,cl)};
 const prestigeLevel=b=>{let raw=b?.prestigeLevel??b?.prestigeTier??b?.prestige;if(raw&&typeof raw==='object')raw=raw.level??raw.tier??raw.value;const n=Number(raw);return raw!==undefined&&raw!==null&&raw!==''&&Number.isInteger(n)&&n>=0?n:null};
 const prestigeSummary=p=>{

@@ -640,15 +640,15 @@ async function fetchPlayer(tag){tag=String(tag||'').trim().toUpperCase();if(!tag
 async function loadProfile(t,{silent=false}={}){
  const btn=$('#profileSearch button');if(btn){btn.disabled=true;btn.textContent='ЗАГРУЗКА...'}
  try{const p=await fetchPlayer(t);state.player=p;state.lastTag=p.tag;state.playerLookupError='';try{localStorage.setItem('bn_my_tag',p.tag)}catch{}
- updateAccountAvatar();renderProfile();if(state.page==='profile'&&!silent)toast('Мой профиль '+p.name+' загружен');
+ updateAccountAvatar();renderProfile();renderHome();learnIcons();if(state.page==='profile'&&!silent)toast('Мой профиль '+p.name+' загружен');
  state.battles=[];
  if(p.club?.tag)loadClub(p.club.tag);else{state.clubData=null;renderClub()}
- try{const battles=await apiRequest('/api/player/'+encodeURIComponent(p.tag)+'/log');state.battles=Array.isArray(battles)?battles:battles?.items||battles?.battleLog?.items||[];renderProfile()}
+ try{const battles=await apiRequest('/api/player/'+encodeURIComponent(p.tag)+'/log');state.battles=Array.isArray(battles)?battles:battles?.items||battles?.battleLog?.items||[];renderProfile();if(state.page==='home'){renderHome();learnIcons()}}
  catch(e){state.playerLookupError='Профиль загружен, но журнал боёв недоступен: '+e.message;renderProfile()}
  }catch(e){state.playerLookupError=e.message;renderProfile();if(!silent)toast('Ошибка: '+e.message)}
 }
 function updateAccountAvatar(){const p=state.player;$('#sidebarPlayerName').textContent=p?.name||'GUEST PLAYER';$('#sidebarPlayerTag').textContent=p?.tag||'Не подключён';const url=p?playerIconUrl(playerAvatarId(p)):'assets/nexus-guest.webp';$$('.sidebar-bottom img,.top-avatar img').forEach(x=>{x.onerror=()=>{x.onerror=null;x.src='assets/nexus-guest.webp'};x.src=url})}
-async function loadClub(tag){state.clubLoading=true;state.clubError='';renderClub();try{let club=await apiRequest('/api/club/'+encodeURIComponent(tag));if(!Array.isArray(club?.members)){try{const list=await apiRequest('/api/club/'+encodeURIComponent(tag)+'/members');club.members=Array.isArray(list)?list:Array.isArray(list?.items)?list.items:[]}catch{club.members=[]}}state.clubData=club;}catch(e){state.clubError=e.message;state.clubData=null}finally{state.clubLoading=false;renderClub();renderProfile()}}
+async function loadClub(tag){state.clubLoading=true;state.clubError='';renderClub();try{let club=await apiRequest('/api/club/'+encodeURIComponent(tag));if(!Array.isArray(club?.members)){try{const list=await apiRequest('/api/club/'+encodeURIComponent(tag)+'/members');club.members=Array.isArray(list)?list:Array.isArray(list?.items)?list.items:[]}catch{club.members=[]}}state.clubData=club;}catch(e){state.clubError=e.message;state.clubData=null}finally{state.clubLoading=false;renderClub();renderProfile();if(state.page==='home'){renderHome();learnIcons()}}}
 async function loadOtherProfile(tag){state.otherLoading=true;state.otherError='';state.otherPlayer=null;state.otherBattles=[];openPage('players');try{const p=await fetchPlayer(tag);state.otherPlayer=p;state.otherBattles=[];renderExplorer();try{const rows=await apiRequest('/api/player/'+encodeURIComponent(p.tag)+'/log');state.otherBattles=Array.isArray(rows)?rows:rows?.items||[];renderExplorer()}catch{}}catch(e){state.otherError=e.message;renderExplorer()}finally{state.otherLoading=false;renderExplorer()}}
 function externalBrawlerDetail(b){
  const prestige=prestigeLevel(b), gadgetList=Array.isArray(b.gadgets)?b.gadgets:[], starList=Array.isArray(b.starPowers)?b.starPowers:[];

@@ -227,3 +227,86 @@
 .bn110-battle-panel .battle-images{display:none}
 .bn110-summary-grid .panel-pad{padding:13px}
 }
+
+/* Promo v3: original artwork with alpha, not a square Brawlify avatar.
+   The separate CTA is retained as a functional button. */
+.sidebar .side-promo {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  isolation:isolate;
+  overflow:hidden;
+  min-height:196px;
+  padding:13px 12px 11px;
+  background:radial-gradient(circle at 93% 10%,rgba(158,44,76,.25),transparent 60%),linear-gradient(145deg,#4e1d2c,#22141d);
+  border:1px solid #713040;
+  border-radius:17px;
+}
+.sidebar .side-promo>img {
+  display:block;
+  position:absolute;
+  z-index:0;
+  top:-7px;
+  bottom:auto;
+  right:-35px;
+  width:190px;
+  height:190px;
+  max-width:none;
+  object-fit:contain;
+  object-position:center;
+  opacity:1;
+  transform:none;
+  filter:drop-shadow(-7px 10px 13px rgba(0,0,0,.28));
+  -webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 62%,rgba(0,0,0,.76) 77%,transparent 100%);
+  mask-image:linear-gradient(to bottom,#000 0%,#000 62%,rgba(0,0,0,.76) 77%,transparent 100%);
+  pointer-events:none;
+}
+.sidebar .side-promo:after {
+  content:"";
+  position:absolute;
+  z-index:0;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(27,11,22,.21) 0%,rgba(27,11,22,.1) 37%,transparent 65%);
+}
+.sidebar .side-promo .promo-rays{pointer-events:none}
+.sidebar .side-promo .promo-text{
+  position:relative;
+  z-index:2;
+  max-width:calc(100% - 69px);
+  min-width:0;
+  margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+.sidebar .side-promo .promo-text b {
+  max-width:none;
+  font-size:20px;
+  font-weight:900;
+  line-height:1.03;
+  letter-spacing:-.35px;
+}
+.sidebar .side-promo .promo-text small{font-size:11px;line-height:1.36}
+.sidebar .side-promo .promo-btn{
+  position:relative;
+  z-index:3;
+  width:100%;
+  min-height:34px;
+  margin:10px 0 0;
+  padding:8px 10px;
+  font-size:10px;
+}
+@media(max-height:800px) and (min-width:761px){
+  .sidebar .side-promo{min-height:176px;padding:11px 11px 9px}
+  .sidebar .side-promo>img{top:-8px;right:-32px;width:178px;height:178px}
+  .sidebar .side-promo .promo-text{max-width:calc(100% - 64px)}
+  .sidebar .side-promo .promo-text b{font-size:19px}
+  .sidebar .side-promo .promo-text small{font-size:10px}
+  .sidebar .side-promo .promo-btn{min-height:30px}
+}
+@media(max-height:660px) and (min-width:761px){
+  .sidebar .side-promo{display:none}
+}

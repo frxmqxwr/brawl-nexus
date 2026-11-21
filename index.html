@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0d090b" />
   <meta name="description" content="BRAWL//NEXUS — фан-платформа с ротацией карт Brawl Stars, тактическими советами, профилями и Live Draft." />
-  <title>BRAWL//NEXUS — Redline 1.9</title>
+  <title>BRAWL//NEXUS — Redline 1.10</title>
   <link rel="preconnect" href="https://cdn.brawlify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,6 +13,7 @@
   <link rel="icon" type="image/png" href="assets/nexus-favicon.png" />
   <meta property="og:image" content="assets/nexus-brand.webp" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="v110.css" />
 </head>
 <body>
   <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div><div class="noise-layer"></div>
@@ -64,6 +65,12 @@
     </div>
   </div>
 
+  <nav class="bn110-mobile-tabs" aria-label="Быстрые разделы">
+    <button data-page="home" aria-label="Обзор"><i data-lucide="house"></i><span>Обзор</span></button>
+    <button data-page="profile" aria-label="Мой профиль"><i data-lucide="user-circle"></i><span>Профиль</span></button>
+    <button data-page="players" aria-label="Поиск игроков"><i data-lucide="search"></i><span>Игроки</span></button>
+    <button data-page="meta" aria-label="Meta Lab"><i data-lucide="swords"></i><span>Драфт</span></button>
+  </nav>
   <div class="ai-fab-wrap"><div class="fab-note">ASK NEXUS AI</div><button class="ai-fab" id="aiToggle" aria-label="Открыть помощника"><i data-lucide="bot"></i><span class="fab-dot"></span></button></div>
   <div class="assistant-panel" id="assistantPanel" role="dialog" aria-label="Nexus Assistant" aria-hidden="true">
     <div class="chat-heading"><span class="chat-bot-icon"><i data-lucide="sparkles"></i></span><div><b>NEXUS <span>ASSISTANT</span></b><small id="aiModeLabel">Аналитический помощник</small></div><button class="icon-btn" id="closeChat" aria-label="Закрыть"><i data-lucide="x"></i></button></div>

@@ -641,14 +641,16 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 @media(max-width:760px){.n16-overview-grid,.n16-tools-row{grid-template-columns:minmax(0,1fr)}.n16-homehero{min-height:345px;padding:24px 17px 118px}.n16-homehero-content{max-width:80%}.n16-homehero-content>p{font-size:11px}.n16-big-title{font-size:72px}.n16-hero-brawler{width:55%;opacity:.55;right:-5%;bottom:1%}.n16-hero-stats{left:9px;right:9px;gap:6px}.n16-hero-stats>div{padding:8px 5px;gap:5px;justify-content:center}.n16-hero-stats .game-stat-glyph{height:24px;width:24px}.n16-hero-stats .game-stat-glyph svg{height:15px;width:15px}.n16-hero-stats strong{font-size:18px}.n16-hero-stats small{font-size:8px}.n16-rotation-grid{gap:9px}.n16-map-card{min-height:320px}.n16-map-card .n16-map-mode{font-size:14px}.n16-map-card .map-rotation-img{height:140px}.n16-map-card .map-rotation-meta b{font-size:20px}.n16-map-picks img{height:34px;width:34px}.n16-profile-card{min-height:0}.n16-profile-portrait{opacity:.25}.n16-profile-stats b{font-size:20px}}
 @media(max-width:480px){.n16-homehero{min-height:380px;padding-bottom:124px}.n16-homehero-content{max-width:100%}.n16-homehero-content>p{max-width:73%}.n16-big-title{font-size:63px}.n16-hero-brawler{right:-22%;width:76%;opacity:.43}.n16-home-links .button{font-size:9px;padding:10px 11px}.n16-rotation-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.n16-map-card{min-height:286px}.n16-map-card .n16-map-mode{height:36px;font-size:12px;padding:4px 6px}.n16-map-mode .real-mode-glyph{width:23px;height:23px}.n16-map-card .map-rotation-img{height:115px}.n16-map-card .map-rotation-meta{padding:9px 7px 5px}.n16-map-card .map-rotation-meta b{font-size:16px}.n16-map-card .map-rotation-meta small{font-size:8px}.n16-map-picks{padding:7px}.n16-map-picks>span{font-size:8px}.n16-map-picks>div{gap:3px}.n16-map-picks img{height:31px;width:31px}.n16-hero-stats strong{font-size:16px}.n16-battle-row{grid-template-columns:64px minmax(0,1fr) auto;gap:6px}.n16-battle-row .battle-time{display:none}.n16-battle-row .battle-images img{height:25px;width:25px}.n16-battle-row .battle-outcome{font-size:8px;padding:8px 4px}.n16-battle-row .mode-label .mode-icon{height:22px;width:22px}.podium-spot{min-height:218px}.podium-spot.podium-1{min-height:248px}.podium-spot .podium-model{height:145px}.podium-spot.podium-1 .podium-model{height:178px}.podium-spot>b{font-size:15px}.podium-spot .podium-plinth{font-size:11px}.ranked-stat .ranked-icon,.ranked-stat .ranked-icon img{width:66px;height:66px;min-width:66px}.ranked-stat .rank-dynamic-img{height:66px!important;width:66px!important}}
 
-
-/* v1.7: authentic game UI icons, prestige and Brawlidex. */
-.bn17-img-glyph{display:inline-flex;align-items:center;justify-content:center;width:1em;height:1em;vertical-align:middle;flex:none;line-height:1}
+/* v1.7 — Original Brawl Stars UI emoji pack & real prestige stats */
+.bn17-img-glyph{display:inline-flex;position:relative;align-items:center;justify-content:center;width:1em;height:1em;vertical-align:middle;flex:none;line-height:1}
 .bn17-img-glyph>img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 3px 5px #0b020688)}
 .bn17-fallback{align-items:center;justify-content:center;width:100%;height:100%}
 .bn17-fallback svg{width:100%;height:100%}
 .game-stat-glyph:has(.bn17-img-glyph){background:none;box-shadow:none;border:0;font-size:30px}
-.bn17-nav-icon{width:20px;height:20px;object-fit:contain;flex-shrink:0}
+.game-stat-glyph .bn17-img-glyph{width:1em;height:1em}
+.bn17-nav-icon{width:20px;height:20px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 1px 3px #0009)}
+.nav-link:has(.bn17-nav-icon){align-items:center}
+.n16-hero-stats .bn17-prestige-chip{background:linear-gradient(125deg,#35232c,#271d25);border-color:#955157}
 .bn17-prestige-panel{overflow:hidden;background:radial-gradient(ellipse at 3% 5%,#7226373f,transparent 57%),linear-gradient(148deg,#27171d,#1a1417)}
 .bn17-prestige-overview{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.35fr);gap:13px;margin:13px 0 16px}
 .bn17-prestige-main,.bn17-prestige-count{min-width:0;display:flex;gap:14px;align-items:center;border:1px solid #814253;background:linear-gradient(130deg,#4e202f,#231720);border-radius:15px;padding:20px}
@@ -678,6 +680,11 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 .bn17-achievement strong{font:900 25px var(--display);color:#fff}
 .bn17-other-prestige{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:10px;margin-top:11px;border-radius:10px;background:#402632;color:#f9d8e4;font-size:12px;font-weight:700}
 .bn17-other-prestige .bn17-img-glyph{font-size:20px}
+@media(max-width:1200px){.bn17-prestige-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-progress-metrics{grid-column:1/-1}.bn17-prestige-list{grid-template-columns:repeat(3,minmax(0,1fr))}.bn17-achievements{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.bn17-prestige-overview{grid-template-columns:1fr}.bn17-prestige-list{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-achievements{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-prestige-main,.bn17-prestige-count{padding:13px}.bn17-prestige-brawler{padding:7px;gap:6px}.bn17-prestige-brawler>img{width:38px;height:43px}.bn17-prestige-brawler em{font-size:8px}}
+@media(max-width:380px){.bn17-prestige-list{grid-template-columns:1fr}.bn17-progress-metrics>div{padding:6px}.bn17-progress-metrics span{font-size:8px}}
+
+/* brawler detail roster */
 .bn17-roster-tools{display:flex;align-items:center;justify-content:space-between;gap:15px;margin:12px 0}
 .bn17-roster-tools label{display:flex;align-items:center;gap:10px;max-width:390px;width:100%;font-size:22px}
 .bn17-roster-tools label .input{min-width:0;flex:1}
@@ -695,86 +702,164 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 .bn17-roster-prestige{font-size:10px;font-weight:900;color:#ffd079;grid-column:1/-1}
 .bn17-roster-powerups{display:flex;flex-wrap:wrap;gap:3px;align-items:center;grid-column:1/-1;font-size:9px;color:#dbb8c2}
 .bn17-roster-powerups>.bn17-img-glyph{font-size:14px}
-@media(max-width:1200px){.bn17-prestige-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-progress-metrics{grid-column:1/-1}.bn17-prestige-list{grid-template-columns:repeat(3,minmax(0,1fr))}.bn17-achievements{grid-template-columns:repeat(3,minmax(0,1fr))}.bn17-roster-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:700px){.bn17-prestige-overview{grid-template-columns:1fr}.bn17-prestige-list,.bn17-roster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-achievements{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-prestige-main,.bn17-prestige-count{padding:13px}.bn17-prestige-brawler{padding:7px;gap:6px}.bn17-prestige-brawler>img{width:38px;height:43px}.bn17-prestige-brawler em{font-size:8px}}
-@media(max-width:380px){.bn17-prestige-list,.bn17-roster-grid{grid-template-columns:1fr}.bn17-progress-metrics>div{padding:6px}.bn17-progress-metrics span{font-size:8px}}
+@media(max-width:1200px){.bn17-roster-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.bn17-roster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:380px){.bn17-roster-grid{grid-template-columns:1fr}}
 
 
-/* v1.8 — genuine prestige roadmap, landscape podium and compact swipeable brawlers */
-.bs-prestige-badge{width:38px;height:45px;object-fit:contain;vertical-align:middle;filter:drop-shadow(0 4px 6px #0008)}
-.bn17-prestige-main .bn17-prestige-medal,.bn17-prestige-count .bn17-prestige-medal{display:grid;place-items:center}
-.bn17-prestige-main .bs-prestige-badge,.bn17-prestige-count .bs-prestige-badge{width:60px;height:64px}
-.bn17-prestige-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-.bn17-prestige-main,.bn17-prestige-count{min-height:108px;padding:15px}
-.bn17-progress-metrics{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.bs-prestige-roadmap{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:8px 0 17px}
-.bs-prestige-stage{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 4px;min-width:0;min-height:111px;border:1px solid #643947;border-radius:12px;background:linear-gradient(152deg,#41232c,#26171e);text-align:center}
-.bs-prestige-stage img{width:100%;max-width:82px;height:63px;object-fit:contain;filter:drop-shadow(0 5px 6px #0009)}
-.bs-prestige-stage b{font:900 12px var(--display);color:#fff}
-.bs-prestige-stage span{font:800 10px var(--sans);color:#ffcba6}
-.bs-prestige-tabs{display:flex;align-items:center;gap:6px;overflow-x:auto;margin:0 0 12px;scrollbar-width:none}
-.bs-tier-tab{flex-shrink:0;border:1px solid #73505a;background:#302028;border-radius:8px;padding:7px 11px;font:800 11px var(--sans);color:#dab4c1}
-.bs-tier-tab.active{background:linear-gradient(130deg,#eb3c56,#b72542);color:white;border-color:#fa7084}
-.bn17-prestige-list{max-height:275px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
-.bn17-prestige-brawler[hidden]{display:none}
-.bn17-prestige-brawler em{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;max-width:65px;min-width:48px;white-space:nowrap;font-size:9px}
-.bn17-prestige-brawler em .bs-prestige-badge{width:35px;height:37px}
-#page-profile .bs-profile-showcase{display:flex;flex-direction:column;gap:16px;margin-top:18px}
-#page-profile .bs-profile-showcase>div{min-width:0;width:100%}
-#page-profile .bs-profile-showcase>div>.panel{width:100%;overflow:hidden}
-#page-profile .bs-profile-showcase .brawler-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:end;max-width:100%}
-#page-profile .bs-profile-showcase .podium-spot,#page-profile .bs-profile-showcase .podium-spot.podium-1{min-height:0;height:258px;max-height:258px;min-width:0;padding-top:7px}
-#page-profile .bs-profile-showcase .podium-spot.podium-1{height:268px;max-height:268px}
-#page-profile .bs-profile-showcase .podium-spot .podium-model,#page-profile .bs-profile-showcase .podium-spot.podium-1 .podium-model{height:158px;max-height:158px;width:100%;min-height:0}
-#page-profile .bs-profile-showcase .podium-spot .podium-model img{max-height:100%;object-fit:contain}
-#page-profile .bs-profile-showcase .podium-spot>b{font-size:20px;margin-top:4px}
-#page-profile .bs-profile-showcase .podium-spot .prestige-mark{margin:0 0 2px;max-height:20px}
-#page-profile .bs-profile-showcase .podium-spot .podium-plinth{padding:6px;margin-top:4px}
-#page-profile .bs-profile-showcase .brawler-mini-grid{display:flex;flex-wrap:nowrap;gap:9px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;max-height:195px;padding:8px 2px}
-#page-profile .bs-profile-showcase .brawler-mini{display:flex;flex-direction:column;gap:4px;flex:0 0 132px;min-width:132px;max-width:132px;height:172px;align-items:center;justify-content:flex-end;scroll-snap-align:start;overflow:hidden;padding:8px;background:linear-gradient(145deg,#3b2330,#21151d);border:1px solid #784755;border-radius:12px}
-#page-profile .bs-profile-showcase .brawler-mini>img{height:105px;max-height:105px;width:100%;max-width:100%;min-width:0;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 6px 8px #0009)}
-#page-profile .bs-profile-showcase .brawler-mini>div{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-width:0;text-align:center}
-#page-profile .bs-profile-showcase .brawler-mini strong{font:900 15px/1.1 var(--display);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-#page-profile .bs-profile-showcase .brawler-mini small{font-size:10px;color:#f3cdaa}
-#page-profile .bs-profile-showcase .brawler-mini .power{font-size:9px}
-#page-profile .bs-profile-showcase .battle-row{display:grid;grid-template-columns:98px minmax(0,1fr) auto 90px;gap:10px;max-width:100%}
-#page-profile .bs-profile-showcase>div:last-child>.panel{max-height:405px;overflow-y:auto;scrollbar-width:thin}
-.bn17-roster-prestige{display:flex;align-items:center;gap:5px}
-.bn17-roster-prestige .bs-prestige-badge{height:25px;width:27px}
-@media(max-width:900px){
- .bs-prestige-roadmap{grid-template-columns:repeat(7,minmax(67px,1fr));overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}
- .bs-prestige-stage img{height:45px}
- .bs-prestige-stage{min-height:94px}
- .bn17-prestige-list{grid-template-columns:repeat(2,minmax(0,1fr))}
- #page-profile .bs-profile-showcase .battle-row{grid-template-columns:78px minmax(0,1fr) auto}
- #page-profile .bs-profile-showcase .battle-row .battle-time{display:none}
+/* v1.8: game-sourced prestige crest roadmap and compact horizontal podium. */
+.bs-prestige-shield{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 7px #06000490)}
+.bs-prestige-missing{font:900 12px var(--display);color:#ffe2ac}
+.bn17-prestige-overview{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;margin-bottom:14px}
+.bn17-prestige-main,.bn17-prestige-count{padding:14px 20px;min-height:104px}
+.bn17-prestige-main .bn17-prestige-medal,.bn17-prestige-count .bn17-prestige-medal{height:67px;width:68px;display:inline-flex;align-items:center;justify-content:center}
+.bs-prestige-path{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px;margin:12px 0 18px}
+.bs-prestige-step{display:flex;min-width:0;align-items:center;flex-direction:column;gap:5px;padding:11px 5px;background:linear-gradient(155deg,#3d232b,#1f171d);border:1px solid #7a424c;border-radius:13px;text-align:center}
+.bs-prestige-step.is-prestige-road{opacity:.85;background:linear-gradient(160deg,#282026,#20171e)}
+.bs-prestige-step img{height:56px;max-width:100%;object-fit:contain;filter:drop-shadow(0 5px 7px #0009)}
+.bs-prestige-step>span{font:900 12px/1.2 var(--display);color:#f9edf2}
+.bs-prestige-step>b{font:900 18px var(--display);color:#ffd7ab}
+.bs-prestige-step b small{font:700 9px var(--sans);color:#bfaab1}
+.bs-prestige-step>small{font:700 9px var(--sans);color:#82616c}
+.bs-prestige-controls{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin:4px 0 11px}
+.bs-prestige-controls>span{display:inline-flex;align-items:center;gap:7px;color:#ffebed;font:900 15px var(--display)}
+.bs-prestige-controls>span .bn17-img-glyph{font-size:21px}
+.bs-prestige-controls>div{display:flex;gap:5px;overflow-x:auto;max-width:100%;scrollbar-width:none}
+.bs-prestige-filter{padding:7px 11px;white-space:nowrap;border:1px solid #69434c;border-radius:9px;background:#332329;color:#e6bdc7;font:800 11px var(--sans)}
+.bs-prestige-filter.active{background:#f1455a;color:#fff;border-color:#ff7788;box-shadow:0 0 12px #f1455a55}
+.bs-prestige-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;max-height:274px;overflow-y:auto;overscroll-behavior:contain;padding:2px 4px 3px 0;scrollbar-width:thin}
+.bs-prestige-entry{display:flex;gap:8px;align-items:center;padding:8px;min-width:0;min-height:76px;border:1px solid #70404e;border-radius:12px;background:linear-gradient(130deg,#34212b,#241820)}
+.bs-prestige-entry[hidden]{display:none}
+.bs-prestige-entry>img{width:50px;height:51px;object-fit:contain;flex:none}
+.bs-prestige-entry-info{min-width:0;display:flex;flex:1;flex-direction:column;gap:3px}
+.bs-prestige-entry-info strong{color:#fef7f8;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font-size:11px}
+.bs-prestige-entry-info>span{display:flex;align-items:center;gap:4px;white-space:nowrap;color:#c9b3ba;font-size:10px}
+.bs-prestige-entry-info>span .bn17-img-glyph{font-size:13px}
+.bs-prestige-entry-badge{flex:none;display:flex;flex-direction:column;align-items:center;gap:1px;width:46px}
+.bs-prestige-entry-badge .bs-prestige-shield{width:38px;height:42px}
+.bs-prestige-entry-badge small{font:900 9px var(--display);color:#ffc071;white-space:nowrap}
+.bs-prestige-empty{grid-column:1/-1;padding:14px;color:#cab0b9}
+.bs-prestige-noresults{padding:10px;color:#caa4b0;font-size:12px}
+.bs-prestige-noresults[hidden]{display:none}
+.bs-showcase{overflow:hidden;background:radial-gradient(ellipse at 50% 0,#80354d39,transparent 70%),linear-gradient(160deg,#271920,#1a1419)}
+.bs-podium-landscape{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:end;gap:13px;margin-top:6px}
+.bs-podium-card{position:relative;display:flex;min-width:0;height:250px;align-items:center;justify-content:flex-end;flex-direction:column;overflow:hidden;border-radius:16px;border:1px solid #a05c74;background:radial-gradient(ellipse at 50% 45%,#a8588e44,transparent 65%),linear-gradient(170deg,#4b2637,#291823);padding-top:8px}
+.bs-podium-card.bs-podium-1{order:2;height:264px;border-color:#e4b06b;background:radial-gradient(ellipse at 50% 42%,#f6bd5f55,transparent 65%),linear-gradient(170deg,#4b2b30,#342017)}
+.bs-podium-card.bs-podium-2{order:1;border-color:#c8aacd}
+.bs-podium-card.bs-podium-3{order:3;border-color:#a97776}
+.bs-podium-ordinal{position:absolute;top:9px;left:12px;font:900 22px var(--display);color:#ffb0bc;z-index:3}
+.bs-podium-card.bs-podium-1 .bs-podium-ordinal{color:#ffdc90}
+.bs-podium-figure{height:148px;max-width:100%;width:100%;display:flex;align-items:flex-end;justify-content:center;padding:0 14px;flex:none}
+.bs-podium-card.bs-podium-1 .bs-podium-figure{height:162px}
+.bs-podium-figure img{height:100%;width:100%;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 8px 10px #070305a0)}
+.bs-podium-content{display:flex;align-items:center;gap:4px;flex-direction:column;min-width:0;justify-content:center;padding:0 7px 6px}
+.bs-podium-content>strong{max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:900 21px/1 var(--display);color:#fff}
+.bs-podium-content>span{display:flex;align-items:center;gap:5px;color:#ffd8a5;font-weight:900;font-size:12px}
+.bs-podium-content>span .bn17-img-glyph{font-size:18px}
+.bs-podium-rank{display:flex;align-items:center;gap:4px;height:20px}
+.bs-podium-rank>.bs-prestige-shield{height:21px;width:24px}
+.bs-podium-rank>.bn17-img-glyph{font-size:17px}
+.bs-podium-rank>small{font:800 10px var(--display);color:#ffcb83}
+.bs-podium-base{width:100%;padding:5px 3px;text-align:center;font:900 14px var(--display);letter-spacing:1px;color:white;background:linear-gradient(90deg,#844a6a,#b7728c,#844a6a)}
+.bs-podium-1 .bs-podium-base{background:linear-gradient(90deg,#a97034,#e9ae5c,#a97034)}
+.bs-podium-3 .bs-podium-base{background:linear-gradient(90deg,#804137,#b97765,#804137)}
+.bs-showcase-subhead{display:flex;align-items:center;gap:10px;justify-content:space-between;margin:15px 0 8px}
+.bs-showcase-subhead>b{display:inline-flex;align-items:center;gap:6px;font:900 17px var(--display)}
+.bs-showcase-subhead>b .bn17-img-glyph{font-size:20px}
+.bs-showcase-subhead>span{font-size:10px;color:#b68f99}
+.bs-rail-controls{display:flex;gap:5px;margin-left:auto}
+.bs-rail-controls button{width:32px;height:32px;display:grid;place-items:center;border-radius:9px;background:#532736;color:#ffd7e2;border:1px solid #905466}
+.bs-rail-controls svg{width:17px;height:17px}
+.bs-showcase-rail{display:flex;gap:9px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:0 2px 8px;scrollbar-width:thin;overscroll-behavior-x:contain}
+.bs-rail-card{scroll-snap-align:start;width:139px;min-width:139px;height:185px;display:flex;align-items:center;flex-direction:column;padding:7px 7px 10px;background:linear-gradient(#362331,#241920);border:1px solid #714553;border-radius:12px;overflow:hidden}
+.bs-rail-art{height:112px;width:100%;display:flex;align-items:flex-end;justify-content:center;flex:none}
+.bs-rail-art img{height:100%;width:100%;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 4px 6px #0008)}
+.bs-rail-card>strong{font:900 14px/1.1 var(--display);max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;margin:4px 0 2px}
+.bs-rail-card>span{display:flex;align-items:center;gap:4px;font-size:10px;color:#ffe1a1}
+.bs-rail-card>span .bn17-img-glyph{font-size:14px}
+.bs-rail-card>small{display:flex;gap:3px;align-items:center;margin-top:3px;font-size:9px;color:#d8afbd;white-space:nowrap}
+.bs-rail-card>small>.bs-prestige-shield{height:15px;width:15px}
+.bs-journal-panel{overflow:hidden}
+.bs-journal-scroll{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px;max-height:330px;overflow-y:auto;overscroll-behavior:contain;padding:2px;scrollbar-width:thin}
+.bs-journal-scroll>.battle-row{min-width:0}
+.bn17-roster-prestige{display:flex;align-items:center;gap:4px}
+.bn17-roster-prestige .bs-prestige-shield{height:24px;width:22px}
+.nav-link[data-page="meta"] .bn18-special-icon{width:22px;height:22px;object-fit:contain}
+.side-promo .promo-btn:before{content:'★';margin-right:7px;color:#ffd17e}
+@media(max-width:1100px){.bs-prestige-list{grid-template-columns:repeat(3,minmax(0,1fr))}.bs-journal-scroll{grid-template-columns:1fr}}
+@media(max-width:700px){.bs-prestige-path{grid-template-columns:repeat(7,minmax(68px,1fr));overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}.bs-prestige-step{padding:7px 3px}.bs-prestige-step img{height:42px}.bs-prestige-step>span{font-size:10px}.bs-prestige-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:280px}.bs-prestige-entry{gap:5px;padding:5px}.bs-prestige-entry>img{width:37px;height:42px}.bs-prestige-entry-badge{width:30px}.bs-prestige-entry-badge .bs-prestige-shield{height:30px;width:27px}.bs-prestige-entry-badge small{font-size:7px}.bs-podium-landscape{display:flex;gap:9px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 0 9px}.bs-podium-card,.bs-podium-card.bs-podium-1{order:initial;min-width:160px;width:160px;height:230px;scroll-snap-align:start}.bs-podium-figure,.bs-podium-card.bs-podium-1 .bs-podium-figure{height:130px;padding:0 8px}.bs-podium-content>strong{font-size:16px}.bs-showcase-subhead>span{display:none}.bs-rail-card{width:115px;min-width:115px;height:166px}.bs-rail-art{height:96px}.bs-rail-card>strong{font-size:12px}.bs-journal-scroll{grid-template-columns:1fr;max-height:320px}.bn17-prestige-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-prestige-main,.bn17-prestige-count{padding:9px;gap:7px;min-height:100px}.bn17-prestige-main .bn17-prestige-medal,.bn17-prestige-count .bn17-prestige-medal{width:36px;height:48px}.bn17-prestige-main strong,.bn17-prestige-count strong{font-size:24px}.bn17-prestige-main small,.bn17-prestige-count small{font-size:8px}.bn17-prestige-main span:not(.bn17-prestige-medal),.bn17-prestige-count span:not(.bn17-prestige-medal){font-size:8px}}
+@media(max-width:390px){.bs-prestige-filter{font-size:10px;padding:6px 8px}.bs-prestige-entry-info>strong{font-size:10px}.bs-prestige-entry-info>span{font-size:9px}.bs-prestige-entry-badge .bs-prestige-shield{height:24px}.bs-showcase-subhead>b{font-size:14px}.bs-podium-card,.bs-podium-card.bs-podium-1{min-width:145px;width:145px}.bs-prestige-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* BRAWL//NEXUS v1.9 — playable profile design, responsive cards, personal map results */
+.profile-card.n16-profile-card{position:relative;isolation:isolate;overflow:hidden;min-height:280px;background:linear-gradient(112deg,#321822 0%,#2c1620 62%,#461e2b 100%);padding:24px;display:flex;flex-direction:column}
+.bn19-profile-figure{position:absolute;z-index:0;pointer-events:none;right:0;top:0;bottom:0;width:min(42%,370px);display:flex;align-items:flex-end;justify-content:flex-end;overflow:hidden;background:radial-gradient(ellipse at 85% 60%,#b72b4938,transparent 72%)}
+.bn19-profile-figure:before{content:'';position:absolute;z-index:1;inset:0;background:linear-gradient(90deg,#321822 0%,transparent 50%),linear-gradient(0deg,#321822ab,transparent 26%)}
+.bn19-profile-figure img{height:94%;width:100%;object-fit:contain;object-position:right bottom;filter:drop-shadow(0 12px 25px #13070a88);opacity:.86}
+.n16-profile-card>.profile-row{max-width:73%;flex:0 0 auto}
+.n16-profile-card>.profile-stats{margin-top:22px;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:69%;padding-top:12px}
+.n16-profile-card>.profile-club{margin-top:auto;max-width:100%;background:#26161edb;backdrop-filter:blur(4px)}
+.n16-profile-stats>div{grid-template-columns:30px minmax(0,1fr);gap:4px;padding:6px 3px;min-width:0}
+.n16-profile-stats .game-stat-glyph{width:30px;height:30px}
+.n16-profile-stats b{font-size:clamp(21px,2.2vw,31px);white-space:nowrap}
+.n16-profile-stats small{font-size:10px;overflow-wrap:anywhere}
+.profile-card .profile-nick{font-size:clamp(24px,2.9vw,39px)}
+.bn19-personal-winrate{display:flex;flex-direction:column;gap:6px;border:1px solid #804353;border-radius:13px;background:#401b2a8e;padding:12px 14px}
+.bn19-personal-wr-title{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:900;color:#efb3c6}
+.bn19-personal-wr-title .bn17-img-glyph{font-size:21px}
+.bn19-personal-winrate strong{font:900 34px/1 var(--display);color:#f4dce2}
+.bn19-personal-winrate small{color:#d8b8c4;font-size:11px}
+.bn19-personal-winrate>span{color:#ad8490;font-size:9px}
+.bn19-ai-gate[hidden]{display:none!important}
+.bn19-ai-gate{padding:9px 13px;background:#30161f;border-top:1px solid #5b2d3c;display:flex;flex-direction:column;gap:5px}
+.bn19-ai-gate>label{font-weight:800;font-size:11px;color:#ffd4dd}
+.bn19-ai-gate-row{display:flex;gap:5px}
+.bn19-ai-gate-row input{flex:1;min-width:0;background:#160d13;border:1px solid #734451;border-radius:8px;padding:8px;color:white}
+.bn19-ai-gate-row button{background:#c82e49;color:#fff;border:0;border-radius:8px;padding:7px 10px;font-weight:800}
+.bn19-ai-gate>small{color:#bda0a9;font-size:9px}
+@media(max-width:1200px){.n16-profile-card>.profile-stats{max-width:78%}.bn19-profile-figure{width:42%}}
+@media(max-width:900px){.n16-profile-card>.profile-row{max-width:75%}.n16-profile-card>.profile-stats{max-width:76%}}
+@media(max-width:760px){
+ .profile-search{grid-template-columns:1fr;gap:8px;padding:13px}
+ .profile-search .form-row{display:grid;grid-template-columns:1fr;gap:7px}
+ .profile-search .form-row>.input,.profile-search .form-row>input{min-width:0;width:100%}
+ .profile-search .form-row>button{min-height:42px;width:100%}
+ .profile-search>.tag{justify-self:start}
+ .n16-profile-card{padding:14px!important;min-height:0!important}
+ .n16-profile-card>.profile-row{max-width:100%;align-items:center;gap:11px;min-width:0;padding:3px 0 10px}
+ .n16-profile-card>.profile-row>div:last-child{min-width:0;position:relative;z-index:2}
+ .n16-profile-card .profile-avatar{width:65px;height:65px;min-width:65px;border-radius:13px;padding:3px}
+ .n16-profile-card .profile-nick{font-size:26px;line-height:1;overflow-wrap:anywhere}
+ .n16-profile-card .profile-tagline{font-size:9px}
+ .bn19-profile-figure{width:50%;top:0;bottom:auto;height:175px;opacity:.24;right:-8px}
+ .bn19-profile-figure img{width:100%;height:100%;object-position:right top}
+ .bn19-profile-figure:before{background:linear-gradient(90deg,#321822,transparent 72%),linear-gradient(0deg,#321822b5,transparent 55%)}
+ .n16-profile-card>.profile-stats{width:100%;max-width:100%;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 8px;margin:5px 0 12px;padding:10px 0}
+ .n16-profile-stats>div{grid-template-columns:29px minmax(0,1fr);padding:7px 3px}
+ .n16-profile-stats b{font-size:24px}
+ .n16-profile-stats small{font-size:10px}
+ .n16-profile-card>.profile-club{width:100%;margin:0;padding:10px;gap:7px}
+ .n16-profile-card .profile-club .button{font-size:10px;padding:6px 9px}
+ .ranked-panel-v14{padding:12px!important}
+ .ranked-panel-v14 .panel-header{align-items:flex-start;gap:8px}
+ .ranked-panel-v14 .ranked-stat{padding:10px;gap:8px;min-height:95px}
+ .ranked-panel-v14 .ranked-icon{width:50px;min-width:50px;height:52px}
+ .ranked-panel-v14 .ranked-icon img{max-width:50px;max-height:50px}
+ .ranked-panel-v14 .ranked-stat b{font-size:22px;overflow-wrap:anywhere}
+ .ranked-panel-v14 .ranked-stat strong{font-size:22px}
+ .ranked-panel-v14 .ranked-stat strong span{font-size:9px}
 }
-@media(max-width:700px){
- .bn17-prestige-overview{grid-template-columns:repeat(2,minmax(0,1fr))}
- .bn17-prestige-main,.bn17-prestige-count{min-height:90px;gap:6px;padding:8px}
- .bn17-prestige-main .bn17-prestige-medal,.bn17-prestige-count .bn17-prestige-medal{width:35px;height:49px}
- .bn17-prestige-main .bs-prestige-badge,.bn17-prestige-count .bs-prestige-badge{width:36px;height:44px}
- .bn17-prestige-main strong,.bn17-prestige-count strong{font-size:24px}
- .bn17-prestige-main small,.bn17-prestige-count small{font-size:8px}
- .bn17-prestige-main span:not(.bn17-prestige-medal),.bn17-prestige-count span:not(.bn17-prestige-medal){font-size:8px}
- .bn17-progress-metrics{grid-column:1/-1}
- .bn17-prestige-brawler{padding:7px;min-height:68px}
- .bn17-prestige-brawler em{min-width:38px;max-width:38px;font-size:8px}
- .bn17-prestige-brawler em .bs-prestige-badge{height:28px;width:28px}
- #page-profile .bs-profile-showcase .brawler-podium{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;gap:8px;padding:3px 1px 9px}
- #page-profile .bs-profile-showcase .podium-spot,#page-profile .bs-profile-showcase .podium-spot.podium-1{min-width:155px;width:155px;max-width:155px;height:236px;max-height:236px;flex-shrink:0;scroll-snap-align:start}
- #page-profile .bs-profile-showcase .podium-spot .podium-model,#page-profile .bs-profile-showcase .podium-spot.podium-1 .podium-model{height:135px;max-height:135px}
- #page-profile .bs-profile-showcase .podium-spot>b{font-size:17px}
- #page-profile .bs-profile-showcase .brawler-mini{min-width:112px;width:112px;max-width:112px}
- #page-profile .bs-profile-showcase .battle-row{grid-template-columns:65px minmax(0,1fr) auto;gap:6px}
- #page-profile .bs-profile-showcase .battle-row .battle-images img{width:23px;height:23px}
+@media(max-width:400px){
+ .profile-card.n16-profile-card{padding:11px!important}
+ .n16-profile-card .profile-avatar{width:56px;height:56px;min-width:56px}
+ .n16-profile-card .profile-nick{font-size:23px}
+ .n16-profile-stats b{font-size:21px}
+ .n16-profile-stats small{font-size:9px}
+ .n16-profile-stats .game-stat-glyph{width:26px;height:26px}
+ .ranked-panel-v14 .ranked-stat strong{font-size:20px}
+ .topbar-actions .status-time{font-size:0}
+ .topbar-actions .pulse-dot{display:inline-block}
+ .topbar-actions .topbar-sep{display:none}
 }
-@media(max-width:390px){.bs-tier-tab{padding:6px 9px;font-size:10px}.bn17-prestige-brawler{gap:5px}.bn17-prestige-brawler>img{width:35px;height:38px}}
 
-
-/* v1.8: aligned game mode/result and club icons */
-#page-profile .battle-outcome{display:flex;align-items:center;justify-content:center;gap:6px}
-#page-profile .battle-outcome .bn17-img-glyph{font-size:20px}
-.member-trophies{display:inline-flex;align-items:center;justify-content:flex-end;gap:5px}
-.member-trophies .bn17-img-glyph{font-size:18px}
-@media(max-width:480px){#page-profile .battle-outcome{gap:3px}#page-profile .battle-outcome .bn17-img-glyph{font-size:14px}}
+.bn19-profile-figure img{color:transparent;font-size:0}
+@media(max-width:760px){.ai-fab-wrap{right:11px;bottom:10px;transform:scale(.88);transform-origin:bottom right}}

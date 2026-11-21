@@ -45,24 +45,50 @@ function matchFeed(d){
 }
 const cleanNews=x=>String(x||'').replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,'$1').replace(/<[^>]*>/g,' ').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/\s+/g,' ').trim();
 async function fetchNews(){
- const output=[],seen=new Set();
- try{
-  const rss='https://news.google.com/rss/search?q='+encodeURIComponent('Brawl Stars Championship esports when:7d')+'&hl=en-US&gl=US&ceid=US:en';
-  const r=await fetch(rss,{headers:{'User-Agent':'BrawlNexus/1.12'},signal:AbortSignal.timeout(7000)});
-  if(r.ok){const xml=await r.text();for(const item of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)){
-   const attr=k=>item[1].match(new RegExp('<'+k+'(?:\\s[^>]*)?>([\\s\\S]*?)<\\/'+k+'>','i'))?.[1]||'';
-   const title=cleanNews(attr('title')).slice(0,150),href=cleanNews(attr('link')),source=cleanNews(attr('source')).slice(0,60);
-   const t=new Date(cleanNews(attr('pubDate')));if(title.length<15||!href.startsWith('https://news.google.com/')||seen.has(href)||Number.isNaN(t.getTime()))continue;
-   seen.add(href);output.push({title,href,published:t.toISOString(),source:source||'Новости',summary:source||'Киберспорт',kind:'ESPORTS NEWS'});if(output.length>=12)break;
-  }}
- }catch{}
- try{
-  const r=await fetch('https://supercell.com/brawlstars/en/blog/esports/',{headers:{'User-Agent':'Mozilla/5.0'},signal:AbortSignal.timeout(8500)});
-  if(r.ok){const html=await r.text();const re=/<a\b[^>]*href="([^"]*\/brawlstars\/en\/blog\/esports\/[^"?#]+)"[^>]*>([\s\S]*?)<\/a>/gi;let m;
-   while((m=re.exec(html))&&output.length<18){const href=new URL(m[1],'https://supercell.com').href,title=cleanNews(m[2]).slice(0,160);if(title.length<15||seen.has(href)||!href.startsWith('https://supercell.com/'))continue;seen.add(href);output.push({title,href,summary:'Официальная новость Supercell',source:'Supercell',kind:'OFFICIAL'})}
+  const seen=new Set(),output=[];
+  const feeds=[
+    {search:'Brawl Stars Championship esports when:7d',kind:'ESPORTS NEWS'},
+    {search:'Brawl Stars Supercell update patch notes when:14d',kind:'GAME UPDATE'}
+  ];
+  await Promise.allSettled(feeds.map(async feed=>{
+    const rss='https://news.google.com/rss/search?q='+encodeURIComponent(feed.search)+'&hl=en-US&gl=US&ceid=US:en';
+    const r=await fetch(rss,{headers:{'User-Agent':'BrawlNexus/2.0'},signal:AbortSignal.timeout(6500)});
+    if(!r.ok)return;
+    const xml=await r.text(),rows=[];
+    for(const item of xml.matchAll(/<item>([\s\S]*?)<\/item>/g)){
+      const attr=k=>item[1].match(new RegExp('<'+k+'(?:\\s[^>]*)?>([\\s\\S]*?)<\\/'+k+'>','i'))?.[1]||'';
+      const title=cleanNews(attr('title')).slice(0,155),href=cleanNews(attr('link'));
+      const src=cleanNews(attr('source')).slice(0,65);
+      const t=new Date(cleanNews(attr('pubDate')));
+      if(title.length<12||!href.startsWith('https://news.google.com/')||Number.isNaN(t.getTime()))continue;
+      rows.push({title,href,published:t.toISOString(),source:src||'Новости',summary:src||'Brawl Stars',kind:feed.kind});
+      if(rows.length>=10)break;
+    }
+    output.push(...rows);
+  }));
+  output.sort((a,b)=>String(b.published).localeCompare(String(a.published)));
+  let officialCount=0;
+  try{
+    const r=await fetch('https://supercell.com/brawlstars/en/blog/esports/',{headers:{'User-Agent':'Mozilla/5.0'},signal:AbortSignal.timeout(6500)});
+    if(r.ok){
+      const html=await r.text(),re=/<a\b[^>]*href="([^"]*\/brawlstars\/en\/blog\/esports\/[^"?#]+)"[^>]*>([\s\S]*?)<\/a>/gi;
+      let m;
+      while((m=re.exec(html))&&officialCount<6){
+        const href=new URL(m[1],'https://supercell.com').href,title=cleanNews(m[2]).slice(0,150);
+        if(title.length<15||!href.startsWith('https://supercell.com/'))continue;
+        output.unshift({title,href,summary:'Официальная публикация Supercell',source:'Supercell',kind:'OFFICIAL'});
+        officialCount++;
+      }
+    }
+  }catch{}
+  const unique=[];
+  for(const n of output){
+    const key=n.href||n.title;
+    if(seen.has(key))continue;
+    seen.add(key);unique.push(n);
+    if(unique.length>=18)break;
   }
- }catch{}
- return {news:output.length?output:DEFAULT_NEWS,source:output.length?'fresh-public-sources':'official-links',updatedAt:new Date().toISOString()};
+  return {news:unique.length?unique:DEFAULT_NEWS,source:unique.length?'public-news-and-official':'official-links',updatedAt:new Date().toISOString(),categories:['ESPORTS NEWS','GAME UPDATE','OFFICIAL']};
 }
 
 function rotationNormal(data){

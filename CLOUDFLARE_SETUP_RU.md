@@ -69,3 +69,20 @@ Cloudflare автоматически собирает `main` при новых 
 ## 6. Киберспорт v2
 
 Новый интерфейс получает новости через `/api/news` (при доступности публичных источников), а результаты матчей — только через `/api/esports`. Без настроенной переменной `ESPORTS_FEED_URL` карты матчей заменяются честными ссылками на официальный матч-центр и турнирную сетку. Для автоматического счёта и подтверждённого LIVE необходимо задать **разрешённый HTTPS JSON-источник матчей** в `ESPORTS_FEED_URL` с полями `matches`, `teamA`, `teamB`, `status`, `scoreA`, `scoreB`, `when`, `url` (подробности формата — в функции `matchFeed`). Не добавляй токены провайдера в публичный JavaScript.
+
+
+## 7. Прокси для Supercell API на Cloudflare
+
+Вариант A: собственный доверенный API-сервер со статическим исходящим IP. Если используешь его, настрой allowlist Supercell на IP этого сервера. Cloudflare Pages сам по себе не гарантирует постоянный исходящий IP.
+
+Вариант B: сторонний RoyaleAPI Brawl Stars Proxy: https://docs.royaleapi.com/proxy.html. В документации указан адрес https://bsproxy.royaleapi.dev и разрешённый IP 45.79.218.79.
+
+1. Если ты доверяешь RoyaleAPI, создай **отдельный новый ключ** на https://developer.brawlstars.com с IP в allowlist: 45.79.218.79.
+2. В Cloudflare → Workers & Pages → brawl-nexus → Settings → Variables and Secrets создай зашифрованный Secret BRAWL_API_TOKEN со значением ключа (не присылай его в чат).
+3. Добавь переменную BRAWL_API_BASE_URL со значением https://bsproxy.royaleapi.dev/v1.
+4. Запусти новый production deployment и проверь https://brawl-nexus.pages.dev/api/status?check=supercell. Успех: configured=true, connected=true, httpStatus=200.
+5. Затем проверь открытие профиля, клуба и боевого журнала.
+
+**Конфиденциальность:** при использовании прокси заголовок Authorization с API-ключом передаётся стороннему серверу RoyaleAPI. Не используй прокси, если не доверяешь оператору; можно выбрать вариант A. Ключ не должен храниться ни в GitHub, ни в публичных JS/HTML файлах.
+
+Если ответ HTTP 403, проблема может быть в разрешённом IP или самом токене. IP домашнего компьютера не поможет: Supercell проверяет исходящий IP сервера или прокси.

@@ -813,12 +813,272 @@
 токио = Tokyo
 `; // Locale dictionary is intentionally editorially reviewed; add further copy here.
 
-  const pairs = RULES.split('\n').map(x => x.trim()).filter(x => x && x.includes(' = '))
+  const EXTRA_RULES = String.raw`
+РАСШИРЕННАЯ СТАТИСТИКА = ADVANCED STATS
+Никаких выдуманных рейтингов: только данные аккаунта и доступная история. = No fabricated ratings: only account data and available match history.
+Подключи профиль, чтобы открыть расширенную статистику. = Connect a profile to unlock advanced stats.
+ПОЛНАЯ ИСТОРИЯ В BRAWLIFY = FULL HISTORY ON BRAWLIFY
+ИЗУЧЕНО БОЁВ = TRACKED BATTLES
+ВИНРЕЙТ = WIN RATE
+STAR PLAYER = STAR PLAYER
+Выборка: = Sample:
+сохранённых или недавно полученных боёв. = saved or recently fetched battles.
+Для винрейта использовано = Win rate is based on
+матчей с известным результатом. = matches with known outcomes.
+История хранится только на этом устройстве. = History is stored only on this device.
+Боевой журнал ещё не получен. После загрузки API здесь появятся реальные результаты. = No battle log received yet. Real results will appear once the API responds.
+ПРОГРЕСС КОЛЛЕКЦИИ = COLLECTION PROGRESS
+Текущие трофеи бойцов — Supercell API = Current brawler trophies — Supercell API
+БОЙЦЫ ПО КУБКАМ = BRAWLERS BY TROPHIES
+СИЛА И ЭКИПИРОВКА = POWER AND EQUIPMENT
+ГАДЖЕТЫ = GADGETS
+ЗВЁЗДНЫЕ СИЛЫ = STAR POWERS
+РЕЗУЛЬТАТЫ ПО РЕЖИМАМ = RESULTS BY MODE
+Из накопленных боёв с известным исходом = Based on saved matches with known results
+ЛУЧШИЕ КАРТЫ = BEST MAPS
+Минимум 3 боя с известным исходом = At least 3 battles with known outcomes
+ЧАСТЫЕ СОЮЗНИКИ = FREQUENT TEAMMATES
+Только матчи, где API указывает твою команду = Only matches with your team specified by the API
+Для рейтинга карт пока недостаточно боёв. = Not enough matches to rank maps yet.
+Составы команд пока недоступны. = Team lineups are not yet available.
+ДИНАМИКА КУБКОВ = TROPHY TREND
+Наблюдения с этого устройства = Snapshots from this device
+Пока недостаточно наблюдений для графика. Прогресс начнёт строиться при следующих посещениях. = Not enough snapshots for a chart yet. Your trend will appear after future visits.
+наблюдений = snapshots
+наблюдение = snapshot
+NEXUS сохраняет историю локально только когда сайт открыт и загружает твой профиль. Старые данные Brawlify, качество аккаунта и 2 098 ранее отслеженных боёв здесь не копируются. = NEXUS saves history locally only while this site is open and loads your profile. Brawlify's older data, account quality score and previously tracked battles are not copied.
+история сохраняется = history is saved
+просмотрено = viewed
+доступно = available
+Карта неизвестна = Unknown map
+Неизвестная карта = Unknown map
+Престиж недоступен = Prestige unavailable
+Только открытые на аккаунте бойцы 11-й силы = Only unlocked Power 11 brawlers on this account
+СМЕШАННАЯ (ПРЕДВАРИТЕЛЬНО) = MIXED (PRELIMINARY)
+Смешанная (предварительно) = Mixed (provisional)
+Тактический справочник: = Tactical reference:
+ХАРАКТЕР КАРТЫ / АВТО: = MAP TERRAIN / AUTO:
+На основе = Based on
+АВТО = AUTO
+ЛИНИИ = LANES
+Характер определяется автоматически для выбранной карты. Для знакомых карт используется тактический справочник, для остальных — предварительная оценка миниатюры (если доступна). Советы не заменяют разбор стен, кустов, матчапов и пиков соперника. = Terrain is assessed automatically for the selected map. Known maps use curated tactical notes; others get provisional thumbnail-based estimates when available. Advice does not replace checking walls, bushes, matchups and enemy picks.
+Это объясняемая эвристика, а не измеренный винрейт. = This is an explainable heuristic, not a measured win rate.
+Сейчас показаны карты из настоящего игрового каталога = Showing maps from the real game catalog
+Не забудь баны = Remember the bans
+Нажми на бойца, чтобы забанить. После шести банов начнутся пики. = Click a brawler to ban them. Picks begin after six bans.
+Нажми на бойца, которого забрал соперник. Не нужно менять команду вручную. = Select the brawler your opponent picked. No manual side switching needed.
+Нажми на бойца, чтобы увидеть силу, рекорд, престиж и оснащение. = Select a brawler to view power, record, prestige and equipment.
+Против Пайпер и Анджело на открытой карте рассмотри Нани или Макс: дальняя дуэль либо мобильность для сближения. Не выбирай медленного танка без прикрытия. Проверяй третьего соперника и карту — контрпик не универсален. = Against Piper and Angelo on an open map, consider Nani or Max: win the ranged duel or close the gap with mobility. Avoid slow tanks without cover. Check the third opponent and the map: no counterpick is universal.
+выбери режим и двух-трёх соперников. Я покажу контрпики с пояснением по ролям и матчапам. Для персонального совета напиши карту, своих союзников и врагов. = choose a mode and two or three opponents. I can suggest counterpicks based on roles and matchups. For personal advice, specify the map, teammates and enemies.
+разбирать драфты и контрпики; 4) после матчей отмечать пики противников. Без видеозаписи или подробного журнала нельзя честно утверждать, где именно ты ошибся. = review drafts and counterpicks; 4) record enemy picks after matches. Without video or detailed logs, nobody can accurately identify your exact mistakes.
+эвристика по ролям, режиму, характеру карты и известным матчапам. Не официальный винрейт и не прогноз победы. Список предназначен для нашей команды. = a heuristic based on roles, mode, terrain and known matchups. Not an official win rate or a victory prediction. These picks are for our team.
+Введи реальный тег, чтобы получить персональные рекомендации. Без данных игрока нельзя честно рассчитать персональный винрейт, ранг или ошибки. = Enter a real player tag for personalized advice. Without player data, personal win rate, rank or mistakes cannot be determined reliably.
+Самые точные локальные рекомендации получаются, если назвать режим, карту, своих бойцов и состав соперника. Для свободного ИИ-диалога подключи = For the best local tips, specify the mode, map, your brawlers and the opposing team. For an open-ended AI chat, connect
+Пока отмечаешь баны, система показывает перспективные варианты для своей команды. После банов и пиков противника оценки пересчитаются. = While you mark bans, the system suggests promising options for your team. Scores update after bans and enemy picks.
+Собери свою тройку по игровым тегам, сравни аккаунты, любимых бойцов и распределение ролей. Данные игроков загружаются из = Build your trio using player tags. Compare accounts, favorite brawlers and team roles. Player data comes from
+Для прогресса попробуй: 1) отрабатывать линии и позиционирование; 2) анализировать, где теряешь контроль карты; 3) в = To improve: 1) practice lanes and positioning; 2) review where you lose map control; 3) in
+Укажи владельца жетона первого пика, отметь баны и выбирай бойцов в очереди — переключать сторону больше не нужно. = Assign the first-pick token, mark bans and pick in order. No need to switch sides manually.
+Расчёт на основе разнообразия ролей среди бойцов с наибольшим количеством кубков; не подтверждённый общий винрейт. = Estimated from role diversity among your highest-trophy brawlers, not a verified overall win rate.
+В киберспорте для прогноза нужны актуальные результаты, карты, составы и уровень оппонентов. Без подключенного = Esports predictions require current results, maps, team lineups and opponent levels. Without a connected
+и проверь его против конкретного пика врага. После этого можно спросить ассистента, как распределить линии. = and test it against a specific enemy pick. Then ask the assistant how to assign lanes.
+Планы — тактические подсказки по бойцу и режиму, а не гарантированный результат или официальный винрейт. = Plans are brawler- and mode-specific tactical suggestions, not guaranteed outcomes or official win rates.
+В соло ты выбираешь одного бойца, но ниже показаны разные подходящие варианты — это не состав из трёх. = In solo, you select one brawler. The alternatives below are options, not a three-player team.
+Чтобы пользоваться помощником, введи тот же код здесь. Код хранится только в текущей сессии браузера. = To use the assistant, enter the same code here. It is stored only for this browser session.
+В командном режиме показан пример состава и запасные варианты. Учитывай пики союзников и карту. = Team modes show a suggested lineup and alternatives. Account for ally picks and the map.
+Выбирай лучшего бойца на карте без банов и очереди пиков. Советы учитывают режим и тип карты. = Pick the best brawler for the map without bans or a pick order. Tips consider the mode and terrain.
+В дуо важна взаимодополняющая пара. Ниже — пример связки и альтернативы для каждого игрока. = In duo, complementary picks matter. Below is a suggested pair and alternatives for each player.
+Трофейные режимы: подбор одного бойца для соло, пары для дуо и состава для командной игры. = Trophy modes: choose one brawler for solo, a pair for duo or a lineup for team play.
+После каждого пика очередь и подсказки обновляются мгновенно. Ввод вручную: официальный = The pick order and tips update immediately after each pick. Input is manual: the official
+Для открытого публичного сервиса нужен ещё лимит запросов и защита от злоупотреблений. = A public service also needs request limits and abuse protection.
+показаны только персонажи 11-й силы из твоего профиля. Сезонных бесплатных бойцов = only Power 11 brawlers from your profile are displayed. Seasonal free brawlers
+Сначала выиграй дальнюю позицию, затем помогай команде продвигать цель режима. = First secure the long-range position, then help your team push the objective.
+Займи безопасный фланг, поддерживай центр и отходи после невыгодного обмена. = Hold a safe flank, support mid and disengage after an unfavorable trade.
+Нажми на бойца, которого забрал соперник. Не нужно менять команду вручную. = Select the brawler the opponent picked. No manual team switching is needed.
+Настрой серверные ключи, чтобы полноценно подключить профили, журнал боёв = Configure server keys to fully enable profiles and battle logs
+недоступен, реальные характеристики не подставляются случайными данными. = is unavailable, real stats are never replaced with random values.
+источника я не буду придумывать статистические шансы. Открой Киберспорт = source, I won't fabricate statistical odds. Open Esports
+Играй от стен и узких проходов; помогай союзнику перед входом на цель. = Use walls and chokepoints; help your teammate before pushing the objective.
+Текущие события, карты и время окончания; требуется серверный токен = Current events, maps and end times; requires a server token
+Загрузи свой профиль и вступи в клуб, чтобы просмотреть его состав. = Load your profile and join a club to view its roster.
+подсветит потенциально совместимые роли и поможет выбрать состав. = will highlight potentially complementary roles to help you build a lineup.
+Нажми на бойца, чтобы забанить. После шести банов начнутся пики. = Select a brawler to ban them. Picks start after six bans.
+Чужой аккаунт можно изучить, не меняя свой закреплённый профиль. = Explore another account without changing your saved profile.
+Процент побед и объём выборки по карте из отдельного провайдера = Map win rate and sample size from a separate provider
+Совет пересчитывается для своей команды после каждого выбора. = Suggestions are recalculated for your team after every pick.
+Запусти компактную рабочую панель для выбора во время матча. = Open a compact drafting panel for use during a match.
+Выбирай одного бойца: у каждого свой короткий план на матч. = Choose one brawler: each has a short match plan.
+Выбирай под состав: ниже краткая тактика каждого кандидата. = Choose based on your lineup. A short plan is shown for each candidate.
+Нет доступных бойцов с подходящими данными. Отключи фильтр = No suitable brawlers available. Disable the filter
+Живой состав клуба, общие кубки и профили участников — из = Live club roster, total trophies and member profiles from
+Не удалось получить бойцов каталога. Проверь подключение = Could not fetch catalog brawlers. Check the connection
+Это объясняемая эвристика, а не измеренный винрейт. = This is an explainable heuristic, not a measured win rate.
+Если разместишь сайт публично и подключишь платный = If you publish the site and connect a paid
+сервера. Без ключей доступны каталог, арт-ресурсы = server. Without keys, the catalog and game assets are available
+сценарный анализ или официальный турнирный центр. = scenario analysis or the official tournament hub.
+и генеративный ИИ. Никогда не вставляй секретные = and generative AI. Never paste secret
+Все пики внесены. Исправь последний ход кнопкой = All picks are entered. Correct the last move using
+Для живой ротации карт официальный ключ откроет = An official key is required for the live map rotation
+кубков): по текущим кубкам бойцов до престижа. = trophies): based on current brawler trophies before prestige.
+Без ручного переключателя — меняется с картой = Changes automatically with the map
+Уже знаешь, кто будет играть? Выбери состав в = Already know who will play? Choose a lineup in
+Нет данных о клубе. Попробуй повторить позже. = No club data available. Try again later.
+Дай советы по моему профилю и улучшению игры. = Give me tips based on my profile and how to improve.
+Хранилище браузера недоступно. Открой сайт по HTTPS. = Browser storage is unavailable. Open the site over HTTPS.
+Пока нет банов — можно перейти прямо к пикам = No bans yet — you can skip straight to picks
+Рекомендацию можно выбрать только в свой ход = You can select a recommendation only on your turn
+Кого брать против Пайпер и Анджело в Нокауте? = Who should I pick against Piper and Angelo in Knockout?
+Боевой журнал ещё не получен. После загрузки API здесь появятся реальные результаты. = Battle log not loaded yet. Real results will appear after the API responds.
+Загрузи свой профиль, чтобы включить фильтр = Load your profile to enable the filter
+Только открытые на аккаунте бойцы 11-й силы = Only unlocked Power 11 brawlers on the account
+Профиль загружен, но журнал боёв недоступен: = Profile loaded, but battle log is unavailable:
+РЕЗУЛЬТАТЫ ТОЛЬКО ИЗ ПРОВЕРЯЕМЫХ ИСТОЧНИКОВ = ONLY VERIFIED SOURCE RESULTS
+Сейчас выбирает наша команда. При фильтре = Our team is picking now. With the filter
+Машинный импорт расписания: настраиваемый = Automated schedule import: configurable
+Для анализа нужны ровно три игровых тега. = Exactly three player tags are required for analysis.
+Для рейтинга карт пока недостаточно боёв. = Not enough battles to rank maps.
+Сервис не вернул действительный профиль. = The service did not return a valid profile.
+Фаза пиков: порядок определяется жетоном = Pick phase: order is determined by the token
+Введи три реальных тега. После загрузки = Enter three real tags. After loading,
+Остальные бойцы, листайте горизонтально = Other brawlers, scroll horizontally
+Из накопленных боёв с известным исходом = Based on saved battles with known outcomes
+Запиши до шести банов или пропусти их. = Record up to six bans, or skip them.
+Для реальных винрейтов по картам укажи = For real map win rates, specify
+Список участников отсутствует в ответе = Member list missing from the response
+Профили и журнал боёв, требует ключ с = Profiles and battle logs require a key with
+запущен — отмечай пики по ходу матча = started — mark picks during the match
+команд, мировой титул, призовой фонд = teams, the world title, and the prize pool
+Боевой журнал появится после ответа = Battle log appears after the response
+Объясни сильный драфт для Броулбола = Explain a strong Brawl Ball draft
+здесь появятся реальные результаты. = real results will appear here.
+Бойцы, арты, карты, игровые иконки = Brawlers, artwork, maps and game icons
+Для смены жетона начни новый драфт = Start a new draft to change the token
+Укажи, у кого жетон первого пика. = Select who owns the first-pick token.
+Если не успел заметить пик, нажми = If you missed a pick, press
+Мои варианты по правилам матчапов = My matchup-based options
+Драфт возвращён к выбранному ходу = Draft restored to selected turn
+Минимум 3 боя с известным исходом = At least 3 battles with known results
+Неизвестный пик отмечен вопросом = Unknown pick is marked with a question mark
+Код сохранён до закрытия вкладки = Code saved until this tab closes
+Быстрый поиск бойца по имени... = Quick search for brawlers by name...
+Теги сохраняются локально. Если = Tags are stored locally. If
+не возвращает престиж, показано = does not provide prestige, shown
+Только результаты из доступного = Only results from available
+Сначала загрузи профиль по тегу = Load a profile by tag first
+Составы команд пока недоступны. = Team lineups are not yet available.
+История боёв ещё не загружена. = Battle history has not loaded yet.
+Часть профилей не загрузилась. = Some profiles failed to load.
+через сервер, только с ключом = through the server, with a key only
+Наблюдения с этого устройства = Snapshots from this device
+БОЙЦА ДЛЯ БАНА = BRAWLER TO BAN
+КОГО БЕРЁМ = WHO DO WE PICK
+КОГО ВЗЯЛИ = WHO DID THEY PICK
+КОГО ВЫБРАТЬ В СОЛО = WHO TO PICK IN SOLO
+ВЫБЕРИ БОЙЦА ДЛЯ БАНА = CHOOSE A BRAWLER TO BAN
+ОТМЕТЬ ПИК СОПЕРНИКА = MARK ENEMY PICK
+НАШ ХОД = OUR TURN
+НАШ ПИК = OUR PICK
+ПИК СОПЕРНИКА = OPPONENT PICK
+ХОД СОПЕРНИКА = OPPONENT TURN
+ПЕРЕД РАНГОВОЙ = BEFORE RANKED
+РЕЖИМ МАТЧА = MATCH MODE
+СОЛО = SOLO
+ИГРОКА = PLAYER
+ПЛАН = PLAN
+ЭВРИСТИКА = HEURISTIC
+НАШ = OURS
+СОПЕРНИКА = OPPONENT
+ТВОИ БОЙЦЫ = YOUR BRAWLERS
+МОИ БОЙЦЫ = MY BRAWLERS
+МОИ = MY
+ТВОИ = YOUR
+КОГО = WHO
+К БАНАМ = TO BANS
+ЗАБАНЕННЫЕ = BANNED
+Убрать бан = Remove ban
+ФАЗА БАНОВ = BAN PHASE
+БАНОВ = BANS
+ОТМЕНА = CANCEL
+ЗАПУСТИТЬ = START
+ВЫЙТИ ИЗ = EXIT
+КАРТА (BRAWLAPI) = MAP (BRAWLAPI)
+Выбрать карту... = Choose a map...
+Нет карт в каталоге = No maps in catalog
+ЗАГРУЗИ ПРОФИЛЬ = LOAD PROFILE
+Показать избранных = Show favorites
+ОЖИДАНИЕ ИГРОКА = WAITING FOR PLAYER
+СОЗДАТЬ ТРОЙКУ = CREATE A TRIO
+ИДЕАЛЬНАЯ ТРОЙКА = IDEAL TRIO
+О РЕЖИМЕ = ABOUT THE MODE
+Управление = Controls
+ПЕРЕД РАНГОВОЙ = BEFORE RANKED
+Победитель = Winner
+Кубков = Trophies
+Побед = Wins
+Гостевой аватар = Guest avatar
+ДАННЫЕ = DATA
+Новость = News
+СОЮЗНИКИ = TEAMMATES
+СОПЕРНИКИ = OPPONENTS
+ВЫБЕРИ = SELECT
+РЕЖИМ = MODE
+КАРТЫ = MAPS
+СИЛА = POWER
+НАЙТИ = FIND
+ПОИСК = SEARCH
+ОБСУДИТЬ = DISCUSS
+РЕАЛЬНЫЕ МАТЧИ = REAL MATCHES
+СЕЙЧАС НАШ ПИК = OUR PICK NOW
+СЕЙЧАС ПИК СОПЕРНИКА = OPPONENT PICK NOW
+НАШИ БОЙЦЫ = OUR BRAWLERS
+Игровая модель = In-game model
+Открыть игровой профиль = Open game profile
+Быстрый поиск = Quick search
+Доступность = Availability
+Ошибка = Error
+Готово = Done
+Проверь тег = Check tag
+Тег не указан = No tag entered
+Не найдено = Not found
+Не удалось загрузить = Could not load
+Проверь подключение = Check connection
+ЗАГРУЗКА... = LOADING...
+Попробуй обновить страницу. = Try refreshing the page.
+Нет изображения = No image
+Рассчитать = Calculate
+Индекс = Index
+Индекс: = Score:
+ИГРОВОЙ АНАЛИЗ = GAME ANALYSIS
+ПРИМЕРЫ = EXAMPLES
+ТАКТИЧЕСКИЙ РАЗБОР = TACTICAL BREAKDOWN
+СЛЕДУЮЩИЕ = NEXT
+ПРЕДЫДУЩИЕ = PREVIOUS
+ОБНОВИТЬ РОТАЦИЮ = REFRESH ROTATION
+СЕЗОН = SEASON
+СЕЗОННЫЕ = SEASONAL
+предварительно = provisional
+золото = gold
+бронза = bronze
+серебро = silver
+гадж. = gadgets
+зв. сил = star powers
+сек. = sec
+Открытая = Open
+Много стен = Wall-heavy
+Смешанная = Mixed
+Не определено = Unknown
+Награда = Bounty
+Ладдер = Ladder
+против = against
+
+`;
+  const pairs = (RULES + '\n' + EXTRA_RULES).split('\n').map(x => x.trim()).filter(x => x && x.includes(' = '))
     .map(x => { const at = x.indexOf(' = '); return [x.slice(0, at), x.slice(at + 3)]; });
   const dictionary = new Map(pairs);
-  const patterns = [...dictionary.entries()]
-    .sort((a,b) => b[0].length - a[0].length)
-    .map(([ru,en]) => [new RegExp('(?<![А-Яа-яЁё])'+ru.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![А-Яа-яЁё])', 'g'), en]);
+  // A single compiled pattern is faster than running hundreds of regexes on every DOM node.
+  const escapeKey = s => [...s].map(c=>'.^$*+?()[]{}|\\'.includes(c)?'\\'+c:c).join('');
+  const combined = [...dictionary.keys()].filter(k=>/[А-Яа-яЁё]/.test(k))
+    .sort((a,b)=>b.length-a.length).map(escapeKey);
+  const textPattern = new RegExp('(?<![А-Яа-яЁё])(?:'+combined.join('|')+')(?![А-Яа-яЁё])','g');
   // Map titles from bilingual Brawlify map listings (November 2026).
   // Display-only: never modify IDs, input values, source API objects or search queries.
   const MAP_PAIRS = String.raw`
@@ -1087,13 +1347,13 @@ Million Dollars|Миллион долларов
     const direct = dictionary.get(key);
     if (direct) return src.replace(key, direct);
     let out = src;
-    for (const [pattern,en] of patterns) out = out.replace(pattern,en);
+    out = out.replace(textPattern,match=>dictionary.get(match)||match);
     return out;
   }
   function skipNode(node) {
     const p = node.parentElement;
     if (!p) return true;
-    return Boolean(p.closest('script,style,textarea,code,pre,[translate="no"],[data-no-translate],.chat-msg.user,.es26-article h3,.es26-article p,.es26-article-bottom'));
+    return Boolean(p.closest('script,style,textarea,code,pre,[translate="no"],[data-no-translate],.chat-msg.user,.es26-article h3,.es26-article p,.es26-article-bottom,.profile-nick,.profile-tagline,#sidebarPlayerName,#sidebarPlayerTag,.bn112-person b,.bn110-own-account b,.bn17-roster-label b,.bn110-mini-brawler span,.team-symbol,.es26-team span,.news-card h3,.ni-list-row [data-no-translate]'));
   }
   function setText(node) {
     if (skipNode(node)) return;
@@ -1105,7 +1365,7 @@ Million Dollars|Миллион долларов
     originals.set(node,{original:raw,last:target});
   }
   function setAttrs(el) {
-    if (el.matches('script,style,[data-no-translate]') || el.closest('.chat-msg.user,.es26-article')) return;
+    if (el.matches('script,style,[data-no-translate]') || el.closest('.chat-msg.user,.es26-article,.news-card h3,.profile-nick,.profile-tagline,#sidebarPlayerName,#sidebarPlayerTag,.bn112-person b,.bn110-own-account b,.bn17-roster-label b,[data-no-translate]')) return;
     let attrs = attrOriginals.get(el);
     if (!attrs) attrs = {};
     for (const name of ['placeholder','title','aria-label','alt','data-chatprompt']) {

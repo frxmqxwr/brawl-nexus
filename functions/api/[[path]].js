@@ -156,7 +156,7 @@ async function handler(request){
       const band=String(u.searchParams.get('band')||'all');
       if(!map||map.length<2||(!/^[\p{L}\p{N} \-']+$/u.test(map)))return asJson({error:'Invalid map name'},400);
       let local=null;
-      if(env.META_DB)try{local=await readMapIntel(env.META_DB,map,mode,band)}catch{}
+      if(env.META_DB)try{local=await cached('d1-intel-'+map.toLowerCase()+'-'+mode+'-'+band,90_000,()=>readMapIntel(env.META_DB,map,mode,band))}catch{}
       if(local?.sample>=20)return asJson({...local,provider:'NEXUS accumulated Supercell logs',mapId:id});
       if(MAP_STATS_FEED&&band==='all'){
         try{

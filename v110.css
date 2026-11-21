@@ -346,3 +346,33 @@
 @media (max-height:660px) and (min-width:761px){
   .sidebar .side-promo{display:none}
 }
+
+/* NEXUS / TIP — visible embedded Spike. Reset legacy mask and sizing overrides. */
+.sidebar .side-promo{position:relative;isolation:isolate;overflow:hidden}
+.sidebar .side-promo>img.nexus-tip-spike{
+  display:block!important;
+  position:absolute!important;
+  visibility:visible!important;
+  opacity:1!important;
+  top:-3px!important;
+  bottom:auto!important;
+  right:-23px!important;
+  left:auto!important;
+  width:183px!important;
+  height:183px!important;
+  min-width:183px!important;
+  max-width:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+  filter:drop-shadow(-6px 7px 13px rgba(0,0,0,.25))!important;
+  mask-image:none!important;
+  -webkit-mask-image:none!important;
+  z-index:1!important;
+  pointer-events:none;
+}
+.sidebar .side-promo .promo-text{position:relative;z-index:2;max-width:calc(100% - 70px)}
+.sidebar .side-promo .promo-btn{position:relative;z-index:3}
+@media(max-height:800px) and (min-width:761px){
+  .sidebar .side-promo>img.nexus-tip-spike{top:-5px!important;right:-20px!important;width:173px!important;height:173px!important;min-width:173px!important}
+}

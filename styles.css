@@ -1576,3 +1576,17 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 @media(max-height:800px) and (min-width:761px){
  .sidebar .side-promo>img{width:92px;height:98px;right:-12px;top:0}
 }
+
+/* NEXUS / TIP: larger Spike face, retaining soft fade into the banner. */
+.sidebar .side-promo>img{
+  width:148px;
+  height:150px;
+  right:-34px;
+  top:-12px;
+  object-fit:contain;
+  object-position:center top;
+  mask-image:radial-gradient(ellipse 76% 76% at 54% 36%,#000 37%,rgba(0,0,0,.86) 60%,transparent 100%);
+}
+@media(max-height:800px) and (min-width:761px){
+  .sidebar .side-promo>img{width:118px;height:122px;right:-25px;top:-9px}
+}

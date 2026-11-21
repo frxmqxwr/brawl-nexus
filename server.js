@@ -84,6 +84,8 @@ async function server(req,res){try{const u=reqUrl(req.url),p=u.pathname;if(req.m
   const stats=await cached('mapstats-'+id,10*60_000,()=>getJson(url.href));
   return json(res,200,{stats:mapStatsNormal(stats),source:'configured-map-stats'});
  }
+ if(req.method==='GET'&&p.startsWith('/api/club/')){let after=p.slice('/api/club/'.length),isMembers=false;if(after.endsWith('/members')){after=after.slice(0,-8);isMembers=true}const tag=validateTag(after);if(!OFFICIAL)return json(res,503,{error:'Для данных клуба необходим BRAWL_API_TOKEN'});const path=OFFICIAL_BASE+'/clubs/'+encodeURIComponent(tag)+(isMembers?'/members':'');return json(res,200,await cached('club'+tag+(isMembers?'members':''),90000,()=>getJson(path,{Authorization:'Bearer '+OFFICIAL})))}
+ if(req.method==='GET'&&p==='/api/gamemodes')return json(res,200,await cached('gamemodes',3600000,()=>getJson('https://api.brawlapi.com/v1/gamemodes')));
  if(req.method==='GET'&&p.startsWith('/api/player/')){let after=p.slice('/api/player/'.length);let kind='';if(after.endsWith('/log')){kind='/log';after=after.slice(0,-4)}const tag=validateTag(after);return json(res,200,await cached(tag+kind,kind?60*1000:110*1000,()=>playerFetch(tag,kind)))}
  if(req.method==='GET'&&p==='/api/news')return json(res,200,await newsFetch());
  if(req.method==='GET'&&p==='/api/esports'){if(!FEED)return json(res,200,{matches:[],source:'not-configured'});const data=await cached('esports',100*1000,()=>getJson(FEED));return json(res,200,{matches:safeFeedMatches(data),source:'configured-feed'})}

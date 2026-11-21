@@ -93,6 +93,15 @@ export default async function handler(request){
       const d=await cached('mapstats-'+id,10*60_000,()=>remoteJson(url.href));
       return asJson({stats:mapStatsNormal(d),source:'configured-map-stats'});
     }
+    if(request.method==='GET'&&p.startsWith('/api/club/')){
+      if(!TOKEN)return asJson({error:'Для клуба настрой BRAWL_API_TOKEN'},503);
+      let clubPart=p.slice('/api/club/'.length), members=false;
+      if(clubPart.endsWith('/members')){clubPart=clubPart.slice(0,-8);members=true}
+      const tag=safeTag(clubPart);
+      const dest=`${OFFICIAL_BASE}/clubs/${encodeURIComponent(tag)}${members?'/members':''}`;
+      return asJson(await cached('club-'+tag+(members?'-members':''),members?90_000:120_000,()=>remoteJson(dest,{Authorization:`Bearer ${TOKEN}`})));
+    }
+    if(request.method==='GET'&&p==='/api/gamemodes')return asJson(await cached('gamemodes',60*60_000,()=>remoteJson(BASE+'/gamemodes')));
     if(request.method==='GET'&&p.startsWith('/api/player/')){
       let tagPart=p.slice('/api/player/'.length),log=false;if(tagPart.endsWith('/log')){tagPart=tagPart.slice(0,-4);log=true}
       if(!TOKEN)return asJson({error:'Для профилей настрой BRAWL_API_TOKEN и разрешённый внешний IP (см. README_NETLIFY_RU.md)'},503);

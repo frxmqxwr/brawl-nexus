@@ -1,4 +1,4 @@
-/* BRAWL//NEXUS 1.15 — fan dashboard. No fabricated live player or esport statistics. */
+/* BRAWL//NEXUS 1.18 — fan dashboard. No fabricated live player or esport statistics. */
 (() => {
 'use strict';
 const CDN = 'https://cdn.brawlify.com';
@@ -532,6 +532,110 @@ const TROPHY_BRAWLER_LISTS={
  brawlArena:['Colt','Jessie','Piper','Max','Spike','Rico','8-Bit','Sandy'],
  deathmatch5v5:['Sandy','Gale','Gene','Max','Belle','Spike','Piper','Stu','Rico','Byron']
 };
+
+/* v1.18: short actionable game plans. These are explainable tactical heuristics,
+   not measured win rates, verified live match data, or promises of a win. */
+const SOLO_BRAWLER_PLANS={
+ gale:'Держи дистанцию и проходы, отталкивай нападающих; не трать супер без угрозы.',
+ spike:'Проверяй кусты атаками, перекрывай проходы; супер оставляй для побега или добивания.',
+ stu:'Получай супер с безопасного попадания, меняй угол рывком; не влетай в толпу.',
+ jessie:'Поставь турель за укрытием на проходе; перемещайся, пока враг отвлечён.',
+ nori:'Ищи одиночных врагов у края зоны; отступай, если к драке подходит третий.',
+ max:'Бегай по краю опасной зоны, забирай свободные ящики; ускорение береги для выхода.',
+ vince:'Играй от укрытий, выманивай соперника на открытое место; избегай боя сразу с двумя.',
+ najia:'Занимай безопасные углы для урона, проверяй кусты и уходи после плохого размена.',
+ shelly:'Проверяй ближние кусты, подпускай врага на свою дистанцию; не беги через открытое поле.',
+ cordelius:'Ищи изолированную цель, принимай короткую дуэль и не входи в драку нескольких игроков.',
+ leon:'Прячь своё направление, заходи с фланга на одиночную цель; уходи после атаки.',
+ surge:'Играй осторожно до усилений, не разменивай жизнь ради ящика в центре.',
+ lily:'Подкрадывайся к одиночной цели из укрытия; не нападай, когда рядом её союзник.',
+ crow:'Держи врагов под давлением с дистанции, не прыгай без безопасного пути отхода.',
+ piper:'Сохраняй дальнюю дистанцию и прострел; не стой рядом с кустом, откуда могут выпрыгнуть.',
+ buzz:'Сначала найди одиночную цель, начинай сближение только с путём для отступления.',
+ bibi:'Продвигайся от стены к стене, выталкивай врага из укрытия; избегай дальних дуэлей.',
+ rico:'Играй от стен и отскоков, меняй угол стрельбы; не стой на открытой линии.',
+ belle:'Держи длинные прострелы, помечай опасную цель и не отдавай близкую дистанцию.',
+ nani:'Выбирай дальние углы, бей по прямым подходам; не подпускай бойцов ближнего боя.',
+ angelo:'Заряжай атаку из безопасной позиции, контролируй проход и не застревай у стены.',
+ brock:'Укрывай подходы дальними атаками и отходи, если противник сокращает дистанцию.',
+ sandy:'Занимай проходы под укрытием и используй супер для безопасного перехода.',
+ '8-bit':'Удерживай выгодную точку и прострел, но заранее планируй путь отхода.',
+ colette:'Выбирай плотные цели и держи расстояние; не открывайся под чужой фокус.',
+ gene:'Покалывай с безопасной дистанции и притягивай только врага без поддержки.',
+ jacky:'Продвигайся за стенами, атакуй на близкой дистанции; не пересекай пустое поле.',
+ poco:'Сохраняй дистанцию, лечись вовремя и выбирай бой, в котором можно отступить.'
+};
+const FEAST_BRAWLER_PLANS={
+ gale:'Держи открытую сторону центра, отталкивай тех, кто выходит из кустов; не заходи первым.',
+ spike:'Простреливай центральные кусты и узкие проходы; супер оставь на преследователя.',
+ stu:'Начинай у внешних ящиков, меняй фланг рывками; в центральную толпу не влетай.',
+ jessie:'Забери безопасные ящики, закрепи турель у прохода; в центр без разведки не входи.',
+ nori:'Обходи центральную драку по краю, выбирай одиночную цель и вовремя отходи.',
+ max:'Собирай свободные ящики по внешнему кругу; ускоряйся для выхода из засады.',
+ vince:'Держись рядом с укрытиями, встречай выходящих из кустов; не бери бой против двоих.',
+ najia:'Простреливай подходы к кустам, не сдавай безопасный угол ради рискованного ящика.'
+};
+const MODE_ROLE_PLANS={
+ brawlball:{
+  Marksman:'Выиграй дальнюю линию и прикрой выход к воротам; с мячом не беги под фокус.',
+  Tank:'Пробивай проход после размена союзников и закрывай врагу путь к мячу.',
+  Controller:'Закрой ключевой проход, освободи партнёру путь к воротам; не преследуй за линией.',
+  Assassin:'Заходи сбоку на защитника, когда тот отвлечён мячом; не врывайся один.',
+  Support:'Поддерживай игрока с мячом, прикрывай отход и помогай после первого голевого размена.'
+ },
+ gemgrab:{
+  Marksman:'Держи дальний фланг и перекрывай вход в центр; не забирай кристаллы под фокусом.',
+  Controller:'Держи центр и подходы к шахте; при отсчёте прикрывай отступление.',
+  Assassin:'Сбивай фланговых врагов и отходи; не рискуй кристаллами перед отсчётом.',
+  Support:'Прикрывай носителя кристаллов и его отход, а не гоняйся за одиночной целью.'
+ },
+ heist:{
+  Marksman:'Сначала выиграй линию, затем наноси урон сейфу с безопасного угла.',
+  'Damage Dealer':'Открой проход и атакуй сейф после оттеснения защитников; следи за своим сейфом.',
+  Controller:'Останавливай заход врага на сейф, затем помогай союзникам давить его защиту.'
+ },
+ hotzone:{
+  Tank:'Войди в зону под поддержкой, удерживай укрытие и не стой под огнём втроём.',
+  Controller:'Зачищай входы в зону и возвращайся к ней после каждого размена.',
+  Marksman:'Простреливай входы с края зоны; не стой в ней, если тебя легко выбить.'
+ },
+ knockout:{
+  Marksman:'Займи дальнюю позицию, дождись ошибки врага; после первого выбивания играй от преимущества.',
+  Assassin:'Ищи изолированного соперника, не инициируй бой 1 против 3.',
+  Support:'Сохраняй жизнь и позицию союзников, не отдавай первый нокаут в раунде.'
+ },
+ duoshowdown:{
+  Support:'Держись в дистанции помощи напарнику и берегись раздельных боёв.',
+  Assassin:'Входи на цель только вместе с напарником; один против пары не разменивайся.',
+  Controller:'Перекрой проход и помоги напарнику выйти из зажатой позиции.'
+ }
+};
+function trophyGamePlan(item,map,terrain){
+ const name=String(item?.b?.name||'').trim().toLowerCase();
+ const r=item?.role||'Damage Dealer',mode=normMode(map?.mode||state.draft.trophyMode);
+ const solo=mode==='soloshowdown';
+ if(solo&&NORM_MAP(map?.name)==='feastorfamine'&&FEAST_BRAWLER_PLANS[name])return FEAST_BRAWLER_PLANS[name];
+ if(solo&&SOLO_BRAWLER_PLANS[name])return SOLO_BRAWLER_PLANS[name];
+ if(MODE_ROLE_PLANS[mode]?.[r])return MODE_ROLE_PLANS[mode][r];
+ if(solo){
+  const soloPlans={
+   Marksman:terrain==='closed'?'Стреляй из-за стен на подходах; не пускай врага в упор.':'Держи дальний край зоны, проверяй кусты и отступай до сближения.',
+   Tank:'Собирай безопасные ящики за укрытиями; вступай в бой только на своей дистанции.',
+   Assassin:'Обходи массовые драки, находи одиночные цели и уходи после атаки.',
+   Controller:'Проверяй кусты и перекрывай проходы; отступай, когда тебя обходят с двух сторон.',
+   Artillery:'Используй стены для безопасного урона; избегай открытого места и ближнего боя.',
+   Support:'Не начинай бой первым; удерживай безопасную позицию и добивай ослабленных.',
+   'Damage Dealer':'Наноси урон с удобного угла, не гонись за врагом в незнакомые кусты.'
+  };
+  return soloPlans[r]||soloPlans['Damage Dealer'];
+ }
+ const terrainPlans={
+  open:'Сначала выиграй дальнюю позицию, затем помогай команде продвигать цель режима.',
+  closed:'Играй от стен и узких проходов; помогай союзнику перед входом на цель.',
+  mixed:'Займи безопасный фланг, поддерживай центр и отходи после невыгодного обмена.'
+ };
+ return terrainPlans[terrain]||terrainPlans.mixed;
+}
 function trophyPickAdvice(map){
  const mode=normMode(map?.mode||state.draft.trophyMode);
  const terrain=terrainEstimate(map).type;
@@ -552,8 +656,8 @@ function trophyPickAdvice(map){
   if(terrain==='open'&&r==='Marksman')points+=6;
   if(terrain==='closed'&&['Tank','Artillery','Controller'].includes(r))points+=5;
   if(p)points+=Math.min(9,Math.round(Number(p.trophies||0)/350));
-  const reason=i<names.length?'Подходит под задачи режима и карту':'Запасной вариант по роли и характеру карты';
-  return {b,points:Math.max(1,Math.min(99,points)),reason,player:p,role:r};
+  const plan=trophyGamePlan({b,role:r},map,terrain);
+  return {b,points:Math.max(1,Math.min(99,points)),plan,player:p,role:r};
  }).sort((a,b)=>b.points-a.points||a.b.name.localeCompare(b.b.name));
  const lineup=[],roles=new Set();
  for(const item of result){if(lineup.length>=teamSize)break;if(!roles.has(item.role)){lineup.push(item);roles.add(item.role)}}
@@ -589,7 +693,7 @@ function renderTrophyAdvisor(){
       <div class="panel-header"><div class="panel-title">${uiPackImg('star')} ${solo?'КОГО ВЫБРАТЬ В СОЛО':`СОСТАВ НА ${count} ИГРОКОВ`}</div><span class="tag gold">ЭВРИСТИКА · НЕ WR</span></div>
       ${!solo&&lineup.length?`<div class="bn115-team-row">${lineup.map((x,i)=>`<div class="bn115-team-member">${bimg(x.b.name)}<b>${esc(x.b.name)}</b><small>${i+1} · ${esc(ROLES_RU[x.role]||'Боец')}</small></div>`).join('')}</div>`:''}
       <p class="bn115-tip">${solo?'Рекомендуемые альтернативы для одного игрока (не нужно выбирать всех).':`Ниже ещё варианты на случай недоступного бойца или другого состава.`}</p>
-      <div class="bn115-candidates">${selectable.map((x,i)=>`<article class="bn115-pick-card">${bimg(x.b.name)}<div class="bn115-pick-meta"><b>${i+1}. ${esc(x.b.name)}</b><small>${esc(ROLES_RU[x.role]||'Боец')} · ${esc(x.reason)}</small>${x.player?`<em>${uiPackImg('trophy')} ${fmt(x.player.trophies)} твоих кубков · Сила ${fmt(x.player.power)}</em>`:''}</div><span class="bn115-pick-rank">#${i+1}</span></article>`).join('')||`<div class="empty-note">${advice.hasPlayer&&d.trophyOwnedOnly?'Нет доступных бойцов с подходящими данными. Отключи фильтр «Твои бойцы».':'Не удалось получить бойцов каталога. Проверь подключение BrawlAPI.'}</div>`}</div>
+      <div class="bn115-candidates">${selectable.map((x,i)=>`<article class="bn115-pick-card">${bimg(x.b.name)}<div class="bn115-pick-meta"><b>${i+1}. ${esc(x.b.name)}</b><small class="bn118-game-plan"><strong>ПЛАН:</strong> ${esc(x.plan)}</small>${x.player?`<em>${uiPackImg('trophy')} ${fmt(x.player.trophies)} твоих кубков · Сила ${fmt(x.player.power)}</em>`:''}</div><span class="bn115-pick-rank">#${i+1}</span></article>`).join('')||`<div class="empty-note">${advice.hasPlayer&&d.trophyOwnedOnly?'Нет доступных бойцов с подходящими данными. Отключи фильтр «Твои бойцы».':'Не удалось получить бойцов каталога. Проверь подключение BrawlAPI.'}</div>`}</div>
       <p class="source-note">Рекомендации основаны на характере карты, ролях, режиме и (при наличии профиля) кубках бойца. Это не официальный винрейт. Драфт с банами доступен во вкладке «Силовая лига».</p>
     </section>
    </div>

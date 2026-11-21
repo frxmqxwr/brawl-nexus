@@ -5,14 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="theme-color" content="#0d090b" />
   <meta name="description" content="BRAWL//NEXUS — фан-платформа с ротацией карт Brawl Stars, тактическими советами, профилями и Live Draft." />
-  <title>BRAWL//NEXUS — Redline Intelligence</title>
+  <title>BRAWL//NEXUS — Redline 1.15</title>
   <link rel="preconnect" href="https://cdn.brawlify.com" crossorigin>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" type="image/png" href="assets/nexus-favicon.png" />
   <meta property="og:image" content="assets/nexus-brand.webp" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=spike-inline-5" />
+  <link rel="stylesheet" href="v110.css?v=spike-inline-5" />
 </head>
 <body>
   <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div><div class="noise-layer"></div>
@@ -24,20 +25,21 @@
       </a>
       <div class="sidebar-label">COMMAND CENTER <span>01 / 06</span></div>
       <nav class="nav-main" id="mainNav" aria-label="Главное меню">
-        <button class="nav-link active" data-page="home"><i data-lucide="layout-dashboard"></i><span>Обзор</span><span class="nav-arrow">↗</span></button>
-        <button class="nav-link" data-page="profile"><i data-lucide="scan-face"></i><span>Мой профиль</span></button>
-        <button class="nav-link" data-page="esports"><i data-lucide="trophy"></i><span>Киберспорт</span><span class="nav-tiny">NEW</span></button>
+        <button class="nav-link active" data-page="home"><img class="bn17-nav-icon" loading="lazy" alt="" src="https://assets.stickers.wiki/img/b46a35c3ad458af2e58d5da671eda16d.webp" onerror="this.style.display='none'"><span>Обзор</span><span class="nav-arrow">↗</span></button>
+        <button class="nav-link" data-page="profile"><img class="bn17-nav-icon" loading="lazy" alt="" src="https://assets.stickers.wiki/img/493152ab6074e39a500752d529ad08e2.webp" onerror="this.style.display='none'"><span>Мой профиль</span></button>
+        <button class="nav-link" data-page="players"><img class="bn17-nav-icon" loading="lazy" alt="" src="https://assets.stickers.wiki/img/32213b9ebfdc0b405db5385c52db23b9.webp" onerror="this.style.display='none'"><span>Поиск игроков</span></button>
+        <button class="nav-link" data-page="club"><img class="bn17-nav-icon" loading="lazy" alt="" src="https://assets.stickers.wiki/img/d6c978172a2c9059a1d59a04ddc3f7e4.webp" onerror="this.style.display='none'"><span>Мой клуб</span></button>
+        <button class="nav-link" data-page="esports"><img class="bn17-nav-icon" loading="lazy" alt="" src="https://assets.stickers.wiki/img/f88e1964091301847f1d95ed8e289238.webp" onerror="this.style.display='none'"><span>Киберспорт</span><span class="nav-tiny">NEW</span></button>
         <button class="nav-link" data-page="meta"><i data-lucide="swords"></i><span>Meta Lab</span></button>
-        <button class="nav-link" data-page="academy"><i data-lucide="graduation-cap"></i><span>Pro Academy</span></button>
-        <button class="nav-link" data-page="squad"><i data-lucide="users-round"></i><span>Squad Hub</span></button>
+        
+        <button class="nav-link" data-page="squad"><img class="bn17-nav-icon" loading="lazy" alt="" src="https://assets.stickers.wiki/img/c8687005e89b30b73b036b77c31d9bdb.webp" onerror="this.style.display='none'"><span>Squad Hub</span></button>
       </nav>
       <div class="sidebar-subtitle">NEXUS SYSTEM</div>
       <button class="nav-link nav-link-sub" id="openAIFromNav"><i data-lucide="sparkles"></i><span>Nexus Assistant</span><span class="nav-dot"></span></button>
-      <button class="nav-link nav-link-sub" data-page="settings"><i data-lucide="sliders-horizontal"></i><span>Подключения</span></button>
       <div class="sidebar-spacer"></div>
       <div class="side-promo">
         <div class="promo-rays"></div>
-        <img src="https://cdn.brawlify.com/brawlers/borderless/16000005.png" alt="Спайк — оригинальная иконка" />
+        <img class="nexus-tip-spike" src="data:image/webp;base64,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" alt="Спайк" width="170" height="170" decoding="sync" fetchpriority="high" />
         <div class="promo-text"><span class="label-mini">NEXUS / TIP</span><b>Прокачай свой драфт.</b><small>Анализируй. Контрпикай. Побеждай.</small></div>
         <button data-page="meta" class="promo-btn">OPEN META LAB <span>↗</span></button>
       </div>
@@ -52,23 +54,31 @@
       <main class="content" id="content" tabindex="-1">
         <section class="page active" id="page-home"></section>
         <section class="page" id="page-profile"></section>
+        <section class="page" id="page-players"></section>
+        <section class="page" id="page-club"></section>
         <section class="page" id="page-esports"></section>
         <section class="page" id="page-meta"></section>
-        <section class="page" id="page-academy"></section>
+        
         <section class="page" id="page-squad"></section>
-        <section class="page" id="page-settings"></section>
       </main>
-      <footer class="footer"><span>© 2026 BRAWL//NEXUS • UNOFFICIAL FAN PROJECT</span><span>Game assets via <a href="https://brawlify.com" target="_blank" rel="noopener">Brawlify CDN</a> · Not endorsed by Supercell</span></footer>
+      <footer class="footer"><span>© 2026 BRAWL//NEXUS • UNOFFICIAL FAN PROJECT</span><span>Game assets via <a href="https://brawlify.com" target="_blank" rel="noopener">Brawlify CDN</a> · UI icons: <a href="https://stickers.wiki/ja/telegram-emojis/hdrbrawlbrawlstarsui_by_tgemodzibot/" target="_blank" rel="noopener">@hdrbrawl pack</a> · Not endorsed by Supercell</span></footer>
     </div>
   </div>
 
+  <nav class="bn110-mobile-tabs" aria-label="Быстрые разделы">
+    <button data-page="home" aria-label="Обзор"><i data-lucide="house"></i><span>Обзор</span></button>
+    <button data-page="profile" aria-label="Мой профиль"><i data-lucide="user-circle"></i><span>Профиль</span></button>
+    <button data-page="players" aria-label="Поиск игроков"><i data-lucide="search"></i><span>Игроки</span></button>
+    <button data-page="meta" aria-label="Meta Lab"><i data-lucide="swords"></i><span>Драфт</span></button>
+  </nav>
   <div class="ai-fab-wrap"><div class="fab-note">ASK NEXUS AI</div><button class="ai-fab" id="aiToggle" aria-label="Открыть помощника"><i data-lucide="bot"></i><span class="fab-dot"></span></button></div>
   <div class="assistant-panel" id="assistantPanel" role="dialog" aria-label="Nexus Assistant" aria-hidden="true">
     <div class="chat-heading"><span class="chat-bot-icon"><i data-lucide="sparkles"></i></span><div><b>NEXUS <span>ASSISTANT</span></b><small id="aiModeLabel">Аналитический помощник</small></div><button class="icon-btn" id="closeChat" aria-label="Закрыть"><i data-lucide="x"></i></button></div>
     <div class="chat-messages" id="chatMessages"><div class="chat-msg bot"><span class="chat-ava">N</span><div>Привет! Я NEXUS. Могу разобрать твой драфт, подобрать контрпик, объяснить матчап и подсказать, что тренировать. Что разберём?</div></div></div>
     <div class="chat-suggestions"><button data-chatprompt="Кого брать против Пайпер и Анджело в Нокауте?">Контрпик</button><button data-chatprompt="Объясни сильный драфт для Броулбола">Драфт</button><button data-chatprompt="Как улучшить мою игру?">Тренировка</button></div>
     <form class="chat-input-wrap" id="chatForm"><input id="chatInput" placeholder="Задай вопрос о Brawl Stars..." autocomplete="off" maxlength="900" /><button type="submit" aria-label="Отправить"><i data-lucide="arrow-up"></i></button></form>
-    <div class="chat-disclaimer">ИИ доступен с ключом. Без ключа работает локальный аналитик.</div>
+    <form id="aiAccessForm" class="bn19-ai-gate" hidden><label for="aiAccessInput">Доступ к NEXUS AI</label><div class="bn19-ai-gate-row"><input id="aiAccessInput" type="password" placeholder="Твой код доступа" autocomplete="off" aria-label="Код доступа к ИИ"><button type="submit">Сохранить</button></div><small>Код хранится только до закрытия вкладки.</small></form>
+    <div class="chat-disclaimer">ИИ использует серверное подключение. Без него доступны локальные советы.</div>
   </div>
   <div class="toast-zone" id="toastZone"></div>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>

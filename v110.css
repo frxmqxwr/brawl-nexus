@@ -377,46 +377,104 @@
   .sidebar .side-promo>img.nexus-tip-spike{top:-5px!important;right:-20px!important;width:173px!important;height:173px!important;min-width:173px!important}
 }
 
-/* v1.20 — restore original compact Netlify-sized NEXUS/TIP banner.
-   Keep Spike art visible, but don't let his portrait enlarge the card. */
+/* v1.21 — readable two-zone banner, aligned like the reference.
+   Compact card; left copy and right Spike never compete for space. */
 .sidebar .side-promo {
   box-sizing:border-box;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
   flex:0 0 170px;
   height:170px;
   min-height:170px;
   max-height:170px;
   margin:0 1px 9px;
   padding:10px 11px 9px;
-  justify-content:space-between;
 }
 .sidebar .side-promo .promo-text {
-  max-width:calc(100% - 70px);
-  gap:4px;
+  position:relative;
+  z-index:2;
+  box-sizing:border-box;
+  width:calc(100% - 106px);
+  max-width:calc(100% - 106px);
+  min-width:0;
   margin:0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
 }
 .sidebar .side-promo .promo-text b {
-  font-size:19px;
-  line-height:.98;
+  max-width:none;
+  font-size:18px;
+  line-height:1.01;
+  letter-spacing:-.35px;
+  overflow-wrap:normal;
+  word-break:normal;
 }
 .sidebar .side-promo .promo-text small {
+  display:block;
   font-size:10px;
-  line-height:1.34;
+  line-height:1.32;
+  overflow-wrap:normal;
+  word-break:normal;
+}
+.sidebar .side-promo>img.nexus-tip-spike {
+  position:absolute!important;
+  display:block!important;
+  width:132px!important;
+  min-width:132px!important;
+  height:132px!important;
+  max-width:none!important;
+  top:4px!important;
+  right:-28px!important;
+  bottom:auto!important;
+  left:auto!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  visibility:visible!important;
+  opacity:1!important;
+  z-index:1!important;
+  filter:drop-shadow(-5px 6px 9px rgba(0,0,0,.23))!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  pointer-events:none;
 }
 .sidebar .side-promo .promo-btn {
+  z-index:3;
+  position:relative;
+  flex-shrink:0;
+  width:100%;
   min-height:30px;
-  margin:7px 0 0;
+  margin:6px 0 0;
   padding:6px 8px;
   font-size:9px;
 }
-.sidebar .side-promo>img.nexus-tip-spike {
-  width:159px!important;
-  min-width:159px!important;
-  height:159px!important;
-  top:-3px!important;
-  right:-19px!important;
+@media (max-height:800px) and (min-width:761px){
+  .sidebar .side-promo {
+    flex-basis:164px;
+    height:164px;
+    min-height:164px;
+    max-height:164px;
+    padding:9px 10px 8px;
+  }
+  .sidebar .side-promo .promo-text {
+    width:calc(100% - 102px);
+    max-width:calc(100% - 102px);
+  }
+  .sidebar .side-promo .promo-text b{font-size:17px}
+  .sidebar .side-promo>img.nexus-tip-spike{
+    width:126px!important;
+    min-width:126px!important;
+    height:126px!important;
+    right:-27px!important;
+    top:5px!important;
+  }
 }
-@media(max-height:800px) and (min-width:761px) {
-  .sidebar .side-promo{flex-basis:164px;height:164px;min-height:164px;max-height:164px;padding:9px 10px 8px}
-  .sidebar .side-promo .promo-text b{font-size:18px}
-  .sidebar .side-promo>img.nexus-tip-spike{width:151px!important;min-width:151px!important;height:151px!important;top:-3px!important;right:-17px!important}
+@media (max-height:660px) and (min-width:761px){
+  .sidebar .side-promo{display:none}
 }

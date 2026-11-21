@@ -319,7 +319,7 @@ function renderHome(){
     <p>Твоя ротация, драфты, профиль и киберспорт в одном месте. Игровые PNG — оригинальные, цифры — из подключённых источников.</p>
     <div class="n16-home-links">${button('ОТКРЫТЬ META LAB','meta','')}${button('МОЙ ПРОФИЛЬ','profile','secondary')}</div>
   </div>
-  ${topBrawler?bPortrait(topBrawler.name,'n16-hero-brawler'):''}
+  ${topBrawler?bModel(topBrawler.name,'n16-hero-brawler'):''}
   <div class="n16-hero-stats">
     <div>${gameStatIcon('trophy','gold')}<span><strong>${fmt(p?.trophies)}</strong><small>Кубки аккаунта</small></span></div>
     <div>${p?rankBadgeFor(current.raw):gameStatIcon('shield','pink')}<span><strong>${p?esc(current.label):'—'}</strong><small>Текущий ранг</small></span></div>

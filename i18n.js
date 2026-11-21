@@ -819,6 +819,262 @@
   const patterns = [...dictionary.entries()]
     .sort((a,b) => b[0].length - a[0].length)
     .map(([ru,en]) => [new RegExp('(?<![А-Яа-яЁё])'+ru.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'(?![А-Яа-яЁё])', 'g'), en]);
+  // Map titles from bilingual Brawlify map listings (November 2026).
+  // Display-only: never modify IDs, input values, source API objects or search queries.
+  const MAP_PAIRS = String.raw`
+Healthy Middle Ground|Разумный компромисс
+New Perspective|Свежий взгляд
+Beach Ball|Пляжный волейбол
+Backyard Bowl|Дворовый чемпионат
+Makeshift Scaffolding|Строительные леса
+Flying Fantasies|Полёт фантазии
+Dueling Beetles|Муравьиные бега
+Open Business|Открыто!
+Below Zero|Ниже нуля
+Bouncy Bowl|Бесконечный отскок
+Journey of a Thousand Steps|Путь в тысячу шагов
+Crescendo|Крещендо
+Spiraling Out|Спираль наружу
+Sneaky Fields|Зловредные поля
+Triple Dribble|Трипл-дриблинг
+Deadlock|Тупик
+Super Beach|Суперпляж
+Sunny Soccer|Солнечный футбол
+Match 1123581321|Матч 1123581321
+Grass Knot|Травяной узел
+Nutmeg|Гол между ногами
+Bustling Business|Бурный бизнес
+Pinhole Punt|Игольное ушко
+Acid Lakes|Тысяча озёр
+Molten to the Core|Оплавленная сердцевина
+Rice Field|Рисовое поле
+Skull Creek|Озеро мертвецов
+Rockwall Brawl|Потасовка в Рокуолле
+Doom Shroom|Роковой гриб
+Crossing the Coast|Через побережье
+Lilypond Grove|Лесные лилии
+Feast or Famine|Всё или ничего
+Truth|Истина
+Starfruit Supernova|Сверхновая-карамбола
+Local Restaurants|Местные забегаловки
+On a Roll|В ударе
+Whisper Vale|Долина шёпота
+Undermine|Подрыв
+Let Me Dance|Танцы до упаду
+Open Space|Открытая местность
+Picturesque|Живописный вид
+Bottom Two|Двойное дно
+Ancestral Roots|Родовые корни
+Hard Rock Mine|Роковая шахта
+Gem Fort|Кристальный форт
+Snake Pit|Яма со змеями
+Goldarm Gulch|Ущелье Золотой руки
+Konnakol|Коннакол
+Double Decker|Двухэтажка
+Please Remain Standing|Оставайтесь на местах
+Streets with No Name|Безымянные улицы
+Chivalry|Рыцарство
+Crab Claws|Клешни краба
+Leaping Dogs|Скачки от проблем
+Out in the Open|В чистом поле
+Opening Move|Первый ход
+Jungle Top|Стычка в джунглях
+Arabesque|Арабеска
+Slippery Showdown|Скользкая схватка
+Super Center|Гипермаркет
+Cabin Fever|Изоляция
+Raging Ocean|Бушующий океан
+Nullscapes|Пустые ландшафты
+Arena of Glory|Арена славы
+The Smackdome|Купол боли
+Knockout Grounds|Спорная территория
+Silver Highlands|Серебряное плато
+Crimson Divide|Багровый разлом
+Kaiju Lake|Озеро Кайдзю
+Mirage Arena|Арена миражей
+Hot Tubs|Ванны
+Golden Bay|Золотая бухта
+Photic Doom|Фотический ужас
+Parallel Plays|Параллельная игра
+Eating Good!|Здоровое питание
+Under Pressure|Высокое давление
+Quintillion|Квинтиллион
+Reach for the Stars|К звёздам
+Hot Potato|Горячая кукуруза
+In the Liminal|На грани
+Jedna|Номер один
+Abracadabra|Абракадабра
+Shrouding Serpent|Змеиные кольца
+Supercut|Суперкат
+The Great Mighty Lou|Всемогущий Лу
+Tasty Berry|Вкусная ягодка
+No Surrender|Никогда не сдавайся
+Shooting Star|Падающая звезда
+Search and Destroy|Найти и уничтожить
+Choral Chambers|Хоральный храм
+Paralysis Pen|Творческий паралич
+Layer Cake|Кремовый торт
+Warrior's Way|Путь воина
+Watermelons|Арбузы
+Palette Hangout|Палитра
+Ball Hog|Жадина
+Solitary Deep Sea Fish|Рыба-одиночка из глубин
+Turnover|Потеря мяча
+Attrition|Истощение
+Pocket Pass|Короткий пас
+WALKING ON HOT SAND|РАСКАЛЁННЫЙ ПЕСОК
+Triple-Double|Трипл-дабл
+Frosty tracks|Тающий след
+Stockpile Stadium|Стадион боеприпасов
+Icy ice park|Ледяной парк
+Siberian Stand Off|Сибирский тупик
+Slippery road|Скользкая дорога
+Insane Streamer|Безумный стример
+Rastermind|Растровый разум
+Deathcap Trap|Поганковая западня
+Double Swoosh|Вжух-вжух
+Crystal Arcade|Кристальная аркада
+Rustic Arcade|Сельский клуб
+Kaboom Canyon|Пороховой каньон
+Safe Zone|Надёжное укрытие
+Bridge Too Far|Взятие моста
+Pit Stop|Пит-стоп
+GG 2.0|Хорошая игра 2.0
+Plain Text|Простой текст
+Subway Turfers|Битва в подземке
+Dry Season|Засуха
+Hideout|Укрытие
+No Excuses|Без отговорок
+Don't turn around|Не смотри назад
+Side by Side|Бок о бок
+Brace for Impact|Подготовка к удару
+Pinball Dreams|Пинбол
+Center Stage|В центре внимания
+Priceless Cactus|Бесценный кактус
+Rooftop Runners|Забег по крышам
+Sidetrack|Отвлекающий манёвр
+Ring of Fire|Огненное кольцо
+Open Zone|Открытая зона
+Fishing Bed|Место для рыбалки
+Just Another Race To Anywhere|Гонка в никуда
+Back Shuffle|Обратная перетасовка
+Zone Splitting|Разделение зон
+Think Ahead|Думай наперёд
+New Horizons|Новые горизонты
+Deep End|Омут
+Flowing Springs|Бурные ключи
+Gated Community|Закрытое сообщество
+Final Four|Последняя четвёрка
+Double Trouble|Двойная проблема
+Cavern Churn|Штольня
+Ring 'o Brawlin|Подводный ринг
+Divine Descent|Небесное воинство
+Hellish Harvest|Мрачная жатва
+Final Frontier|Последний рубеж
+Infernal Invasion|Инфернальное нашествие
+Celestial Crusade|Праведный поход
+Abyssal Assault|Вторжение тьмы
+Radiant Rampage|Сияющая кавалькада
+Underworld Uprising|Потусторонний мятеж
+Wild Greens|Зелёные оттенки
+Reverse Crossing|В другом направлении
+Skipyard|Отдых не по своей воле
+Insert Victory|Счастливая карта
+Invaded Space|Нарушение границ
+1-2-3 Play|3, 2, 1, старт!
+Prize Pushing|Драка за приз
+Crazy for Credits|Кредитомания
+Hidden in Plain Sight|На виду
+Middle Management|Ловкость рук
+Treasure Marks the Spot|Карта сокровищ
+Ancient Treasure|Древнее сокровище
+Excellent Excavations|Место раскопок
+Can You Dig It|Закопанный клад
+Brawl Starrgate|Звёздные врата
+Train Erasure|Исчезнувший поезд
+Lotus|Лотос
+Safety Center|Убежище
+Twentyfive to Two|Двадцать пять на два
+Time Flies|Время летит
+Catacombs|Катакомбы
+Deathmatch|Смертельный бой
+Pound of Mass|Масса
+Wonderland|Страна чудес
+Too Gimmicky 2|Перенасыщение — 2
+Hello Always Ends With a Goodbye|Нет привета без прощания
+Keeper's Corner|Угол вратаря
+Backnet Bonanza|Старая сетка
+Goalmouth Scramble|Суета у ворот
+Fox in the Box|Обходной манёвр
+Penalty Park|Парк пенальти
+Kickoff Coliseum|Кубок колизея
+Midfield Madness|Центровая лихорадка
+Impossible Arena|Невозможная арена
+Tiger Leap|Прыжок тигра
+Block Party|Уличная вечеринка
+Power Alley|Дорога силы
+Strong Side|Сильная сторона
+Pancake|Блинчик
+Jungle Ball|Бал в джунглях
+Floater|На плаву
+Moonbark Meadow|Лунная полянка
+Rebound Ring|Отскоки в кольце
+Hug or Hurl|Хватай и швыряй
+Side Hustle|Суета по краям
+Squish Court|В лепёшку!
+Wispwillow Ward|Лес загадочных огней
+Dodge or Die|Тест на ловкость
+Toot Town|Кукуево
+Metro Mayhem|Хаос в метро
+Backtrack Attack|Обратная атака
+Loopy Line|Безумный маршрут
+Trainbow Road|Радужный экспресс
+Choo Choo Showdown|Разборки на рельсах
+T-Rail Rush|Гонки на путях
+Jumpscare Lair|Пещера страшных сюрпризов
+Flaring Phoenix|Пылающий феникс
+Monkey Maze|Обезьяний лабиринт
+Coin Flip|Подбрось монету
+Paperback Pond|Картонный пруд
+Foursquare Fortress|Прямоугольная крепость
+Broiler Room|Бройлерная
+Hoop Boot Hill|Холм испытаний
+Kooky Gates|Чудные ворота
+Afterpiece Arena|Театр комедии
+Slippery Slap|Скользкий склон
+Cool Box|Сумка-холодильник
+Starr Garden|Сад Старр
+H is for Holiday|«П» значит «праздник»
+Hyperspace|Гиперпространство
+Tip Toe|На цыпочках
+Unhappy Arena|Грустная арена
+Survival of the Meanest|Выживает вреднейший
+Brawlerverse|Боевая вселенная
+The Emptiness Machine|Машина пустоты
+Serpentshrine Island|Храм Змея
+Hot Maze|Знойный лабиринт
+Case of the Mondays|Тяжёлый понедельник
+Jump to Conclusions|Поспешные выводы
+Thin Walls|Тонкие стены
+Paper Jam|Проблемы с бумагой
+Million Dollars|Миллион долларов
+`.trim().split('\n').map(line => line.split('|'));
+  const normalizeMapKey = s => String(s||'').normalize('NFKC').replace(/[’‘]/g,"'").trim().toLowerCase();
+  const mapLookup = new Map();
+  for (const [en,ru] of MAP_PAIRS) {
+    mapLookup.set(normalizeMapKey(en),{en,ru});
+    mapLookup.set(normalizeMapKey(ru),{en,ru});
+  }
+  const escapeMapPattern = s => s.replace(/[.*+?^${}()|[\]\\]/g,'\\  const originals = new WeakMap();');
+  const mapAlternates = [...new Set(MAP_PAIRS.flat())].sort((a,b)=>b.length-a.length).map(escapeMapPattern);
+  const mapPattern = new RegExp('(?<![\\p{L}\\p{N}])(?:'+mapAlternates.join('|')+')(?![\\p{L}\\p{N}])','giu');
+  function mapText(src,language){
+    if (!src || !/[\\p{L}]/u.test(src)) return src;
+    return src.replace(mapPattern,name=>{
+      const found=mapLookup.get(normalizeMapKey(name));
+      return found ? found[language] : name;
+    });
+  }
   const originals = new WeakMap();
   const attrOriginals = new WeakMap();
   let locale = 'ru';
@@ -844,7 +1100,7 @@
     const current = node.nodeValue;
     let entry = originals.get(node);
     const raw = entry && current === entry.last ? entry.original : current;
-    const target = locale === 'en' ? translate(raw) : raw;
+    const target = locale === 'en' ? translate(mapText(raw,'en')) : mapText(raw,'ru');
     if (target !== current) node.nodeValue = target;
     originals.set(node,{original:raw,last:target});
   }
@@ -857,7 +1113,7 @@
       const current = el.getAttribute(name);
       const prev = attrs[name];
       const original = prev && current === prev.last ? prev.original : current;
-      const target = locale === 'en' ? translate(original) : original;
+      const target = locale === 'en' ? translate(mapText(original,'en')) : mapText(original,'ru');
       if (current !== target) el.setAttribute(name,target);
       attrs[name]={original,last:target};
     }
@@ -916,7 +1172,7 @@
     observer.observe(document.body,{subtree:true,childList:true,characterData:true});
     schedule();
   }
-  window.NexusLocale={set:setLanguage,get:()=>locale,translate};
+  window.NexusLocale={set:setLanguage,get:()=>locale,translate,mapName:(name,lang=locale)=>mapText(name,lang)};
   if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',init);
   else init();
 })();

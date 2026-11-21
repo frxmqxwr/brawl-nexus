@@ -698,3 +698,75 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 @media(max-width:1200px){.bn17-prestige-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-progress-metrics{grid-column:1/-1}.bn17-prestige-list{grid-template-columns:repeat(3,minmax(0,1fr))}.bn17-achievements{grid-template-columns:repeat(3,minmax(0,1fr))}.bn17-roster-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:700px){.bn17-prestige-overview{grid-template-columns:1fr}.bn17-prestige-list,.bn17-roster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-achievements{grid-template-columns:repeat(2,minmax(0,1fr))}.bn17-prestige-main,.bn17-prestige-count{padding:13px}.bn17-prestige-brawler{padding:7px;gap:6px}.bn17-prestige-brawler>img{width:38px;height:43px}.bn17-prestige-brawler em{font-size:8px}}
 @media(max-width:380px){.bn17-prestige-list,.bn17-roster-grid{grid-template-columns:1fr}.bn17-progress-metrics>div{padding:6px}.bn17-progress-metrics span{font-size:8px}}
+
+
+/* v1.8 — genuine prestige roadmap, landscape podium and compact swipeable brawlers */
+.bs-prestige-badge{width:38px;height:45px;object-fit:contain;vertical-align:middle;filter:drop-shadow(0 4px 6px #0008)}
+.bn17-prestige-main .bn17-prestige-medal,.bn17-prestige-count .bn17-prestige-medal{display:grid;place-items:center}
+.bn17-prestige-main .bs-prestige-badge,.bn17-prestige-count .bs-prestige-badge{width:60px;height:64px}
+.bn17-prestige-overview{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.bn17-prestige-main,.bn17-prestige-count{min-height:108px;padding:15px}
+.bn17-progress-metrics{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.bs-prestige-roadmap{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin:8px 0 17px}
+.bs-prestige-stage{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 4px;min-width:0;min-height:111px;border:1px solid #643947;border-radius:12px;background:linear-gradient(152deg,#41232c,#26171e);text-align:center}
+.bs-prestige-stage img{width:100%;max-width:82px;height:63px;object-fit:contain;filter:drop-shadow(0 5px 6px #0009)}
+.bs-prestige-stage b{font:900 12px var(--display);color:#fff}
+.bs-prestige-stage span{font:800 10px var(--sans);color:#ffcba6}
+.bs-prestige-tabs{display:flex;align-items:center;gap:6px;overflow-x:auto;margin:0 0 12px;scrollbar-width:none}
+.bs-tier-tab{flex-shrink:0;border:1px solid #73505a;background:#302028;border-radius:8px;padding:7px 11px;font:800 11px var(--sans);color:#dab4c1}
+.bs-tier-tab.active{background:linear-gradient(130deg,#eb3c56,#b72542);color:white;border-color:#fa7084}
+.bn17-prestige-list{max-height:275px;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin}
+.bn17-prestige-brawler[hidden]{display:none}
+.bn17-prestige-brawler em{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;max-width:65px;min-width:48px;white-space:nowrap;font-size:9px}
+.bn17-prestige-brawler em .bs-prestige-badge{width:35px;height:37px}
+#page-profile .bs-profile-showcase{display:flex;flex-direction:column;gap:16px;margin-top:18px}
+#page-profile .bs-profile-showcase>div{min-width:0;width:100%}
+#page-profile .bs-profile-showcase>div>.panel{width:100%;overflow:hidden}
+#page-profile .bs-profile-showcase .brawler-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;align-items:end;max-width:100%}
+#page-profile .bs-profile-showcase .podium-spot,#page-profile .bs-profile-showcase .podium-spot.podium-1{min-height:0;height:258px;max-height:258px;min-width:0;padding-top:7px}
+#page-profile .bs-profile-showcase .podium-spot.podium-1{height:268px;max-height:268px}
+#page-profile .bs-profile-showcase .podium-spot .podium-model,#page-profile .bs-profile-showcase .podium-spot.podium-1 .podium-model{height:158px;max-height:158px;width:100%;min-height:0}
+#page-profile .bs-profile-showcase .podium-spot .podium-model img{max-height:100%;object-fit:contain}
+#page-profile .bs-profile-showcase .podium-spot>b{font-size:20px;margin-top:4px}
+#page-profile .bs-profile-showcase .podium-spot .prestige-mark{margin:0 0 2px;max-height:20px}
+#page-profile .bs-profile-showcase .podium-spot .podium-plinth{padding:6px;margin-top:4px}
+#page-profile .bs-profile-showcase .brawler-mini-grid{display:flex;flex-wrap:nowrap;gap:9px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:thin;max-height:195px;padding:8px 2px}
+#page-profile .bs-profile-showcase .brawler-mini{display:flex;flex-direction:column;gap:4px;flex:0 0 132px;min-width:132px;max-width:132px;height:172px;align-items:center;justify-content:flex-end;scroll-snap-align:start;overflow:hidden;padding:8px;background:linear-gradient(145deg,#3b2330,#21151d);border:1px solid #784755;border-radius:12px}
+#page-profile .bs-profile-showcase .brawler-mini>img{height:105px;max-height:105px;width:100%;max-width:100%;min-width:0;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 6px 8px #0009)}
+#page-profile .bs-profile-showcase .brawler-mini>div{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-width:0;text-align:center}
+#page-profile .bs-profile-showcase .brawler-mini strong{font:900 15px/1.1 var(--display);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#page-profile .bs-profile-showcase .brawler-mini small{font-size:10px;color:#f3cdaa}
+#page-profile .bs-profile-showcase .brawler-mini .power{font-size:9px}
+#page-profile .bs-profile-showcase .battle-row{display:grid;grid-template-columns:98px minmax(0,1fr) auto 90px;gap:10px;max-width:100%}
+#page-profile .bs-profile-showcase>div:last-child>.panel{max-height:405px;overflow-y:auto;scrollbar-width:thin}
+.bn17-roster-prestige{display:flex;align-items:center;gap:5px}
+.bn17-roster-prestige .bs-prestige-badge{height:25px;width:27px}
+@media(max-width:900px){
+ .bs-prestige-roadmap{grid-template-columns:repeat(7,minmax(67px,1fr));overflow-x:auto;padding-bottom:8px;scrollbar-width:thin}
+ .bs-prestige-stage img{height:45px}
+ .bs-prestige-stage{min-height:94px}
+ .bn17-prestige-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #page-profile .bs-profile-showcase .battle-row{grid-template-columns:78px minmax(0,1fr) auto}
+ #page-profile .bs-profile-showcase .battle-row .battle-time{display:none}
+}
+@media(max-width:700px){
+ .bn17-prestige-overview{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .bn17-prestige-main,.bn17-prestige-count{min-height:90px;gap:6px;padding:8px}
+ .bn17-prestige-main .bn17-prestige-medal,.bn17-prestige-count .bn17-prestige-medal{width:35px;height:49px}
+ .bn17-prestige-main .bs-prestige-badge,.bn17-prestige-count .bs-prestige-badge{width:36px;height:44px}
+ .bn17-prestige-main strong,.bn17-prestige-count strong{font-size:24px}
+ .bn17-prestige-main small,.bn17-prestige-count small{font-size:8px}
+ .bn17-prestige-main span:not(.bn17-prestige-medal),.bn17-prestige-count span:not(.bn17-prestige-medal){font-size:8px}
+ .bn17-progress-metrics{grid-column:1/-1}
+ .bn17-prestige-brawler{padding:7px;min-height:68px}
+ .bn17-prestige-brawler em{min-width:38px;max-width:38px;font-size:8px}
+ .bn17-prestige-brawler em .bs-prestige-badge{height:28px;width:28px}
+ #page-profile .bs-profile-showcase .brawler-podium{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;gap:8px;padding:3px 1px 9px}
+ #page-profile .bs-profile-showcase .podium-spot,#page-profile .bs-profile-showcase .podium-spot.podium-1{min-width:155px;width:155px;max-width:155px;height:236px;max-height:236px;flex-shrink:0;scroll-snap-align:start}
+ #page-profile .bs-profile-showcase .podium-spot .podium-model,#page-profile .bs-profile-showcase .podium-spot.podium-1 .podium-model{height:135px;max-height:135px}
+ #page-profile .bs-profile-showcase .podium-spot>b{font-size:17px}
+ #page-profile .bs-profile-showcase .brawler-mini{min-width:112px;width:112px;max-width:112px}
+ #page-profile .bs-profile-showcase .battle-row{grid-template-columns:65px minmax(0,1fr) auto;gap:6px}
+ #page-profile .bs-profile-showcase .battle-row .battle-images img{width:23px;height:23px}
+}
+@media(max-width:390px){.bs-tier-tab{padding:6px 9px;font-size:10px}.bn17-prestige-brawler{gap:5px}.bn17-prestige-brawler>img{width:35px;height:38px}}

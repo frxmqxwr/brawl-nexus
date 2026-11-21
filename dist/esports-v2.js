@@ -1,13 +1,13 @@
 /* BRAWL//NEXUS • Esports Command Center v2. Authentic Brawl UI emoji from the site's UI_PACK. */
 (function(){
 'use strict';
-var mode='overview',matchFilter='all',newsFilter='all',busy=false,context=null;
+var mode='overview',matchFilter='all',newsFilter='all',teamFilter='',busy=false,context=null;
 var OFFICIAL='https://event.supercell.com/brawlstars/en/live';
 var BRACKET='https://liquipedia.net/brawlstars/Brawl_Stars_World_Finals/2026';
 var GUIDE='https://supercell.com/brawlstars/en/blog/esports/your-guide-to-the-biggest-brawl-stars-world-finals-ever-/';
 var STREAM='https://www.youtube.com/channel/UCjvzNXGGlnC4jcCnhglf8-Q';
 var teams=['HMBLE','NAVI','Team Elektros','Crazy Raccoon','NOVO Esports','Reply Totem','Tribe Gaming','ZETA DIVISION','FUT Esports','Team Heretics','RED Canids'];
-var tabs=[['overview','ОБЗОР','trophy'],['matches','МАТЧИ','swords'],['teams','КОМАНДЫ','users-round'],['news','НОВОСТИ','newspaper'],['analysis','АНАЛИЗ','star']];
+var tabs=[['overview','ОБЗОР','trophy'],['matches','МАТЧИ','swords'],['teams','КОМАНДЫ','users-round'],['news','НОВОСТИ','newspaper']];
 function safe(url,fallback){return /^https:\/\/[^ "'<>]+$/i.test(String(url||''))?String(url):fallback||OFFICIAL}
 function niceDate(raw){var d=new Date(raw||'');return Number.isFinite(d.getTime())?d.toLocaleString('ru-RU',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'Время уточняется'}
 function humanDate(raw){var d=new Date(raw||'');return Number.isFinite(d.getTime())?d.toLocaleDateString('ru-RU',{day:'2-digit',month:'long',year:'numeric'}):''}
@@ -46,19 +46,21 @@ function entry(m){
  return '<article class="es26-match"><div class="es26-match-top"><span>'+icon('ticket')+' '+esc(m.tournament||'BSC')+'</span>'+badge(live?'LIVE · ПОДТВЕРЖДЕНО':ended?'ЗАВЕРШЁН':'ЗАПЛАНИРОВАНО',live?'live':ended?'finished':'upcoming')+'</div>'+
  '<div class="es26-versus"><div>'+context.u.teamSymbol(a)+'<b>'+esc(a)+'</b></div><strong>'+ (score?esc(rawA+' : '+rawB):'VS')+'</strong><div>'+context.u.teamSymbol(b,true)+'<b>'+esc(b)+'</b></div></div>'+
  '<div class="es26-match-foot"><small>'+ (m.winner?'Победитель: '+esc(m.winner):niceDate(m.when))+'</small><div>'+ (m.url?link(m.url,'ИСТОЧНИК','es26-minilink'):'')+
- '<button type="button" class="es26-minilink" data-action="set-match" data-a="'+esc(a)+'" data-b="'+esc(b)+'">РАЗОБРАТЬ '+ico('arrow-right')+'</button></div></div></article>';
+ '</div></div></article>';
 }
 function matchList(isOverview){
  var list=Array.isArray(context.s.esportsFeed)?context.s.esportsFeed:[];
+ if(teamFilter&&!isOverview){list=list.filter(function(m){return String(m.teamA||'').toLowerCase()===teamFilter.toLowerCase()||String(m.teamB||'').toLowerCase()===teamFilter.toLowerCase()})}
  if(!isOverview){list=list.filter(function(m){var status=String(m.status||'').toLowerCase();return matchFilter==='all'||(matchFilter==='live'&&(m.live||status==='live'))||(matchFilter==='finished'&&['finished','completed','ended','final'].includes(status))||(matchFilter==='upcoming'&&!m.live&&!['live','finished','completed','ended','final'].includes(status))})}
+ var activeTeam=teamFilter&&!isOverview?'<div class="es26-teamfilter">'+icon('users-round')+' <b>МАТЧИ: '+esc(teamFilter)+'</b><button data-es-clear-team type="button">СБРОСИТЬ ФИЛЬТР ×</button></div>':'';
  var filters=isOverview?'':'<div class="es26-filters">'+[['all','ВСЕ'],['live','LIVE'],['upcoming','ПРЕДСТОЯЩИЕ'],['finished','ЗАВЕРШЁННЫЕ']].map(function(f){return '<button data-es-filter="'+f[0]+'" class="'+(matchFilter===f[0]?'active':'')+'">'+f[1]+'</button>'}).join('')+'</div>';
  var content=list.length?'<div class="es26-matchgrid">'+list.slice(0,isOverview?4:20).map(entry).join('')+'</div>':
  '<div class="es26-empty"><div class="es26-emptyicon">'+icon('clock')+'</div><div><b>Подтверждённые счёты пока недоступны</b><p>Для автоматического отображения матчей нужен источник турнирных результатов. Не подменяем его выдуманными победами или статусами LIVE.</p><div class="es26-emptylinks">'+link(OFFICIAL,'ОФИЦИАЛЬНОЕ РАСПИСАНИЕ')+link(BRACKET,'СЕТКА И РЕЗУЛЬТАТЫ')+'</div></div></div>';
- return section('МАТЧ-ЦЕНТР','Результаты только из подключённой турнирной ленты, не из догадок.',badge(context.s.esportsFeed&&context.s.esportsFeed.length?'FEED CONNECTED':'ОФИЦИАЛЬНЫЕ ССЫЛКИ',context.s.esportsFeed&&context.s.esportsFeed.length?'connected':''))+filters+content;
+ return section('МАТЧ-ЦЕНТР','Результаты только из подключённой турнирной ленты, не из догадок.',badge(context.s.esportsFeed&&context.s.esportsFeed.length?'FEED CONNECTED':'ОФИЦИАЛЬНЫЕ ССЫЛКИ',context.s.esportsFeed&&context.s.esportsFeed.length?'connected':''))+activeTeam+filters+content;
 }
 function teamGallery(short){
- return section('КОМАНДЫ СЦЕНЫ','Оригинальные эмблемы команд; нажми на команду, чтобы открыть сценарный анализ.',link(GUIDE,'УЧАСТНИКИ 2026','es26-minilink'))+
- '<div class="es26-teamgrid">'+teams.slice(0,short?6:teams.length).map(function(t){return '<button type="button" class="es26-team" data-action="choose-team" data-name="'+esc(t)+'">'+context.u.teamSymbol(t)+'<span>'+esc(t)+'</span>'+ico('arrow-up-right')+'</button>'}).join('')+'</div>'+
+ return section('КОМАНДЫ СЦЕНЫ','Эмблемы мировой сцены. Выбери команду, чтобы посмотреть её матчи в подключённом источнике.',link(GUIDE,'УЧАСТНИКИ 2026','es26-minilink'))+
+ '<div class="es26-teamgrid">'+teams.slice(0,short?6:teams.length).map(function(t){return '<button type="button" class="es26-team" data-es-team="'+esc(t)+'">'+context.u.teamSymbol(t)+'<span>'+esc(t)+'</span>'+ico('arrow-up-right')+'</button>'}).join('')+'</div>'+
  (short?'<button class="es26-all" data-es-tab="teams">ВСЕ КОМАНДЫ '+ico('arrow-right')+'</button>':'<p class="es26-caveat">Список включает команды мировой сцены, не только участников финалов 2026. Полный состав турнира — в официальном руководстве.</p>');
 }
 function article(n){
@@ -74,13 +76,6 @@ function news(short){
  return section('НОВОСТНАЯ ЛЕНТА','Публикации с открытыми ссылками на источники; обновление при открытии и далее автоматически.',link('https://supercell.com/brawlstars/en/blog/esports/','БЛОГ SUPERCELL','es26-minilink'))+filters+
  (list.length?'<div class="es26-newsgrid">'+list.slice(0,short?3:18).map(article).join('')+'</div>':'<div class="es26-empty"><div class="es26-emptyicon">'+icon('newspaper')+'</div><p>Новые публикации не найдены. Открой официальный блог для актуальных объявлений.</p></div>');
 }
-function analysis(){
- var s=context.s.scenario||{},u=context.u;
- return section('MATCH ANALYZER','Сценарная оценка по вручную выбранной форме. Это не реальная вероятность победы.')+
- '<div class="es26-analyzer"><form id="esportsPredictForm"><div class="es26-analyzer-top"><label><small>КОМАНДА A</small><input class="input" id="predictA" maxlength="40" required value="'+esc(s.a||'')+'"></label><label><small>КОМАНДА B</small><input class="input" id="predictB" maxlength="40" required value="'+esc(s.b||'')+'"></label><button type="submit" class="button">'+ico('brain-circuit')+' АНАЛИЗ</button></div>'+
- '<div class="es26-ranges"><label>ФОРМА A · <span id="fALabel">'+esc(s.formA||3)+' / 5</span><input type="range" id="formA" min="1" max="5" value="'+esc(s.formA||3)+'"></label><label>ФОРМА B · <span id="fBLabel">'+esc(s.formB||3)+' / 5</span><input type="range" id="formB" min="1" max="5" value="'+esc(s.formB||3)+'"></label></div></form>'+
- '<div id="esportsResult">'+(s.result?u.makeScenarioResult(s.result):'<div class="es26-analyzer-note">Выбери команды и оцени их форму (1–5). Итог — учебный сценарный индекс, а не прогноз реальных матчей.</div>')+'</div></div>';
-}
 function overview(){
  return '<div class="es26-two"><div>'+section('ЧЕМПИОНАТ В ФОКУСЕ','Официальная информация о World Finals 2026.')+
  '<div class="es26-focus">'+badge('2026 · WORLD FINALS','event')+'<h3>20–22 ноября · Токио</h3><p>12 команд, мировой титул, призовой фонд $1 000 000. Награды зрителям и прогнозы доступны на официальном сайте турнира.</p>'+
@@ -93,14 +88,15 @@ function render(s,u){
  context={s:s,u:u};var root=document.getElementById('page-esports');if(!root)return;
  var top='<div class="es26">'+hero()+toolbar()+
  '<div class="es26-meta"><span>'+icon('clock')+' ИСТОЧНИК: '+(s.esportsFeed&&s.esportsFeed.length?'ТУРНИРНАЯ ЛЕНТА':'SUPERCELL / OFFICIAL LINKS')+'</span><button type="button" class="es26-refresh" data-es-refresh '+(busy?'disabled':'')+'>'+ico('refresh-cw')+' '+(busy?'ОБНОВЛЕНИЕ...':'ОБНОВИТЬ ДАННЫЕ')+'</button></div>';
- var body=mode==='matches'?matchList(false):mode==='teams'?teamGallery(false):mode==='news'?news(false):mode==='analysis'?analysis():overview();
+ var body=mode==='matches'?matchList(false):mode==='teams'?teamGallery(false):mode==='news'?news(false):overview();
  root.innerHTML=top+'<div class="es26-body">'+body+'</div><div class="es26-footer">BRAWL // NEXUS · UNOFFICIAL FAN PROJECT · РЕЗУЛЬТАТЫ ТОЛЬКО ИЗ ПРОВЕРЯЕМЫХ ИСТОЧНИКОВ</div></div>';
  u.learnIcons();
 }
-function showAnalyzer(){mode='analysis'}
 document.addEventListener('click',async function(e){
  if(!context)return;
  var tab=e.target.closest('[data-es-tab]');if(tab){e.preventDefault();mode=tab.dataset.esTab;render(context.s,context.u);return}
+ var team=e.target.closest('[data-es-team]');if(team){e.preventDefault();teamFilter=team.dataset.esTeam;matchFilter='all';mode='matches';render(context.s,context.u);return}
+ var clear=e.target.closest('[data-es-clear-team]');if(clear){e.preventDefault();teamFilter='';render(context.s,context.u);return}
  var filter=e.target.closest('[data-es-filter]');if(filter){e.preventDefault();matchFilter=filter.dataset.esFilter;render(context.s,context.u);return}
  var nf=e.target.closest('[data-es-news]');if(nf){e.preventDefault();newsFilter=nf.dataset.esNews;render(context.s,context.u);return}
  var refresh=e.target.closest('[data-es-refresh]');if(!refresh||busy)return;
@@ -111,5 +107,5 @@ document.addEventListener('click',async function(e){
   if(result[1].status==='fulfilled'&&Array.isArray(result[1].value.news)&&result[1].value.news.length)context.s.news=result[1].value.news.map(context.u.normalizeNews);
  }finally{busy=false;render(context.s,context.u)}
 });
-window.NexusEsportsV2={render:render,showAnalyzer:showAnalyzer};
+window.NexusEsportsV2={render:render};
 })();

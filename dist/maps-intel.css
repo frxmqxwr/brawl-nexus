@@ -82,3 +82,6 @@
 @media(max-width:1050px){.mi-shell{grid-template-columns:1fr}.mi-library{position:static;max-height:none}.mi-catalog{grid-template-columns:repeat(4,minmax(0,1fr))}.mi-library-controls{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:740px){.mi-library{padding:12px}.mi-catalog{grid-template-columns:repeat(3,minmax(0,1fr))}.mi-library-controls{grid-template-columns:1fr 1fr}.mi-library-controls input{grid-column:span 2}.mi-detail{padding:11px}.mi-hero{grid-template-columns:1fr}.mi-hero>.mi-map-art{max-height:260px}.mi-hero h2{font-size:41px}.mi-kpis b{font-size:22px}}
 @media(max-width:450px){.mi-catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.mi-pick{grid-template-columns:minmax(95px,1fr) repeat(2,65px);padding:8px 5px;gap:4px}.mi-pick .mi-count{display:none}.mi-pick-person img{width:34px;height:34px}.mi-pick-person strong{font-size:10px}.mi-stat b{font-size:18px}.mi-hero{padding:12px}.mi-kpis{gap:5px}.mi-kpis>div{padding:8px 5px}.mi-kpis span{font-size:8px}.mi-bands button{padding:7px;font-size:9px}}
+
+/* Five real mobile destinations: Overview, Profile, Players, Maps and Draft. */
+@media(max-width:1200px){.bn110-mobile-tabs{grid-template-columns:repeat(5,minmax(0,1fr))}}

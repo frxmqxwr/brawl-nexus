@@ -161,7 +161,7 @@ function render(s,utils){
  state=s;u=utils;
  const root=document.getElementById('page-maps');if(!root)return;
  const maps=mapList();
- if(!current||!maps.some(m=>String(m.id)===String(current))){const init=maps.find(x=>q(x.name)==='quintillion'&&!x.disabled)||maps.find(x=>!x.disabled)||maps[0];current=init?String(init.id):''}
+ if(!current||!maps.some(m=>String(m.id)===String(current))){const init=maps.find(x=>currentRotation(x)&&!x.disabled)||maps.find(x=>q(x.name)==='quintillion'&&!x.disabled)||maps.find(x=>!x.disabled)||maps[0];current=init?String(init.id):''}
  const map=currentMap();
  root.innerHTML='<div class="mi-shell">'+mapCards()+(map?'<div class="mi-detail">'+overview(map,metaFor(map))+list(map,metaFor(map))+
  '<div class="mi-footer"><button class="mi-draft-btn" type="button" data-mi-draft>'+u.uiPackImg('star')+' ОТКРЫТЬ ДРАФТ ДЛЯ ЭТОЙ КАРТЫ</button>'+

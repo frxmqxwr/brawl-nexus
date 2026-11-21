@@ -1,4 +1,4 @@
-/* BRAWL//NEXUS 1.14 — fan dashboard. No fabricated live player or esport statistics. */
+/* BRAWL//NEXUS 1.15 — fan dashboard. No fabricated live player or esport statistics. */
 (() => {
 'use strict';
 const CDN = 'https://cdn.brawlify.com';
@@ -77,7 +77,7 @@ const FALLBACK_NEWS = [
  {title:'Your Path to BSC 2027',href:'https://supercell.com/brawlstars/en/blog/esports/',sub:'Официальные новости киберспорта',kind:'ESPORTS'},
  {title:'2026 World Finals & Championship',href:'https://event.supercell.com/brawlstars/en/',sub:'Расписание, прогнозы и трансляции — на официальном сайте',kind:'CHAMPIONSHIP'}
 ];
-const state={page:'home',rotationEvents:[],rotationSource:'not-configured',rotationSelected:'',rotationTerrain:'mixed',mapStats:{},catalog:BRAWLERS_SEED,maps:[],icons:{},player:null,battles:[],otherPlayer:null,otherBattles:[],otherError:'',otherLoading:false,clubData:null,clubError:'',clubLoading:false,gameModes:[],connected:false,dataSource:'Загрузка данных',catalogLive:false,mapLive:false,news:FALLBACK_NEWS,esportsFeed:null,aiAvailable:false,playerLookupError:'',draft:{ally:[],enemy:[],bans:[],side:'ally',mode:'Броулбол',mapId:'',terrain:'mixed',query:'',classFilter:'Все',favorites:[],favoritesOnly:false,ownedOnly:true,liveMode:false,token:'ally',phase:'bans',pickHistory:[]},squad:{tags:[],members:[],error:''},scenario:{a:'HMBLE',b:'NAVI',formA:3,formB:3,mode:'Броулбол',result:null}};
+const state={page:'home',rotationEvents:[],rotationSource:'not-configured',rotationSelected:'',rotationTerrain:'mixed',mapStats:{},catalog:BRAWLERS_SEED,maps:[],icons:{},player:null,battles:[],otherPlayer:null,otherBattles:[],otherError:'',otherLoading:false,clubData:null,clubError:'',clubLoading:false,gameModes:[],connected:false,dataSource:'Загрузка данных',catalogLive:false,mapLive:false,news:FALLBACK_NEWS,esportsFeed:null,aiAvailable:false,playerLookupError:'',draft:{ally:[],enemy:[],bans:[],side:'ally',mode:'Броулбол',mapId:'',terrain:'mixed',query:'',classFilter:'Все',favorites:[],favoritesOnly:false,ownedOnly:true,playlist:'trophy',trophyMode:'brawlBall',trophyMapName:'',trophyOwnedOnly:true,liveMode:false,token:'ally',phase:'bans',pickHistory:[]},squad:{tags:[],members:[],error:''},scenario:{a:'HMBLE',b:'NAVI',formA:3,formB:3,mode:'Броулбол',result:null}};
 try{state.squad.tags=JSON.parse(localStorage.getItem('bn_squad')||'[]');state.draft.favorites=JSON.parse(localStorage.getItem('bn_fav_brawlers')||'[]');const lastTag=localStorage.getItem('bn_my_tag')||localStorage.getItem('bn_lasttag');if(lastTag)state.lastTag=lastTag;
  const saved=JSON.parse(localStorage.getItem('bn_draft_v12')||'null');
  if(saved&&typeof saved==='object'){
@@ -90,6 +90,10 @@ try{state.squad.tags=JSON.parse(localStorage.getItem('bn_squad')||'[]');state.dr
    if(['mixed','open','closed'].includes(saved.terrain))d.terrain=saved.terrain;
    if(typeof saved.mapId==='string')d.mapId=saved.mapId;
    if(typeof saved.ownedOnly==='boolean')d.ownedOnly=saved.ownedOnly;
+   if(['trophy','ranked'].includes(saved.playlist))d.playlist=saved.playlist;
+   if(typeof saved.trophyMode==='string')d.trophyMode=saved.trophyMode;
+   if(typeof saved.trophyMapName==='string')d.trophyMapName=saved.trophyMapName;
+   if(typeof saved.trophyOwnedOnly==='boolean')d.trophyOwnedOnly=saved.trophyOwnedOnly;
    for(const side of ['ally','enemy'])d[side]=d.pickHistory.filter(x=>x.side===side&&x.name).map(x=>x.name);
  }
 }catch{}
@@ -464,7 +468,7 @@ const SNAKE_ORDER=['first','second','second','first','first','second'];
 function draftSequence(){const first=state.draft.token;return SNAKE_ORDER.map(x=>x==='first'?first:(first==='ally'?'enemy':'ally'))}
 function draftCurrent(){const d=state.draft;if(d.phase==='bans')return {phase:'bans',index:d.bans.length};const index=d.pickHistory.length;return {phase:'picks',index,side:draftSequence()[index]||null}}
 function draftRebuild(){const d=state.draft;for(const side of ['ally','enemy'])d[side]=d.pickHistory.filter(x=>x.side===side&&x.name).map(x=>x.name)}
-function draftSave(){try{const d=state.draft;localStorage.setItem('bn_draft_v12',JSON.stringify({token:d.token,phase:d.phase,pickHistory:d.pickHistory,bans:d.bans,mode:d.mode,terrain:d.terrain,mapId:d.mapId,ownedOnly:d.ownedOnly}))}catch{}}
+function draftSave(){try{const d=state.draft;localStorage.setItem('bn_draft_v12',JSON.stringify({token:d.token,phase:d.phase,pickHistory:d.pickHistory,bans:d.bans,mode:d.mode,terrain:d.terrain,mapId:d.mapId,ownedOnly:d.ownedOnly,playlist:d.playlist,trophyMode:d.trophyMode,trophyMapName:d.trophyMapName,trophyOwnedOnly:d.trophyOwnedOnly}))}catch{}}
 function draftAdd(name){const d=state.draft;if([...d.ally,...d.enemy,...d.bans].includes(name)){toast('Этот боец уже выбран или забанен');return false}const t=draftCurrent();if(t.phase==='bans'){if(d.bans.length>=6){toast('Все шесть банов уже выбраны');return false}d.bans.push(name);if(d.bans.length===6){d.phase='picks';toast('Баны готовы! Начинается фаза пиков')}return true}
  if(!t.side){toast('Все шесть пиков уже заполнены');return false}
  d.pickHistory.push({side:t.side,name});draftRebuild();if(d.pickHistory.length===6)toast('Драфт завершён — проверь итоговый состав');return true}
@@ -608,7 +612,9 @@ function listen(){
  if(a==='set-own-player'){loadProfile(act.dataset.tag);openPage('profile');return}
  if(a==='rotation-select'){state.rotationSelected=act.dataset.key;renderHome();learnIcons();const m=rotationSelected();if(m?.id)loadMapStats(m.id);$('#rotationDetail')?.scrollIntoView({behavior:'smooth',block:'start'});return}
   else if(a==='rotation-refresh'){toast('Проверяем ротацию Supercell...');loadRotation();return}
- else if(a==='rotation-to-draft'){const m=rotationSelected();if(m){const found=Object.entries(MODE_EN).find(([ru,en])=>en.toLowerCase()===m.mode.toLowerCase());if(found)state.draft.mode=found[0];if(m.id)state.draft.mapId=m.id;state.draft.terrain=terrainEstimate(m).type;draftSave()}openPage('meta');return}
+ else if(a==='rotation-to-draft'){const m=rotationSelected();if(m){d.playlist='trophy';d.trophyMode=String(m.mode||'brawlBall');d.trophyMapName=String(m.name||'');d.terrain=terrainEstimate(m).type;draftSave()}openPage('meta');return}
+ if(a==='meta-playlist'){d.playlist=act.dataset.playlist==='ranked'?'ranked':'trophy';if(d.playlist==='ranked'&&!MODES.includes(d.mode))d.mode=MODES[0];if(d.playlist!=='ranked'&&d.liveMode){d.liveMode=false;document.body.classList.remove('live-draft-mode')}draftSave();renderMeta();return}
+ else if(a==='trophy-owned'){d.trophyOwnedOnly=!d.trophyOwnedOnly;draftSave();renderMeta();return}
  if(a==='draft-token'){if(d.pickHistory.length){toast('Для смены жетона начни новый драфт');return}d.token=act.dataset.token;draftChange()}
  else if(a==='draft-start-picks'){d.phase='picks';draftChange();toast('Фаза пиков: порядок определяется жетоном')}
  else if(a==='draft-reopen-bans'){if(d.pickHistory.length){toast('Сначала отмени пики');return}d.phase='bans';draftChange()}
@@ -637,7 +643,7 @@ function listen(){
  });
  document.addEventListener('submit',e=>{if(e.target.id==='profileSearch'){e.preventDefault();loadProfile($('#profileTag').value)}else if(e.target.id==='otherSearch'){e.preventDefault();loadOtherProfile(new FormData(e.target).get('tag'))}else if(e.target.id==='squadForm'){e.preventDefault();const fd=new FormData(e.target);loadSquad([0,1,2].map(i=>fd.get('player'+i)||''))}else if(e.target.id==='chatForm'){e.preventDefault();sendChat($('#chatInput').value)}else if(e.target.id==='aiAccessForm'){e.preventDefault();const code=$('#aiAccessInput').value.trim();if(!code){toast('Введите код доступа');return}try{sessionStorage.setItem('bn_ai_access_code',code);$('#aiAccessInput').value='';toast('Код сохранён до закрытия вкладки')}catch{toast('Хранилище браузера недоступно. Открой сайт по HTTPS.')}}else if(e.target.id==='esportsPredictForm'){e.preventDefault();const a=$('#predictA').value.trim(),b=$('#predictB').value.trim(),fa=Number($('#formA').value),fb=Number($('#formB').value);if(a.toLowerCase()===b.toLowerCase()){toast('Выбери две разные команды');return}const left=Math.round(50+(fa-fb)*9);state.scenario={...state.scenario,a,b,formA:fa,formB:fb,result:{a,b,fa,fb,left:Math.max(14,Math.min(86,left))}};$('#esportsResult').innerHTML=makeScenarioResult(state.scenario.result)}});
  document.addEventListener('input',e=>{if(e.target.id==='draftSearch'){state.draft.query=e.target.value;drawPicker()}else if(e.target.id==='formA')$('#fALabel').textContent=e.target.value+' / 5';else if(e.target.id==='formB')$('#fBLabel').textContent=e.target.value+' / 5'});
- document.addEventListener('change',e=>{if(e.target.id==='draftMode'){state.draft.mode=e.target.value;state.draft.mapId='';renderMeta()}else if(e.target.id==='draftMap'){state.draft.mapId=e.target.value;state.draft.terrain=terrainEstimate(byMapId(e.target.value)).type;draftSave();renderMeta()}else if(e.target.id==='draftClass'){state.draft.classFilter=e.target.value;drawPicker()}});
+ document.addEventListener('change',e=>{if(e.target.id==='trophyMode'){state.draft.trophyMode=e.target.value;state.draft.trophyMapName='';draftSave();renderMeta()}else if(e.target.id==='trophyMap'){state.draft.trophyMapName=e.target.value;draftSave();renderMeta()}else if(e.target.id==='draftMode'){state.draft.mode=e.target.value;state.draft.mapId='';renderMeta()}else if(e.target.id==='draftMap'){state.draft.mapId=e.target.value;state.draft.terrain=terrainEstimate(byMapId(e.target.value)).type;draftSave();renderMeta()}else if(e.target.id==='draftClass'){state.draft.classFilter=e.target.value;drawPicker()}});
  document.addEventListener('keydown',e=>{const formField=e.target.matches('input,textarea,select,[contenteditable]');if(e.key==='Escape'){closeChat();$('#sidebar').classList.remove('open');if(state.draft.liveMode){state.draft.liveMode=false;document.body.classList.remove('live-draft-mode');renderMeta()}else if(e.target.id==='draftSearch'){state.draft.query='';e.target.value='';drawPicker()}}
  if(state.page!=='meta'||$('#assistantPanel').classList.contains('open'))return;
  if(e.key==='/'&&!formField){e.preventDefault();$('#draftSearch')?.focus();$('#draftSearch')?.select()}

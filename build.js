@@ -13,7 +13,7 @@ for(const name of ['index.html','styles.css','v110.css','app.js']){
 const assetSrc=path.join(src,'assets');
 const assetDest=path.join(out,'assets');
 fs.mkdirSync(assetDest,{recursive:true});
-for(const name of ['nexus-emblem.webp','nexus-wordmark.webp','nexus-brand.webp','nexus-guest.webp','nexus-favicon.png','spike-tip.webp']){
+for(const name of ['nexus-emblem.webp','nexus-wordmark.webp','nexus-brand.webp','nexus-guest.webp','nexus-favicon.png','spike-tip.webp','nexus-tip-banner.webp']){
   fs.copyFileSync(path.join(assetSrc,name),path.join(assetDest,name));
   console.log('Published: assets/'+name);
 }

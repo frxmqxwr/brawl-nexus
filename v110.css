@@ -478,3 +478,73 @@
 @media (max-height:660px) and (min-width:761px){
   .sidebar .side-promo{display:none}
 }
+
+/* NEXUS / TIP: exact supplied artwork — no reflowing text or character overlap.
+   Image is the visual; accessible, transparent hotspot keeps META LAB functional. */
+.sidebar .side-promo.nexus-tip-exact {
+  box-sizing:border-box;
+  position:relative;
+  display:block;
+  flex:0 0 auto;
+  width:calc(100% - 2px);
+  height:auto;
+  min-height:0;
+  max-height:none;
+  aspect-ratio:1538/1022;
+  margin:0 1px 9px;
+  padding:0;
+  overflow:hidden;
+  border:0;
+  border-radius:17px;
+  isolation:isolate;
+  background:#251019 url("./assets/nexus-tip-banner.webp") center center / 100% 100% no-repeat;
+}
+.sidebar .side-promo.nexus-tip-exact::before,
+.sidebar .side-promo.nexus-tip-exact::after{
+  content:none!important;
+  display:none!important;
+}
+.sidebar .side-promo.nexus-tip-exact .promo-btn.nexus-tip-action {
+  box-sizing:border-box;
+  position:absolute;
+  z-index:3;
+  display:block;
+  inset:72% 4.5% auto 4.5%;
+  width:91%;
+  height:16%;
+  min-height:0;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:12px;
+  background:transparent!important;
+  box-shadow:none!important;
+  color:transparent!important;
+  font-size:0;
+  cursor:pointer;
+}
+.sidebar .side-promo.nexus-tip-exact .promo-btn.nexus-tip-action::before,
+.sidebar .side-promo.nexus-tip-exact .promo-btn.nexus-tip-action::after {
+  content:none!important;
+  display:none!important;
+}
+.sidebar .side-promo.nexus-tip-exact .promo-btn.nexus-tip-action:hover{
+  background:rgba(255,255,255,.07)!important;
+}
+.sidebar .side-promo.nexus-tip-exact .promo-btn.nexus-tip-action:focus-visible{
+  outline:2px solid #fff!important;
+  outline-offset:-2px;
+}
+@media(max-height:800px) and (min-width:761px){
+  .sidebar .side-promo.nexus-tip-exact{
+    display:block;
+    flex:0 0 auto;
+    height:auto;
+    min-height:0;
+    max-height:none;
+    padding:0;
+  }
+}
+@media(max-height:660px) and (min-width:761px){
+  .sidebar .side-promo.nexus-tip-exact{display:none}
+}

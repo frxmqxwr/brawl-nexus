@@ -1435,3 +1435,27 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
  .bn115-trophy-intro .bn115-live-label{display:none}
  .bn115-pick-card>img{width:42px;height:42px;flex-basis:42px}
 }
+
+
+/* v1.15 — highlighted enemy picks and readable map detail actions */
+.bn115-enemies{padding:12px 13px;margin:10px 0 12px;background:linear-gradient(115deg,#521e2b,#29191f);border:1px solid #a5415b;border-radius:11px}
+.bn115-enemies>b{font-size:10px;letter-spacing:.6px;color:#ffb8c6}
+.bn115-enemies>div{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:9px}
+.bn115-enemies>div>span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:#fff;padding:4px 8px;border:1px solid #76404e;background:#2c1a24;border-radius:8px}
+.bn115-enemies>div>span>img{width:31px;height:31px;object-fit:contain;border-radius:5px}
+.bn115-mobile-text{display:none}
+.map-detail-actions{display:flex;flex-wrap:wrap;gap:10px;min-width:0}
+.map-detail-actions .button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-width:0;white-space:normal}
+@media(max-width:620px){
+ .map-detail-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .map-detail-actions .button{width:100%;min-width:0;font-size:10px;padding:10px 6px;line-height:1.25}
+ .map-detail-actions .button svg{width:16px;height:16px;flex:none}
+ .map-detail-actions .bn115-desktop-text{display:none}
+ .map-detail-actions .bn115-mobile-text{display:inline}
+ .bn115-enemies{padding:9px}
+ .bn115-enemies>b{font-size:9px}
+}
+@media(max-width:345px){
+ .map-detail-actions{grid-template-columns:1fr}
+ .map-detail-actions .button{font-size:11px}
+}

@@ -5,7 +5,7 @@ const path=require('node:path');
 const src=__dirname;
 const out=path.join(src,'dist');
 fs.mkdirSync(out,{recursive:true});
-for(const name of ['index.html','styles.css','v110.css','app.js','esports-v2.js','esports-v2.css','i18n.js','i18n.css']){
+for(const name of ['index.html','styles.css','v110.css','app.js','esports-v2.js','esports-v2.css','i18n.js','i18n.css','insights.js','insights.css']){
   fs.copyFileSync(path.join(src,name),path.join(out,name));
   console.log('Published:',name);
 }

@@ -692,9 +692,9 @@ function renderTrophyAdvisor(){
     <section class="bn115-picks-panel panel panel-pad">
       <div class="panel-header"><div class="panel-title">${uiPackImg('star')} ${solo?'КОГО ВЫБРАТЬ В СОЛО':`СОСТАВ НА ${count} ИГРОКОВ`}</div><span class="tag gold">ЭВРИСТИКА · НЕ WR</span></div>
       ${!solo&&lineup.length?`<div class="bn115-team-row">${lineup.map((x,i)=>`<div class="bn115-team-member">${bimg(x.b.name)}<b>${esc(x.b.name)}</b><small>${i+1} · ${esc(ROLES_RU[x.role]||'Боец')}</small></div>`).join('')}</div>`:''}
-      <p class="bn115-tip">${solo?'Рекомендуемые альтернативы для одного игрока (не нужно выбирать всех).':`Ниже ещё варианты на случай недоступного бойца или другого состава.`}</p>
+      <p class="bn115-tip">${solo?'Выбирай одного бойца: у каждого свой короткий план на матч.':`Выбирай под состав: ниже краткая тактика каждого кандидата.`}</p>
       <div class="bn115-candidates">${selectable.map((x,i)=>`<article class="bn115-pick-card">${bimg(x.b.name)}<div class="bn115-pick-meta"><b>${i+1}. ${esc(x.b.name)}</b><small class="bn118-game-plan"><strong>ПЛАН:</strong> ${esc(x.plan)}</small>${x.player?`<em>${uiPackImg('trophy')} ${fmt(x.player.trophies)} твоих кубков · Сила ${fmt(x.player.power)}</em>`:''}</div><span class="bn115-pick-rank">#${i+1}</span></article>`).join('')||`<div class="empty-note">${advice.hasPlayer&&d.trophyOwnedOnly?'Нет доступных бойцов с подходящими данными. Отключи фильтр «Твои бойцы».':'Не удалось получить бойцов каталога. Проверь подключение BrawlAPI.'}</div>`}</div>
-      <p class="source-note">Рекомендации основаны на характере карты, ролях, режиме и (при наличии профиля) кубках бойца. Это не официальный винрейт. Драфт с банами доступен во вкладке «Силовая лига».</p>
+      <p class="source-note">Планы — тактические подсказки по бойцу и режиму, а не гарантированный результат или официальный винрейт.</p>
     </section>
    </div>
  </div>`;

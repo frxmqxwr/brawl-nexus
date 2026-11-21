@@ -1505,7 +1505,7 @@ Million Dollars|Миллион долларов
   function skipNode(node) {
     const p = node.parentElement;
     if (!p) return true;
-    return Boolean(p.closest('script,style,textarea,code,pre,[translate="no"],[data-no-translate],.chat-msg.user,.es26-article h3,.es26-article p,.es26-article-bottom,.profile-nick,.profile-tagline,#sidebarPlayerName,#sidebarPlayerTag,.bn112-person b,.bn110-own-account b,.bn17-roster-label b,.bn110-mini-brawler span,.team-symbol,.es26-team span,.news-card h3,.ni-list-row [data-no-translate]'));
+    return Boolean(p.closest('script,style,textarea,code,pre,[translate="no"],[data-no-translate],.chat-msg.user,.es26-article h3,.es26-article p,.es26-article-bottom,.profile-nick,.profile-tagline,#sidebarPlayerName,#sidebarPlayerTag,.bn112-person b,.bn110-own-account b,.bn110-id-row h2,.n16-members-mini button span,.club-member .member-identity b,.bn17-roster-label b,.bn110-mini-brawler span,.team-symbol,.es26-team span,.news-card h3,.ni-list-row [data-no-translate]'));
   }
   function setText(node) {
     if (skipNode(node)) return;

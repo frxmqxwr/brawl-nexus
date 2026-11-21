@@ -58,7 +58,7 @@ function mapStatsNormal(raw){
 
 async function answerAI(req){
   if(!AI_KEY)return asJson({error:'В Netlify environment variables не задан OPENAI_API_KEY'},503);
-  if(AI_ACCESS_CODE&&req.headers.get('x-nexus-access-code')!==AI_ACCESS_CODE)return asJson({error:'Для ИИ нужен код доступа. Введи его в разделе Подключения.'},403);
+  if(AI_ACCESS_CODE&&req.headers.get('x-nexus-access-code')!==AI_ACCESS_CODE)return asJson({error:'Для ИИ нужен код доступа. Введи его в окне Nexus Assistant.'},403);
   const raw=await req.text();if(raw.length>18000)return asJson({error:'Слишком длинный запрос'},413);
   let body;try{body=JSON.parse(raw)}catch{return asJson({error:'Некорректный JSON'},400)}
   const query=String(body?.query||'').trim().slice(0,1000);if(!query)return asJson({error:'Вопрос пуст'},400);
@@ -73,7 +73,7 @@ export default async function handler(request){
     const u=new URL(request.url);
     let p=u.pathname.replace(/^\/.netlify\/functions\/api(?=\/|$)/,'/api');
     if(!p.startsWith('/api/'))return asJson({error:'Not found'},404);
-    if(request.method==='GET'&&p==='/api/status')return asJson({catalog:true,official:!!TOKEN,brawltools:false,ai:!!AI_KEY,esports:!!ESPORTS_FEED,rotation:!!TOKEN,mapStats:!!MAP_STATS_FEED,staticIpRequired:true,netlify:true,now:new Date().toISOString()});
+    if(request.method==='GET'&&p==='/api/status')return asJson({catalog:true,official:!!TOKEN,brawltools:false,ai:!!AI_KEY,aiAccessRequired:!!AI_ACCESS_CODE,esports:!!ESPORTS_FEED,rotation:!!TOKEN,mapStats:!!MAP_STATS_FEED,staticIpRequired:true,netlify:true,now:new Date().toISOString()});
     if(request.method==='GET'&&['/api/catalog','/api/maps','/api/icons'].includes(p)){
       const endpoint={'/api/catalog':'brawlers','/api/maps':'maps','/api/icons':'icons'}[p];
       return asJson(await cached(endpoint,60*60_000,()=>remoteJson(BASE+'/'+endpoint)));

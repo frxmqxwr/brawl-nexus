@@ -1,0 +1,12 @@
+name = "brawl-nexus-meta-collector"
+main = "index.js"
+compatibility_date = "2026-11-21"
+workers_dev = true
+
+[triggers]
+crons = ["0 * * * *"]
+
+[[d1_databases]]
+binding = "META_DB"
+database_name = "brawl-nexus-meta"
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"

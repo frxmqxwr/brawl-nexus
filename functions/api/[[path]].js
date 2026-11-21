@@ -1,3 +1,4 @@
+import {storeBattleLog,readMapIntel,readMetaStatus} from '../../lib/nexus-map-data.js';
 /**
  * BRAWL//NEXUS API for Cloudflare Pages Functions.
  * Path: /functions/api/[[path]].js -> /api/*
@@ -7,7 +8,7 @@
  */
 const CACHE = new Map();
 
-export async function onRequest({ request, env }) {
+export async function onRequest({ request, env, waitUntil }) {
 const BASE = 'https://api.brawlapi.com/v1';
 const TOKEN = env.BRAWL_API_TOKEN || '';
 const OFFICIAL_BASE = (env.BRAWL_API_BASE_URL || 'https://api.brawlstars.com/v1').replace(/\/+$/, '');
@@ -144,6 +145,34 @@ async function handler(request){
       const endpoint={'/api/catalog':'brawlers','/api/maps':'maps','/api/icons':'icons'}[p];
       return asJson(await cached(endpoint,60*60_000,()=>remoteJson(BASE+'/'+endpoint)));
     }
+    if(request.method==='GET'&&p==='/api/meta-status'){
+      if(!env.META_DB)return asJson({configured:false,matches:0,maps:0,players:0,reason:'d1-not-configured'});
+      return asJson(await readMetaStatus(env.META_DB));
+    }
+    if(request.method==='GET'&&p==='/api/map-intel'){
+      const map=String(u.searchParams.get('map')||'').slice(0,90);
+      const id=String(u.searchParams.get('mapId')||'').slice(0,12);
+      const mode=String(u.searchParams.get('mode')||'').replace(/[^a-z0-9]/gi,'').slice(0,60);
+      const band=String(u.searchParams.get('band')||'all');
+      if(!map||map.length<2||(!/^[\p{L}\p{N} \-']+$/u.test(map)))return asJson({error:'Invalid map name'},400);
+      let local=null;
+      if(env.META_DB)try{local=await readMapIntel(env.META_DB,map,mode,band)}catch{}
+      if(local?.sample>=20)return asJson({...local,provider:'NEXUS accumulated Supercell logs',mapId:id});
+      if(MAP_STATS_FEED&&band==='all'){
+        try{
+          const feed=new URL(MAP_STATS_FEED);
+          if(feed.protocol==='https:'){
+            if(id)feed.searchParams.set('mapId',id);feed.searchParams.set('map',map);
+            const d=await cached('map-intel-'+id+'-'+map,10*60_000,()=>remoteJson(feed.href));
+            const stats=mapStatsNormal(d);
+            if(stats.length)return asJson({source:'configured-statistics-provider',provider:feed.hostname,sample:Number(d.sample||d.totalBattles||0)||null,
+              updatedAt:String(d.updatedAt||d.timestamp||'').slice(0,55),mapName:map,mapId:id,stats,pairs:Array.isArray(d.pairs)?d.pairs.slice(0,25):[],
+              teams:Array.isArray(d.teams)?d.teams.slice(0,20):[],counters:Array.isArray(d.counters)?d.counters.slice(0,40):[],band});
+          }
+        }catch{}
+      }
+      return asJson(local||{source:'unavailable',mapName:map,mapId:id,sample:0,stats:[],teams:[],pairs:[],counters:[],band});
+    }
     if(request.method==='GET'&&p==='/api/events'){
       if(!TOKEN)return asJson({events:[],source:'not-configured',live:false,reason:'BRAWL_API_TOKEN is not configured'});
       const data=await cached('official-rotation',60_000,()=>remoteJson(`${OFFICIAL_BASE}/events/rotation`,{Authorization:`Bearer ${TOKEN}`}));
@@ -173,7 +202,9 @@ async function handler(request){
       if(!TOKEN)return asJson({error:'Для профилей настрой BRAWL_API_TOKEN и доступ к Supercell API с разрешённого IP (см. CLOUDFLARE_SETUP_RU.md)'},503);
       const tag=safeTag(tagPart);
       const dest=`${OFFICIAL_BASE}/players/${encodeURIComponent(tag)}${log?'/battlelog':''}`;
-      return asJson(await cached('player-'+tag+(log?'-log':''),log?60_000:100_000,()=>remoteJson(dest,{Authorization:`Bearer ${TOKEN}`})));
+      const response=await cached('player-'+tag+(log?'-log':''),log?60_000:100_000,()=>remoteJson(dest,{Authorization:`Bearer ${TOKEN}`}));
+      if(log&&env.META_DB){const job=storeBattleLog(env.META_DB,tag,Array.isArray(response?.items)?response.items:[]);if(typeof waitUntil==='function')waitUntil(job);else await job;}
+      return asJson(response);
     }
     if(request.method==='GET'&&p==='/api/news')return asJson(await cached('news',5*60_000,fetchNews));
     if(request.method==='GET'&&p==='/api/esports'){

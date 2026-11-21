@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#0d090b" />
+  <meta name="description" content="BRAWL//NEXUS — фан-платформа с ротацией карт Brawl Stars, тактическими советами, профилями и Live Draft." />
+  <title>BRAWL//NEXUS — Redline Intelligence</title>
+  <link rel="preconnect" href="https://cdn.brawlify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/nexus-favicon.png" />
+  <meta property="og:image" content="assets/nexus-brand.webp" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div><div class="noise-layer"></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a href="#home" class="brand brand-v14" data-page="home" aria-label="BRAWL NEXUS — главная">
+        <img class="nexus-brand-emblem" src="assets/nexus-emblem.webp" alt="Эмблема Nexus" />
+        <span class="nexus-brand-type"><img class="nexus-brand-wordmark" src="assets/nexus-wordmark.webp" alt="BRAWL//NEXUS" /><small>COMPETITIVE INTELLIGENCE</small></span>
+      </a>
+      <div class="sidebar-label">COMMAND CENTER <span>01 / 06</span></div>
+      <nav class="nav-main" id="mainNav" aria-label="Главное меню">
+        <button class="nav-link active" data-page="home"><i data-lucide="layout-dashboard"></i><span>Обзор</span><span class="nav-arrow">↗</span></button>
+        <button class="nav-link" data-page="profile"><i data-lucide="scan-face"></i><span>Мой профиль</span></button>
+        <button class="nav-link" data-page="esports"><i data-lucide="trophy"></i><span>Киберспорт</span><span class="nav-tiny">NEW</span></button>
+        <button class="nav-link" data-page="meta"><i data-lucide="swords"></i><span>Meta Lab</span></button>
+        <button class="nav-link" data-page="academy"><i data-lucide="graduation-cap"></i><span>Pro Academy</span></button>
+        <button class="nav-link" data-page="squad"><i data-lucide="users-round"></i><span>Squad Hub</span></button>
+      </nav>
+      <div class="sidebar-subtitle">NEXUS SYSTEM</div>
+      <button class="nav-link nav-link-sub" id="openAIFromNav"><i data-lucide="sparkles"></i><span>Nexus Assistant</span><span class="nav-dot"></span></button>
+      <button class="nav-link nav-link-sub" data-page="settings"><i data-lucide="sliders-horizontal"></i><span>Подключения</span></button>
+      <div class="sidebar-spacer"></div>
+      <div class="side-promo">
+        <div class="promo-rays"></div>
+        <img src="https://cdn.brawlify.com/brawlers/borderless/16000005.png" alt="Спайк — оригинальная иконка" />
+        <div class="promo-text"><span class="label-mini">NEXUS / TIP</span><b>Прокачай свой драфт.</b><small>Анализируй. Контрпикай. Побеждай.</small></div>
+        <button data-page="meta" class="promo-btn">OPEN META LAB <span>↗</span></button>
+      </div>
+      <div class="sidebar-bottom"><span class="avatar-sm"><img src="assets/nexus-guest.webp" alt="Гостевой аватар Nexus" /></span><div class="sb-name"><b id="sidebarPlayerName">GUEST PLAYER</b><small id="sidebarPlayerTag">Не подключён</small></div><i data-lucide="chevron-right"></i></div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><button class="mobile-menu" id="menuToggle" aria-label="Открыть меню"><i data-lucide="menu"></i></button><span class="breadcrumb-sub">NEXUS</span><span class="crumb-slash">/</span><b id="crumbCurrent">ОБЗОР</b></div>
+        <div class="topbar-actions"><span class="status-time"><span class="pulse-dot"></span><span id="dataStatus">Инициализация данных</span></span><span class="topbar-sep"></span><button class="icon-btn" title="Перезагрузить игровые данные" id="refreshBtn"><i data-lucide="refresh-cw"></i></button><button class="top-avatar" data-page="profile" title="Открыть профиль"><img src="assets/nexus-guest.webp" alt="Гостевой аватар Nexus" /></button></div>
+      </header>
+      <main class="content" id="content" tabindex="-1">
+        <section class="page active" id="page-home"></section>
+        <section class="page" id="page-profile"></section>
+        <section class="page" id="page-esports"></section>
+        <section class="page" id="page-meta"></section>
+        <section class="page" id="page-academy"></section>
+        <section class="page" id="page-squad"></section>
+        <section class="page" id="page-settings"></section>
+      </main>
+      <footer class="footer"><span>© 2026 BRAWL//NEXUS • UNOFFICIAL FAN PROJECT</span><span>Game assets via <a href="https://brawlify.com" target="_blank" rel="noopener">Brawlify CDN</a> · Not endorsed by Supercell</span></footer>
+    </div>
+  </div>
+
+  <div class="ai-fab-wrap"><div class="fab-note">ASK NEXUS AI</div><button class="ai-fab" id="aiToggle" aria-label="Открыть помощника"><i data-lucide="bot"></i><span class="fab-dot"></span></button></div>
+  <div class="assistant-panel" id="assistantPanel" role="dialog" aria-label="Nexus Assistant" aria-hidden="true">
+    <div class="chat-heading"><span class="chat-bot-icon"><i data-lucide="sparkles"></i></span><div><b>NEXUS <span>ASSISTANT</span></b><small id="aiModeLabel">Аналитический помощник</small></div><button class="icon-btn" id="closeChat" aria-label="Закрыть"><i data-lucide="x"></i></button></div>
+    <div class="chat-messages" id="chatMessages"><div class="chat-msg bot"><span class="chat-ava">N</span><div>Привет! Я NEXUS. Могу разобрать твой драфт, подобрать контрпик, объяснить матчап и подсказать, что тренировать. Что разберём?</div></div></div>
+    <div class="chat-suggestions"><button data-chatprompt="Кого брать против Пайпер и Анджело в Нокауте?">Контрпик</button><button data-chatprompt="Объясни сильный драфт для Броулбола">Драфт</button><button data-chatprompt="Как улучшить мою игру?">Тренировка</button></div>
+    <form class="chat-input-wrap" id="chatForm"><input id="chatInput" placeholder="Задай вопрос о Brawl Stars..." autocomplete="off" maxlength="900" /><button type="submit" aria-label="Отправить"><i data-lucide="arrow-up"></i></button></form>
+    <div class="chat-disclaimer">ИИ доступен с ключом. Без ключа работает локальный аналитик.</div>
+  </div>
+  <div class="toast-zone" id="toastZone"></div>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+  <script src="app.js" defer></script>
+</body>
+</html>

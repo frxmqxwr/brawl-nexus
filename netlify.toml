@@ -1,0 +1,23 @@
+# Deploy the contents of this BRAWL_NEXUS folder as the Netlify site root.
+[build]
+  publish = "dist"
+  command = "node build.js"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Netlify's direct function route is configured in netlify/functions/api.mjs:
+# export const config = { path: '/api/*' }
+# Static HTML / CSS / JS are served directly by the CDN.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache"

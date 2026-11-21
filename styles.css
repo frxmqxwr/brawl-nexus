@@ -1285,3 +1285,42 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
   max-height:46px!important;
  }
 }
+
+
+/* v1.14 — prevent cropped hero statistics and protect mobile readability */
+.n16-hero-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}
+.n16-hero-stats>div{max-width:none;width:auto;min-width:0;min-height:66px;display:flex;justify-content:flex-start;overflow:hidden}
+.n16-hero-stats>div>span:last-child{min-width:0;max-width:100%;display:flex;flex-direction:column;gap:4px}
+.n16-hero-stats strong{display:block;max-width:100%;font-size:clamp(17px,1.7vw,25px);line-height:1.1;white-space:normal;overflow-wrap:break-word;overflow:visible;text-overflow:clip}
+.n16-hero-stats small{display:block;line-height:1.3;white-space:normal;overflow-wrap:break-word}
+.n16-hero-brawler{opacity:.18;right:0;filter:drop-shadow(0 12px 22px #10071199)}
+.n16-homehero:after{content:'';position:absolute;z-index:1;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 40%,#210f1e40 75%,#190c17a0 100%)}
+.n16-homehero-content{position:relative;z-index:2}
+.bn114-owned-filter{background:linear-gradient(120deg,#52252d,#2b1b24);border-color:#a65365;color:#ffe0e8}
+.bn114-owned-filter.active{background:linear-gradient(120deg,#cb284d,#902036);border-color:#fa5a78;color:white}
+.bn114-owned-filter:disabled{opacity:.48;cursor:not-allowed}
+@media(max-width:960px){
+ .n16-hero-stats{grid-template-columns:repeat(2,minmax(0,1fr));position:relative;left:auto;right:auto;bottom:auto;margin-top:19px}
+ .n16-hero-stats>div{max-width:none;width:100%;padding:10px;gap:9px;min-height:63px}
+ .n16-homehero{height:auto;min-height:0;padding-bottom:22px}
+ .n16-hero-brawler{right:-10%;width:65%;height:88%;bottom:0;opacity:.12}
+}
+@media(max-width:620px){
+ .n16-homehero{padding:19px 16px 18px;overflow:hidden;min-height:0}
+ .n16-homehero-content>p{max-width:100%;font-size:12px;line-height:1.7}
+ .n16-hero-brawler{display:none}
+ .n16-hero-stats{margin-top:17px;gap:8px;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;max-width:100%}
+ .n16-hero-stats>div{display:grid;grid-template-columns:27px minmax(0,1fr);align-items:center;gap:8px;padding:10px 8px;min-height:70px;border-radius:11px}
+ .n16-hero-stats .game-stat-glyph,.n16-hero-stats .bn17-img-glyph{width:25px;height:25px;font-size:25px}
+ .n16-hero-stats>div>img{width:27px;height:30px;object-fit:contain}
+ .n16-hero-stats>div>span:last-child{gap:3px;min-width:0}
+ .n16-hero-stats strong{font:900 clamp(18px,5vw,25px)/1.1 var(--display);white-space:normal;overflow-wrap:anywhere;text-overflow:clip;overflow:visible}
+ .n16-hero-stats small{font-size:10px;line-height:1.18;color:#f1c2cc}
+ .bn114-owned-filter{font-size:10px;line-height:1.2;white-space:normal}
+ .n16-role-picks{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:360px){
+ .n16-hero-stats>div{grid-template-columns:23px minmax(0,1fr);gap:6px;padding:8px 6px}
+ .n16-hero-stats strong{font-size:18px}
+ .n16-hero-stats small{font-size:9px}
+}

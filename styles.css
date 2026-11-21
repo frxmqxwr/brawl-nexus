@@ -1590,3 +1590,26 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 @media(max-height:800px) and (min-width:761px){
   .sidebar .side-promo>img{width:118px;height:122px;right:-25px;top:-9px}
 }
+
+/* NEXUS / TIP — Spike fills the RIGHT EDGE vertically, rather than floating above it. */
+.sidebar .side-promo>img{
+  top:auto;
+  bottom:0;
+  right:-14px;
+  width:68%;
+  max-width:none;
+  height:100%;
+  object-fit:cover;
+  object-position:center center;
+  transform:none;
+  opacity:.92;
+  filter:brightness(.86) saturate(1.12);
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.68) 26%,#000 48%,#000 100%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.68) 26%,#000 48%,#000 100%);
+}
+.sidebar .side-promo:after{
+  background:linear-gradient(90deg,transparent 48%,rgba(35,13,24,.08) 70%,rgba(35,13,24,.17) 100%);
+}
+@media(max-height:800px) and (min-width:761px){
+  .sidebar .side-promo>img{top:auto;bottom:0;right:-12px;width:67%;height:100%;object-fit:cover}
+}

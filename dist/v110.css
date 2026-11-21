@@ -430,7 +430,7 @@
   height:132px!important;
   max-width:none!important;
   top:4px!important;
-  right:-28px!important;
+  right:-20px!important;
   bottom:auto!important;
   left:auto!important;
   object-fit:contain!important;
@@ -471,7 +471,7 @@
     width:126px!important;
     min-width:126px!important;
     height:126px!important;
-    right:-27px!important;
+    right:-19px!important;
     top:5px!important;
   }
 }

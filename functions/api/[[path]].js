@@ -98,7 +98,21 @@ async function handler(request){
     const u=new URL(request.url);
     let p=u.pathname.replace(/^\/.netlify\/functions\/api(?=\/|$)/,'/api');
     if(!p.startsWith('/api/'))return asJson({error:'Not found'},404);
-    if(request.method==='GET'&&p==='/api/status')return asJson({catalog:true,official:!!TOKEN,brawltools:false,ai:!!AI_KEY,aiAccessRequired:!!AI_ACCESS_CODE,esports:!!ESPORTS_FEED,rotation:!!TOKEN,mapStats:!!MAP_STATS_FEED,staticIpRequired:true,netlify:false,cloudflare:true,now:new Date().toISOString()});
+    if(request.method==='GET'&&p==='/api/status'){
+      // Return configuration state without ever exposing the token.
+      const overview={catalog:true,official:!!TOKEN,brawltools:false,ai:!!AI_KEY,aiAccessRequired:!!AI_ACCESS_CODE,esports:!!ESPORTS_FEED,rotation:!!TOKEN,mapStats:!!MAP_STATS_FEED,staticIpRequired:true,netlify:false,cloudflare:true,now:new Date().toISOString()};
+      if(u.searchParams.get('check')!=='supercell')return asJson(overview);
+      if(!TOKEN)return asJson({configured:false,connected:false,reason:'token-not-configured',checkedAt:new Date().toISOString()});
+      const probe=await cached('supercell-connection-check',120_000,async()=>{
+        try{
+          const url=OFFICIAL_BASE+'/players/'+encodeURIComponent('#9YRLQG229');
+          const response=await fetch(url,{headers:{Authorization:'Bearer '+TOKEN,Accept:'application/json'},signal:AbortSignal.timeout(7000)});
+          const reason=response.ok?'connected':response.status===403?'ip-or-token-not-allowed':response.status===401?'token-rejected':response.status===429?'rate-limited':'supercell-http-error';
+          return {connected:response.ok,httpStatus:response.status,reason};
+        }catch{return {connected:false,httpStatus:null,reason:'network-or-timeout'}}
+      });
+      return asJson({configured:true,...probe,checkedAt:new Date().toISOString()});
+    }
     if(request.method==='GET'&&['/api/catalog','/api/maps','/api/icons'].includes(p)){
       const endpoint={'/api/catalog':'brawlers','/api/maps':'maps','/api/icons':'icons'}[p];
       return asJson(await cached(endpoint,60*60_000,()=>remoteJson(BASE+'/'+endpoint)));

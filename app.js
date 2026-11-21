@@ -484,8 +484,120 @@ function getVisibleBrawlers(){const d=state.draft;let a=state.catalog.filter(b=>
 function drawPicker(){const el=$('#brawlerPicker');if(!el)return;const {ally,enemy,bans,favorites}=state.draft;const visible=getVisibleBrawlers();const counter=$('#draftVisibleCount');if(counter)counter.textContent=`${visible.length} / ${state.draft.ownedOnly&&state.player?.brawlers?.length&&draftCurrent().phase==='picks'&&draftCurrent().side==='ally'?state.player.brawlers.length:state.catalog.length}`;el.innerHTML=visible.slice(0,160).map(b=>{const chosen=ally.includes(b.name)||enemy.includes(b.name),banned=bans.includes(b.name),fav=favorites.includes(b.name),disabled=chosen||banned||(state.draft.phase==='picks'&&state.draft.pickHistory.length>=6);return `<div class="pick-tile ${chosen?'chosen':''} ${banned?'banned':''}"><button type="button" class="brawler-pick ${chosen?'chosen':''} ${banned?'banned':''}" data-action="draft-pick" data-name="${esc(b.name)}" title="Выбрать ${esc(b.name)} · ${esc(ROLES_RU[role(b)]||role(b))}" ${disabled?'disabled':''}>${img(b.imageUrl,b.name)}<span>${esc(b.name)}</span>${banned?'<span class="banned-x">×</span>':''}</button><button class="pick-favorite ${fav?'saved':''}" type="button" data-action="draft-favorite" data-name="${esc(b.name)}" aria-label="${fav?'Убрать из избранного':'В избранное'}: ${esc(b.name)}" title="Избранное">${fav?'★':'☆'}</button></div>`}).join('')||'<div class="empty-note">Ничего не найдено. Измени поиск или фильтры.</div>'}
 
 function drawRecommendations(){const el=$('#draftRecommendations');if(!el)return;const t=draftCurrent(),top=assessDraft(),canPick=t.phase==='picks'&&t.side==='ally';el.innerHTML=`<div class="panel-header"><div class="panel-title">${t.phase==='bans'?'ПОДГОТОВКА СОСТАВА':t.side==='enemy'?'ПЛАН НА НАШ СЛЕДУЮЩИЙ ХОД':'NEXUS RECOMMENDS'}</div>${tag('HEURISTIC MODEL','purple')}</div>${t.phase==='bans'?'<p class="help-text">Пока отмечаешь баны, система показывает перспективные варианты для своей команды. После банов и пиков противника оценки пересчитаются.</p>':''}<div style="display:grid;gap:9px">${top.map((x,i)=>`<div class="analysis-line">${img(x.b.imageUrl,x.b.name)}<div class="reason"><b>${i+1}. ${esc(x.b.name)}</b><p>${esc(x.reason)}</p></div><div class="score-pill">${x.score}</div><button class="icon-btn" title="${canPick?'Выбрать для своей команды':'Доступно в свой ход пика'}" data-action="recommend-pick" data-name="${esc(x.b.name)}" ${canPick?'':'disabled'}>${icon('plus')}</button></div>`).join('')}</div><p class="source-note" style="margin:12px 0 0">Индекс 0–100 — эвристика по ролям, режиму, характеру карты и известным матчапам. Не официальный винрейт и не прогноз победы. Список предназначен для нашей команды.</p>`;learnIcons()}
+
+const TROPHY_MODE_PRESETS=['soloShowdown','duoShowdown','trioShowdown','brawlBall','gemGrab','knockout','hotZone','heist','bounty','wipeout','basketBrawl','volleyBrawl','duels','brawlArena','deathmatch5v5'];
+function metaModeSelector(){
+ const d=state.draft;
+ return `<div class="bn115-modes" role="group" aria-label="Выбери тип матча">
+  <button type="button" data-action="meta-playlist" data-playlist="trophy" aria-pressed="${d.playlist!=='ranked'}" class="bn115-mode-button bn115-trophy ${d.playlist!=='ranked'?'selected':''}">
+   <span class="bn115-mode-art">${uiPackImg('trophy')}</span><span class="bn115-mode-label"><b>ИГРА НА ТРОФЕИ</b><small>Ладдер · соло, дуо и командные режимы</small></span><span class="bn115-mode-check">${icon('check-circle-2')}</span>
+  </button>
+  <button type="button" data-action="meta-playlist" data-playlist="ranked" aria-pressed="${d.playlist==='ranked'}" class="bn115-mode-button bn115-ranked ${d.playlist==='ranked'?'selected':''}">
+   <span class="bn115-mode-art">${rankPic('Legendary','bn115-ranked-symbol')}</span><span class="bn115-mode-label"><b>СИЛОВАЯ ЛИГА</b><small>Ranked · жетон, баны, пики и контрпики</small></span><span class="bn115-mode-check">${icon('check-circle-2')}</span>
+  </button>
+ </div>`;
+}
+function trophyModesAvailable(){
+ const order=[...TROPHY_MODE_PRESETS,...(state.rotationEvents||[]).map(e=>e.mode),...(state.maps||[]).map(m=>m?.gameMode?.name)];
+ return [...new Map(order.filter(Boolean).map(mode=>[normMode(mode),String(mode)])).values()].filter(mode=>normMode(mode)!=='').sort((a,b)=>{
+  const i=TROPHY_MODE_PRESETS.findIndex(x=>normMode(x)===normMode(a)),j=TROPHY_MODE_PRESETS.findIndex(x=>normMode(x)===normMode(b));
+  return (i<0?999:i)-(j<0?999:j)||modeName(a).localeCompare(modeName(b),'ru');
+ });
+}
+function trophyMapsAvailable(){
+ const d=state.draft,mode=normMode(d.trophyMode);
+ const feed=rotationEntries().filter(e=>normMode(e.mode)===mode).map(e=>({...e,live:!!e.live}));
+ const catalog=(state.maps||[]).filter(m=>normMode(m?.gameMode?.name)===mode).map(m=>({id:String(m.id||''),key:String(m.id||''),name:String(m.name||''),mode:d.trophyMode,imageUrl:m.imageUrl||'',live:false}));
+ const set=new Set();
+ return [...feed,...catalog].filter(m=>{const key=NORM_MAP(m.name);if(!key||set.has(key))return false;set.add(key);return true});
+}
+function chosenTrophyMap(){
+ const d=state.draft,all=trophyMapsAvailable();
+ return all.find(m=>NORM_MAP(m.name)===NORM_MAP(d.trophyMapName))||all[0]||null;
+}
+const TROPHY_BRAWLER_LISTS={
+ soloShowdown:['Cordelius','Shelly','Leon','Surge','Max','Crow','Lily','Buzz','Piper','Stu','Angelo','Bibi'],
+ duoShowdown:['Max','Gene','Sandy','Gus','Leon','Cordelius','Byron','Piper','Crow','Spike','Belle','Angelo'],
+ trioShowdown:['Max','Sandy','Gene','Spike','Belle','Gale','Stu','Gus','Piper','Rico','Colette','Leon'],
+ brawlBall:['Gale','Max','Sandy','Stu','Bibi','Surge','Cordelius','Rico','Colette','Gene','Jacky'],
+ gemGrab:['Gene','Sandy','Belle','Max','Rico','Piper','Jessie','Byron','Pam','Gus','Spike'],
+ heist:['Colt','Colette','Jessie','8-Bit','Chuck','Brock','Melodie','Nita','Rico','Crow'],
+ knockout:['Piper','Belle','Nani','Angelo','Gus','Gene','Mandy','Brock','Max','Byron'],
+ hotZone:['Sandy','Gale','Emz','Lou','Rico','Jessie','Spike','Poco','Jacky','Bibi'],
+ bounty:['Piper','Belle','Mandy','Nani','Brock','Angelo','Gene','Gus'],
+ wipeout:['Piper','Nani','Belle','Brock','Gene','Max','Angelo','Crow'],
+ basketBrawl:['Gale','Max','Sandy','Bibi','Colette','Stu','Surge'],
+ duels:['Cordelius','Shelly','Leon','Surge','Piper','Nani','Buzz','Max'],
+ brawlArena:['Colt','Jessie','Piper','Max','Spike','Rico','8-Bit','Sandy'],
+ deathmatch5v5:['Sandy','Gale','Gene','Max','Belle','Spike','Piper','Stu','Rico','Byron']
+};
+function trophyPickAdvice(map){
+ const mode=normMode(map?.mode||state.draft.trophyMode);
+ const terrain=terrainEstimate(map).type;
+ const teamSize=modePickCount(map?.mode||state.draft.trophyMode);
+ let names=TROPHY_BRAWLER_LISTS[mode]||[];
+ if(mode==='soloshowdown'&&terrain==='open')names=['Piper','Max','Leon','Crow','Angelo','Cordelius','Shelly','Stu','Surge','Lily','Buzz'];
+ const terrainNames=terrain==='open'?['Piper','Belle','Nani','Angelo','Brock']:terrain==='closed'?['Rico','Bibi','Sandy','Jacky','Cordelius']:['Gale','Max','Spike','Stu','Jessie'];
+ const candidates=[...new Set([...names,...terrainNames,...(state.catalog||[]).map(b=>b.name)])].map(n=>getB(n)).filter(b=>b&&b.released!==false);
+ const owned=new Map((state.player?.brawlers||[]).map(b=>[String(b.name||'').toLowerCase(),b]));
+ const hasPlayer=owned.size>0;
+ const pool=state.draft.trophyOwnedOnly&&hasPlayer?candidates.filter(b=>owned.has(b.name.toLowerCase())):candidates;
+ const roleWanted=mode==='soloshowdown'?['Assassin','Damage Dealer','Controller']:mode==='duoshowdown'?['Support','Controller','Assassin','Marksman']:(MODE_PREFS[Object.keys(MODE_EN).find(k=>normMode(MODE_EN[k])===mode)]||[]);
+ const result=pool.map((b,i)=>{
+  const p=owned.get(b.name.toLowerCase());
+  let points=70-(i<names.length?i*3:Math.min(30,14+i));
+  const r=role(b);
+  if(roleWanted.includes(r))points+=6;
+  if(terrain==='open'&&r==='Marksman')points+=6;
+  if(terrain==='closed'&&['Tank','Artillery','Controller'].includes(r))points+=5;
+  if(p)points+=Math.min(9,Math.round(Number(p.trophies||0)/350));
+  const reason=i<names.length?'Подходит под задачи режима и карту':'Запасной вариант по роли и характеру карты';
+  return {b,points:Math.max(1,Math.min(99,points)),reason,player:p,role:r};
+ }).sort((a,b)=>b.points-a.points||a.b.name.localeCompare(b.b.name));
+ const lineup=[],roles=new Set();
+ for(const item of result){if(lineup.length>=teamSize)break;if(!roles.has(item.role)){lineup.push(item);roles.add(item.role)}}
+ for(const item of result){if(lineup.length>=teamSize)break;if(!lineup.includes(item))lineup.push(item)}
+ return {result,teamSize,lineup,hasPlayer,terrain};
+}
+function renderTrophyAdvisor(){
+ const d=state.draft,m=chosenTrophyMap();
+ const chosen=m||{mode:d.trophyMode,name:'Карта не выбрана'};
+ const modes=trophyModesAvailable(),maps=trophyMapsAvailable();
+ const advice=trophyPickAdvice(chosen),count=advice.teamSize,solo=count===1;
+ const selectable=advice.result.slice(0,Math.max(8,count+5));
+ const modeInfo=modeName(d.trophyMode);
+ const active=state.rotationEvents?.some(e=>NORM_MAP(e.map)===NORM_MAP(chosen.name)&&normMode(e.mode)===normMode(chosen.mode));
+ const rosterLabel=state.player?.brawlers?.length?d.trophyOwnedOnly?'ТВОИ БОЙЦЫ':'ВСЕ БОЙЦЫ':'ГОСТЕВОЙ РЕЖИМ';
+ const lineup=advice.lineup;
+ return `<div class="bn115-trophy-page">
+   <div class="bn115-trophy-intro"><div>${uiPackImg('trophy')}<span><b>TROPHY INTELLIGENCE</b><small>Выбирай лучшего бойца на карте без банов и очереди пиков. Советы учитывают режим и тип карты.</small></span></div><span class="bn115-live-label">${active?'● LIVE ROTATION':'MAP CATALOG'}</span></div>
+   <div class="bn115-trophy-controls panel panel-pad">
+    <label><span class="small-label">РЕЖИМ ИГРЫ</span><select class="select" id="trophyMode">${modes.map(mode=>`<option value="${esc(mode)}" ${normMode(mode)===normMode(d.trophyMode)?'selected':''}>${esc(modeName(mode))}</option>`).join('')}</select></label>
+    <label><span class="small-label">КАРТА · BRAWLAPI / SUPERCELL</span><select class="select" id="trophyMap">${maps.length?maps.map(map=>`<option value="${esc(map.name)}" ${NORM_MAP(map.name)===NORM_MAP(chosen.name)?'selected':''}>${esc(map.name)}${map.live?' · LIVE':''}</option>`).join(''):'<option value="">Нет карт в каталоге</option>'}</select></label>
+    <button class="bn115-roster-toggle ${state.player?.brawlers?.length&&d.trophyOwnedOnly?'active':''}" type="button" data-action="trophy-owned" ${!state.player?.brawlers?.length?'disabled title="Загрузи свой профиль, чтобы включить фильтр"':''}>${uiPackImg('contact-round')} ${rosterLabel}</button>
+   </div>
+   <div class="bn115-trophy-layout">
+    <section class="bn115-map-panel panel panel-pad">
+     <div class="panel-header"><div class="panel-title">${modeGameIcon(chosen.mode)} ${esc(modeInfo)}</div><span class="tag red">${count===1?'СОЛО':count+' ИГРОКА'}</span></div>
+     <div class="bn115-map-art">${m?.imageUrl?img(m.imageUrl,m.name):`<div class="n16-map-placeholder">${icon('map')} Нет изображения</div>`}</div>
+     <h3>${esc(m?.name||'Выбери карту')}</h3>
+     ${terrainBadge(chosen)}
+     <p class="card-sub">${solo?'В соло ты выбираешь одного бойца, но ниже показаны разные подходящие варианты — это не состав из трёх.':count===2?'В дуо важна взаимодополняющая пара. Ниже — пример связки и альтернативы для каждого игрока.':'В командном режиме показан пример состава и запасные варианты. Учитывай пики союзников и карту.'}</p>
+    </section>
+    <section class="bn115-picks-panel panel panel-pad">
+      <div class="panel-header"><div class="panel-title">${uiPackImg('star')} ${solo?'КОГО ВЫБРАТЬ В СОЛО':`СОСТАВ НА ${count} ИГРОКОВ`}</div><span class="tag gold">ЭВРИСТИКА · НЕ WR</span></div>
+      ${!solo&&lineup.length?`<div class="bn115-team-row">${lineup.map((x,i)=>`<div class="bn115-team-member">${bimg(x.b.name)}<b>${esc(x.b.name)}</b><small>${i+1} · ${esc(ROLES_RU[x.role]||'Боец')}</small></div>`).join('')}</div>`:''}
+      <p class="bn115-tip">${solo?'Рекомендуемые альтернативы для одного игрока (не нужно выбирать всех).':`Ниже ещё варианты на случай недоступного бойца или другого состава.`}</p>
+      <div class="bn115-candidates">${selectable.map((x,i)=>`<article class="bn115-pick-card">${bimg(x.b.name)}<div class="bn115-pick-meta"><b>${i+1}. ${esc(x.b.name)}</b><small>${esc(ROLES_RU[x.role]||'Боец')} · ${esc(x.reason)}</small>${x.player?`<em>${uiPackImg('trophy')} ${fmt(x.player.trophies)} твоих кубков · Сила ${fmt(x.player.power)}</em>`:''}</div><span class="bn115-pick-rank">#${i+1}</span></article>`).join('')||`<div class="empty-note">${advice.hasPlayer&&d.trophyOwnedOnly?'Нет доступных бойцов с подходящими данными. Отключи фильтр «Твои бойцы».':'Не удалось получить бойцов каталога. Проверь подключение BrawlAPI.'}</div>`}</div>
+      <p class="source-note">Рекомендации основаны на характере карты, ролях, режиме и (при наличии профиля) кубках бойца. Это не официальный винрейт. Драфт с банами доступен во вкладке «Силовая лига».</p>
+    </section>
+   </div>
+ </div>`;
+}
+
 function renderMeta(){const d=state.draft,t=draftCurrent();
- $('#page-meta').innerHTML=`${intro('TACTICAL DRAFT ENGINE','META <span>LAB.</span>','Реальный порядок выбора 1–2–2–1. Укажи владельца жетона первого пика, отметь баны и выбирай бойцов в очереди — переключать сторону больше не нужно.','Gale')}
+ if(d.playlist!=='ranked'){$('#page-meta').innerHTML=`${intro('TROPHY INTELLIGENCE','META <span>LAB.</span>','Трофейные режимы: подбор одного бойца для соло, пары для дуо и состава для командной игры.','Max')}${metaModeSelector()}${renderTrophyAdvisor()}`;learnIcons();return}
+ $('#page-meta').innerHTML=`${intro('TACTICAL DRAFT ENGINE','META <span>LAB.</span>','Реальный порядок выбора 1–2–2–1. Укажи владельца жетона первого пика, отметь баны и выбирай бойцов в очереди — переключать сторону больше не нужно.','Gale')}${metaModeSelector()}
  <div class="draft-live-bar ${d.liveMode?'is-live':''}"><div class="live-callout"><span class="live-beacon"></span><div><b>${d.liveMode?'LIVE DRAFT / РЕЖИМ МАТЧА':'DRAFT ASSIST / ПЕРЕД РАНГОВОЙ'}</b><small>${d.liveMode?'После каждого пика очередь и подсказки обновляются мгновенно. Ввод вручную: официальный API не передаёт живые пики.':'Запусти компактную рабочую панель для выбора во время матча.'}</small></div></div><div class="live-actions"><button class="button ${d.liveMode?'secondary':'purple'} sm" data-action="live-mode">${icon(d.liveMode?'minimize':'maximize')} ${d.liveMode?'ВЫЙТИ ИЗ LIVE':'ЗАПУСТИТЬ LIVE DRAFT'}</button><span class="hotkey-hint">/ ПОИСК · ENTER ПИК · CTRL+Z ОТМЕНА</span></div></div>
  ${panel(`<div class="draft-tools draft-tools-v12"><label><span class="small-label">РЕЖИМ</span><select class="select" id="draftMode">${MODES.map(m=>`<option ${m===d.mode?'selected':''}>${m}</option>`).join('')}</select></label><label><span class="small-label">КАРТА (BRAWLAPI)</span><select class="select" id="draftMap"><option value="">Выбрать карту...</option>${matchingMaps().map(m=>`<option value="${esc(m.id)}" ${String(d.mapId)===String(m.id)?'selected':''}>${esc(m.name)}</option>`).join('')}</select></label><button class="button secondary sm" data-action="draft-reset">${icon('rotate-ccw')} НОВЫЙ ДРАФТ</button></div><div class="terrain-bar">${mapPreview()}<div class="terrain-controls"><span class="small-label">ХАРАКТЕР КАРТЫ / АВТО</span>${terrainBadge(matchingMaps().find(x=>String(x.id)===String(d.mapId)))}<small class="terrain-caption">Без ручного переключателя — меняется с картой</small></div></div>${draftProgressUI()}<div class="draft-board"><div class="panel draft-team ${t.side==='ally'?'board-active-own':''}"><div class="draft-title"><strong style="color:var(--cyan)">НАША КОМАНДА</strong>${tag(d.pickHistory.filter(x=>x.side==='ally').length+'/3','cyan')}</div><div class="draft-slots">${[0,1,2].map(i=>draftSlot('ally',i)).join('')}</div></div><div class="panel draft-team ${t.side==='enemy'?'board-active-enemy':''}"><div class="draft-title"><strong style="color:var(--pink)">СОПЕРНИК</strong>${tag(d.pickHistory.filter(x=>x.side==='enemy').length+'/3','red')}</div><div class="draft-slots">${[0,1,2].map(i=>draftSlot('enemy',i)).join('')}</div></div></div><div class="eyeline" style="margin:16px 0 10px">ЗАБАНЕННЫЕ ${d.bans.length}/6</div><div class="bans-list bans-v12">${d.bans.map(n=>`<div class="ban-icon">${bimg(n)}<span>${esc(n)}</span>${d.phase==='bans'?`<button class="ban-remove" data-action="draft-unban" data-name="${esc(n)}" title="Убрать бан">×</button>`:''}</div>`).join('')||'<span class="help-text">Пока нет банов — можно перейти прямо к пикам</span>'}</div>`,'panel-pad')}
  <div class="grid-2 mt-18 meta-workspace"><div>${panel(`<div class="picker-turn-glance ${t.phase==='bans'?'glance-ban':t.side==='enemy'?'glance-enemy':'glance-ally'}"><span class="glance-light"></span><b>${t.phase==='bans'?'ФАЗА БАНОВ':!t.side?'ДРАФТ ЗАВЕРШЁН':t.side==='ally'?'СЕЙЧАС НАШ ПИК':'СЕЙЧАС ПИК СОПЕРНИКА'}</b><span>${t.phase==='picks'?'ХОД '+Math.min(t.index+1,6)+' / 6':d.bans.length+' / 6 БАНОВ'}</span></div><div class="panel-header"><div class="panel-title">${t.phase==='bans'?'ВЫБЕРИ БОЙЦА ДЛЯ БАНА':!t.side?'ДРАФТ ЗАВЕРШЁН':t.side==='ally'?'ВЫБЕРИ НАШ ПИК':'ОТМЕТЬ ПИК СОПЕРНИКА'} <span class="picker-counter" id="draftVisibleCount">${state.catalog.length}</span></div><button type="button" class="favorite-filter bn114-owned-filter ${d.ownedOnly&&state.player?.brawlers?.length?'active':''}" data-action="draft-only-owned" ${!state.player?.brawlers?.length?'disabled title="Сначала загрузи свой профиль"':'title="Только открытые на аккаунте бойцы 11-й силы"'}>${state.player?.brawlers?.length?d.ownedOnly?'✓ МОИ БОЙЦЫ · 11 СИЛА':'ВСЕ БОЙЦЫ':'ЗАГРУЗИ ПРОФИЛЬ'}</button><button class="favorite-filter ${d.favoritesOnly?'active':''}" data-action="draft-only-favorites" title="Показать избранных">★ ${d.favoritesOnly?'ТОЛЬКО ИЗБРАННЫЕ':'ИЗБРАННОЕ'}</button></div><label class="picker-search"><span>${icon('search')}</span><input class="input" placeholder="Быстрый поиск бойца по имени..." autocomplete="off" id="draftSearch" value="${esc(d.query)}" aria-label="Поиск бойца"></label><div class="pick-filter-row"><button class="role-chip ${d.classFilter==='Все'?'active':''}" data-action="draft-role" data-role="Все">ВСЕ</button>${Object.entries(ROLES_RU).map(([en,ru])=>`<button class="role-chip ${d.classFilter===en?'active':''}" data-action="draft-role" data-role="${en}">${ru}</button>`).join('')}</div><p class="help-text picker-hint">${t.phase==='bans'?'Нажми на бойца, чтобы забанить. После шести банов начнутся пики.':t.side==='ally'?'Сейчас выбирает наша команда. При фильтре «Мои бойцы» показаны только персонажи 11-й силы из твоего профиля. Сезонных бесплатных бойцов API не раскрывает.':t.side==='enemy'?'Нажми на бойца, которого забрал соперник. Не нужно менять команду вручную.':'Все пики внесены. Исправь последний ход кнопкой «Назад».'}</p><div id="brawlerPicker" class="brawler-picker"></div>`,'panel-pad')}</div><div>${panel(`<div id="draftRecommendations"></div>`,'panel-pad')}<div class="panel panel-pad mt-18"><div class="panel-header"><div class="panel-title">О РЕЖИМЕ LIVE DRAFT</div><span class="icon-bubble purple">${icon('brain-circuit')}</span></div><div class="card-sub" style="line-height:1.9">1. Укажи, у кого жетон первого пика.<br>2. Запиши до шести банов или пропусти их.<br>3. Дальше очередь 1–2–2–1 переключается сама.<br>4. Если не успел заметить пик, нажми «Пропустить пик» и продолжай.<br>5. Совет пересчитывается для своей команды после каждого выбора.</div><button class="button secondary sm" style="margin-top:14px" id="metaAskAI">${icon('sparkles')} ОБСУДИТЬ ДРАФТ</button></div></div></div>`;

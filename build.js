@@ -5,7 +5,7 @@ const path=require('node:path');
 const src=__dirname;
 const out=path.join(src,'dist');
 fs.mkdirSync(out,{recursive:true});
-for(const name of ['index.html','styles.css','v110.css','app.js','esports-v2.js','esports-v2.css']){
+for(const name of ['index.html','styles.css','v110.css','app.js','esports-v2.js','esports-v2.css','i18n.js','i18n.css']){
   fs.copyFileSync(path.join(src,name),path.join(out,name));
   console.log('Published:',name);
 }
@@ -13,7 +13,7 @@ for(const name of ['index.html','styles.css','v110.css','app.js','esports-v2.js'
 const assetSrc=path.join(src,'assets');
 const assetDest=path.join(out,'assets');
 fs.mkdirSync(assetDest,{recursive:true});
-for(const name of ['nexus-emblem.webp','nexus-wordmark.webp','nexus-brand.webp','nexus-guest.webp','nexus-favicon.png','spike-tip.webp','nexus-tip-banner.webp']){
+for(const name of ['nexus-emblem.webp','nexus-wordmark.webp','nexus-brand.webp','nexus-guest.webp','nexus-favicon.png','spike-tip.webp','nexus-tip-banner.webp','nexus-tip-banner-en.webp']){
   fs.copyFileSync(path.join(assetSrc,name),path.join(assetDest,name));
   console.log('Published: assets/'+name);
 }

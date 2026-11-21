@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="styles.css?v=spike-inline-5" />
   <link rel="stylesheet" href="v110.css?v=nexus-exact-image-9" />
   <link rel="stylesheet" href="esports-v2.css?v=esports-2026-1" />
+  <link rel="stylesheet" href="i18n.css?v=ru-en-1" />
 </head>
 <body>
   <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div><div class="noise-layer"></div>
@@ -47,7 +48,7 @@
     <div class="main-area">
       <header class="topbar">
         <div class="breadcrumbs"><button class="mobile-menu" id="menuToggle" aria-label="Открыть меню"><i data-lucide="menu"></i></button><span class="breadcrumb-sub">NEXUS</span><span class="crumb-slash">/</span><b id="crumbCurrent">ОБЗОР</b></div>
-        <div class="topbar-actions"><span class="status-time"><span class="pulse-dot"></span><span id="dataStatus">Инициализация данных</span></span><span class="topbar-sep"></span><button class="icon-btn" title="Перезагрузить игровые данные" id="refreshBtn"><i data-lucide="refresh-cw"></i></button><button class="top-avatar" data-page="profile" title="Открыть профиль"><img src="assets/nexus-guest.webp" alt="Гостевой аватар Nexus" /></button></div>
+        <div class="topbar-actions"><span class="status-time"><span class="pulse-dot"></span><span id="dataStatus">Инициализация данных</span></span><div class="nexus-language-switch" role="group" aria-label="Site language"><button type="button" data-language="ru" aria-pressed="true" title="Русский">RU</button><button type="button" data-language="en" aria-pressed="false" title="English">EN</button></div><span class="topbar-sep"></span><button class="icon-btn" title="Перезагрузить игровые данные" id="refreshBtn"><i data-lucide="refresh-cw"></i></button><button class="top-avatar" data-page="profile" title="Открыть профиль"><img src="assets/nexus-guest.webp" alt="Гостевой аватар Nexus" /></button></div>
       </header>
       <main class="content" id="content" tabindex="-1">
         <section class="page active" id="page-home"></section>
@@ -81,6 +82,7 @@
   <div class="toast-zone" id="toastZone"></div>
   <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
   <script src="esports-v2.js?v=esports-2026-3" defer></script>
-  <script src="app.js?v=esports-2026-3" defer></script>
+  <script src="app.js?v=i18n-1" defer></script>
+  <script src="i18n.js?v=ru-en-1" defer></script>
 </body>
 </html>

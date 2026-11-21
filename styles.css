@@ -998,3 +998,116 @@ body{background:radial-gradient(ellipse 48vw 32vw at 75% 0,#4e0e202d,transparent
 .bn110-brawler-expand>div{display:flex;flex-direction:column;gap:3px}
 .bn110-brawler-expand>div>b{font-size:9px;color:#bd8396}
 .bn110-brawler-expand>div>span{font-size:12px;font-weight:800;color:#f5d4df}
+.bn110-brawler-expand p{grid-column:1/-1;margin:3px 0 0;font-size:10px;color:#d0adb7;line-height:1.6;overflow-wrap:anywhere}
+.bn110-mobile-tabs{display:none}
+@media(max-width:1200px){.bn110-explorer-search{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)}.bn110-my-button{grid-column:2;justify-self:end}.bn110-hero-stats{max-width:82%}.bn110-prestige-tier{gap:4px}.bn110-prestige-tier b{font-size:19px}}
+@media(max-width:1000px){.bn110-overview-grid,.bn110-summary-grid,.bn110-lower-grid{grid-template-columns:1fr}.bn110-explorer-search{grid-template-columns:1fr auto;gap:10px}.bn110-search-form{grid-column:1/-1;grid-row:2}.bn110-my-button{grid-column:2;grid-row:1}.bn110-rank-container{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.bn110-rank-container .panel-title{grid-column:1/-1}.bn110-rank-card{min-width:0}}
+@media(max-width:760px){
+ .sidebar{height:100dvh!important;max-height:100dvh;overflow-y:auto!important;padding:14px 13px 16px!important}
+ .sidebar .side-promo{display:none}
+ .sidebar .brand-v14{padding:5px 5px 12px}
+ .sidebar .nav-link{min-height:43px;padding:10px 10px}
+ .sidebar .sidebar-bottom{margin-top:auto}
+ .main-area .content{padding-bottom:115px!important}
+ .bn110-mobile-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:fixed;z-index:60;left:max(8px,env(safe-area-inset-left));right:max(8px,env(safe-area-inset-right));bottom:calc(8px + env(safe-area-inset-bottom));padding:5px;background:#1e121abf;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid #754154;border-radius:15px;box-shadow:0 12px 28px #000a}
+ .bn110-mobile-tabs button{border:0;background:transparent;border-radius:11px;color:#d0a6b2;display:grid;place-items:center;gap:4px;min-height:51px;padding:6px 2px;font:800 9px var(--sans)}
+ .bn110-mobile-tabs button.active{background:linear-gradient(120deg,#a52843,#5b2032);color:white}
+ .bn110-mobile-tabs svg{width:19px;height:19px}
+ .bn110-mobile-tabs .bn17-nav-icon{width:19px;height:19px;object-fit:contain}
+ .bn110-explorer-search{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}
+ .bn110-own-account{grid-column:1}
+ .bn110-my-button{grid-column:2}
+ .bn110-search-form{grid-column:1/-1;grid-row:2}
+ .bn110-player-hero{min-height:0;padding:14px}
+ .bn110-character-art{width:40%;opacity:.24}
+ .bn110-hero-stats{max-width:100%}
+ .bn110-metric{background:#281721e8}
+ .bn110-mini-podium{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 1px 9px;scrollbar-width:thin}
+ .bn110-mini-podium .bs-podium-card,.bn110-mini-podium .bs-podium-card.bs-podium-1{flex:0 0 151px;width:151px;min-width:151px;max-width:151px;height:224px;max-height:224px;scroll-snap-align:start}
+ .bn110-mini-podium .bs-podium-figure{height:123px;max-height:123px}
+ .bn110-rank-card{min-height:85px;padding:9px;gap:8px}
+ .bn110-rank-image{width:52px;min-width:52px;height:52px}
+ .bn110-rank-image .rank-dynamic-img{width:46px;height:46px}
+ .bn110-rank-card strong{font-size:21px}
+ .bn110-other-profile{gap:10px}
+ .ai-fab-wrap{bottom:calc(79px + env(safe-area-inset-bottom))!important;right:12px!important}
+}
+@media(max-width:480px){
+ .bn110-page-head h1{font-size:37px}
+ .bn110-rank-container{display:flex;flex-direction:column}
+ .bn110-prestige-numbers{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .bn110-prestige-numbers>div{padding:8px;gap:5px}
+ .bn110-prestige-numbers strong{font-size:25px}
+ .bn110-prestige-numbers .bs-prestige-shield{width:28px;height:37px}
+ .bn110-prestige-numbers small{font-size:8px}
+ .bn110-prestige-tier{flex-direction:column;text-align:center;gap:2px;padding:7px 3px}
+ .bn110-prestige-tier b{margin:0;font-size:20px}
+ .bn110-prestige-tier .bs-prestige-shield{width:28px;height:30px}
+ .bn110-profile-avatar{width:57px;height:57px}
+ .bn110-id-row>div{max-width:calc(100% - 72px)}
+ .bn110-id-row h2{font-size:29px}
+ .bn110-id-row{gap:12px}
+ .bn110-hero-stats{gap:6px}
+ .bn110-metric{gap:5px;padding:8px 5px}
+ .bn110-metric .game-stat-glyph{font-size:22px}
+ .bn110-metric b{font-size:23px}
+ .bn110-metric small{font-size:9px}
+ .bn110-hero-cta>span{font-size:9px}
+ .bn110-hero-cta .button{font-size:8px;padding:6px 8px}
+ .bn110-search-form>div{display:grid;grid-template-columns:minmax(0,1fr) auto}
+ .bn110-search-form .button{font-size:10px;padding:9px}
+ .bn110-search-panel{padding:13px}
+ .bn110-own-account b{font-size:11px}
+ .bn110-my-button{font-size:9px;padding:8px}
+ .bn110-battle-panel .battle-row{grid-template-columns:72px minmax(0,1fr);gap:7px}
+ .bn110-battle-panel .battle-images{display:none}
+ .bn110-summary-grid .panel-pad{padding:13px}
+}
+
+/* v1.11 — mobile podium fit, rank alignment and visible trophy stage counters */
+.bs-prestige-step{min-width:0;gap:3px}
+.bs-prestige-step>b{font:900 20px/1 var(--display);color:#fff;white-space:nowrap}
+.bs-prestige-step>b small{font:700 10px/1.1 var(--sans);color:#e9a9bc;display:block;margin-top:5px}
+.ranked-stat{display:grid;grid-template-columns:clamp(50px,6vw,73px) minmax(0,1fr);align-items:center;gap:13px}
+.ranked-stat>div:last-child{min-width:0;align-content:center;justify-items:start}
+.ranked-icon{width:100%;min-width:0;max-width:73px;height:auto;aspect-ratio:1;align-self:center;justify-self:center}
+.ranked-icon img{width:88%;height:88%;max-width:65px;max-height:65px;object-fit:contain;display:block;margin:auto}
+@media(max-width:700px){
+ .bs-showcase .bs-podium-landscape{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;overflow:visible;padding:0;scroll-snap-type:none;align-items:end}
+ .bs-showcase .bs-podium-card,.bs-showcase .bs-podium-card.bs-podium-1{width:auto;min-width:0;max-width:none;height:191px;min-height:0;overflow:hidden;border-radius:12px;padding-top:8px}
+ .bs-showcase .bs-podium-card.bs-podium-1{height:207px}
+ .bs-showcase .bs-podium-figure,.bs-showcase .bs-podium-card.bs-podium-1 .bs-podium-figure{height:102px;min-height:0;padding:0 3px;flex:0 0 102px}
+ .bs-showcase .bs-podium-card.bs-podium-1 .bs-podium-figure{height:115px;flex-basis:115px}
+ .bs-showcase .bs-podium-figure img{object-fit:contain;max-width:100%;max-height:100%;object-position:bottom}
+ .bs-showcase .bs-podium-content{width:100%;padding:0 2px 4px;gap:3px}
+ .bs-showcase .bs-podium-content>strong{font-size:15px;max-width:100%}
+ .bs-showcase .bs-podium-content>span{font-size:10px;gap:2px;white-space:nowrap}
+ .bs-showcase .bs-podium-content>span .bn17-img-glyph{font-size:14px}
+ .bs-showcase .bs-podium-rank{height:18px;gap:1px}
+ .bs-showcase .bs-podium-rank>.bs-prestige-shield{height:18px;width:20px}
+ .bs-showcase .bs-podium-rank>small{font-size:8px;white-space:nowrap}
+ .bs-showcase .bs-podium-base{font-size:11px;padding:5px 1px}
+ .bs-showcase .bs-podium-ordinal{font-size:18px;top:5px;left:8px}
+ .ranked-panel-v14 .panel-title{font-size:clamp(19px,5vw,24px);line-height:1.05;overflow-wrap:normal}
+ .ranked-panel-v14 .ranked-stat{display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px;align-items:center;min-height:101px;padding:11px}
+ .ranked-panel-v14 .ranked-icon{height:58px;width:58px;min-width:0;max-width:58px;aspect-ratio:1;align-self:center}
+ .ranked-panel-v14 .ranked-icon img{width:52px;height:52px;max-height:52px;max-width:52px;object-fit:contain}
+ .ranked-panel-v14 .ranked-stat>div:last-child{display:flex;flex-direction:column;justify-content:center;gap:5px;min-width:0}
+ .ranked-panel-v14 .ranked-stat b{font-size:clamp(19px,5vw,24px);line-height:1.04}
+ .ranked-panel-v14 .ranked-stat strong{font-size:clamp(19px,5vw,24px)}
+ .ranked-panel-v14 .ranked-stat strong span{font-size:9px;line-height:1.25;margin-top:4px}
+ .bs-prestige-step>b{font-size:19px}
+ .bs-prestige-step>b small{font-size:9px}
+}
+@media(max-width:390px){
+ .bs-showcase .bs-podium-landscape{gap:4px}
+ .bs-showcase .bs-podium-card,.bs-showcase .bs-podium-card.bs-podium-1{height:181px}
+ .bs-showcase .bs-podium-card.bs-podium-1{height:192px}
+ .bs-showcase .bs-podium-figure,.bs-showcase .bs-podium-card.bs-podium-1 .bs-podium-figure{height:96px;flex-basis:96px}
+ .bs-showcase .bs-podium-content>strong{font-size:13px}
+ .bs-showcase .bs-podium-content>span{font-size:9px}
+ .bs-showcase .bs-podium-rank>small{font-size:7px}
+ .ranked-panel-v14 .ranked-stat{grid-template-columns:50px minmax(0,1fr);gap:7px}
+ .ranked-panel-v14 .ranked-icon{width:50px;height:50px}
+ .ranked-panel-v14 .ranked-icon img{width:44px;height:44px}
+}

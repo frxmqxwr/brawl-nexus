@@ -17,3 +17,9 @@ for(const name of ['nexus-emblem.webp','nexus-wordmark.webp','nexus-brand.webp',
   fs.copyFileSync(path.join(assetSrc,name),path.join(assetDest,name));
   console.log('Published: assets/'+name);
 }
+
+/* Cloudflare Pages: only /api/* invokes Functions, static assets stay CDN-served.
+   Netlify safely ignores this file. */
+fs.writeFileSync(path.join(out, '_routes.json'), JSON.stringify({
+  version: 1, include: ['/api/*'], exclude: []
+}, null, 2) + '\n');
